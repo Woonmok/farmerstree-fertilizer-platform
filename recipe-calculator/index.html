@@ -85,6 +85,32 @@
         <div class="message" id="recipeMessage">
           배합 설명이 여기에 표시됩니다.
         </div>
+
+        <div class="lock-section">
+          <h3>
+            특허 기반 잠금 배합
+            <span class="lock-badge">LOCKED DEFAULT</span>
+          </h3>
+          <p class="lock-description">
+            특허 기준 중량부를 기본값으로 고정했습니다. 기준 원료 100중량부 환산으로 자동 계산됩니다.
+          </p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>원료</th>
+                <th>특허 기준(중량부)</th>
+                <th>허용 범위(중량부)</th>
+                <th>환산 투입량</th>
+              </tr>
+            </thead>
+            <tbody id="patentRecipeTable"></tbody>
+          </table>
+
+          <div class="message lock-message" id="patentRecipeMessage">
+            특허 기준 잠금 배합 안내가 여기에 표시됩니다.
+          </div>
+        </div>
       </div>
     </section>
   </main>

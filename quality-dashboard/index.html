@@ -244,6 +244,17 @@
           검사값을 입력하고 품질 판정을 누르세요.
         </div>
 
+        <div class="patent-panel" id="patentPanel">
+          <div class="patent-title-row">
+            <h3>출하 최적 기준 자동 판정</h3>
+            <span class="patent-overall neutral" id="patentOverall">대기</span>
+          </div>
+          <p class="patent-description">
+            기준값: pH 6.8~7.6, 질소 1.2~2.2%, 인 0.8~2.0%, 칼륨 0.8~2.0%, C/N 15~25
+          </p>
+          <div class="patent-metric-list" id="patentMetricList"></div>
+        </div>
+
         <div id="reasonList" class="reason-list"></div>
       </div>
 
@@ -390,11 +401,39 @@
               <th>접종수분</th>
               <th>접종시점</th>
               <th>판정</th>
+              <th>최적기준</th>
             </tr>
           </thead>
           <tbody id="recordsTable"></tbody>
         </table>
       </div>
+    </section>
+
+    <section class="card">
+      <h2>월별 품질 추세</h2>
+
+      <div class="trend-controls">
+        <label>
+          추세 지표
+          <select id="trendMetric">
+            <option value="moisture">수분(%)</option>
+            <option value="ph">pH</option>
+            <option value="ec">EC</option>
+            <option value="totalNitrogen">총질소(%)</option>
+            <option value="phosphate">인산(%)</option>
+            <option value="potassium">칼리(%)</option>
+            <option value="cn">C/N</option>
+            <option value="gi">발아지수(GI)</option>
+            <option value="breakage">파손율(%)</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="trend-canvas-wrap">
+        <canvas id="trendCanvas" height="280"></canvas>
+      </div>
+
+      <p class="trend-summary" id="trendSummary">기록을 저장하면 월별 추세가 표시됩니다.</p>
     </section>
   </main>
 

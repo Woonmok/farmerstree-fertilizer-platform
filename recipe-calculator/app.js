@@ -56,6 +56,15 @@ const substrateInput = document.getElementById("substrateKg");
 const recipeTypeSelect = document.getElementById("recipeType");
 const recipeTable = document.getElementById("recipeTable");
 const recipeMessage = document.getElementById("recipeMessage");
+const patentRecipeTable = document.getElementById("patentRecipeTable");
+const patentRecipeMessage = document.getElementById("patentRecipeMessage");
+
+const patentLockedRatios = [
+  { name: "건초", part: 45, min: 40, max: 50 },
+  { name: "밀짚", part: 30, min: 25, max: 35 },
+  { name: "가금류 분뇨", part: 10, min: 5, max: 15 },
+  { name: "미생물제", part: 0.1, min: 0.05, max: 0.2 },
+];
 
 function toNumber(input) {
   const value = Number(input.value);
@@ -101,6 +110,30 @@ function calculateRecipe() {
   recipeMessage.textContent =
     `${recipe.name}입니다. 후배지 ${formatKg(substrateKg)} 기준 총 배합 투입량은 약 ${formatKg(totalInputKg)}입니다. ` +
     `${recipe.description} 배합 후 초기 수분 55~60%, pH 6.5~7.5, C/N 25~30을 목표로 수분과 탄질비를 현장에서 다시 보정해야 합니다.`;
+
+  renderPatentLockedRecipe(substrateKg);
+}
+
+function renderPatentLockedRecipe(substrateKg) {
+  patentRecipeTable.innerHTML = "";
+
+  patentLockedRatios.forEach((item) => {
+    const row = document.createElement("tr");
+    const calculatedKg = substrateKg * (item.part / 100);
+
+    row.innerHTML = `
+      <td>${item.name}</td>
+      <td><strong>${item.part}</strong></td>
+      <td>${item.min}~${item.max}</td>
+      <td><strong>${formatKg(calculatedKg)}</strong></td>
+    `;
+
+    patentRecipeTable.appendChild(row);
+  });
+
+  patentRecipeMessage.textContent =
+    `특허 표준 잠금값은 건초 45, 밀짚 30, 가금류 분뇨 10, 미생물제 0.1 중량부입니다. ` +
+    `현재 후배지 ${formatKg(substrateKg)} 기준 환산값을 자동 적용했습니다.`;
 }
 
 substrateInput.addEventListener("input", calculateRecipe);

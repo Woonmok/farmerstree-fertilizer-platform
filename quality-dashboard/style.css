@@ -164,6 +164,109 @@ button.danger {
   gap: 10px;
 }
 
+.patent-panel {
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 14px;
+  background: #f6f8f2;
+  border: 1px solid #d9e2cf;
+}
+
+.patent-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.patent-title-row h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.patent-description {
+  margin: 8px 0 12px;
+  font-size: 13px;
+  color: #4c5748;
+}
+
+.patent-overall {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 6px 11px;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.patent-overall.pass {
+  background: #e4f3da;
+  color: #2f5e20;
+}
+
+.patent-overall.warning {
+  background: #fff3cf;
+  color: #735400;
+}
+
+.patent-overall.fail {
+  background: #ffe0d8;
+  color: #7b2b1d;
+}
+
+.patent-overall.neutral {
+  background: #edf0f3;
+  color: #3f4a54;
+}
+
+.patent-metric-list {
+  display: grid;
+  gap: 8px;
+}
+
+.patent-metric {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #ffffff;
+  border: 1px solid #e3e9db;
+  font-size: 13px;
+}
+
+.patent-metric-label {
+  font-weight: 800;
+}
+
+.patent-metric-value {
+  color: #3d4839;
+  font-weight: 700;
+}
+
+.patent-badge {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 5px 10px;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.patent-badge.pass {
+  background: #e4f3da;
+  color: #2f5e20;
+}
+
+.patent-badge.warning {
+  background: #fff3cf;
+  color: #735400;
+}
+
+.patent-badge.fail {
+  background: #ffe0d8;
+  color: #7b2b1d;
+}
+
 .reason {
   padding: 14px 16px;
   border-radius: 12px;
@@ -219,6 +322,31 @@ table {
   line-height: 1.6;
   color: #7b2b1d;
   font-weight: 700;
+}
+
+.trend-controls {
+  max-width: 320px;
+  margin-bottom: 12px;
+}
+
+.trend-canvas-wrap {
+  width: 100%;
+  border: 1px solid #dfe7d5;
+  border-radius: 14px;
+  background: #fbfcfa;
+  padding: 10px;
+}
+
+#trendCanvas {
+  width: 100%;
+  display: block;
+}
+
+.trend-summary {
+  margin: 12px 0 0;
+  color: #4c5748;
+  font-weight: 700;
+  line-height: 1.6;
 }
 
 th,

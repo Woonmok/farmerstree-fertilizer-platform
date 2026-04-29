@@ -36,6 +36,11 @@ const inputs = {
 const outputs = {
   finalStatus: document.getElementById("finalStatus"),
   reasonList: document.getElementById("reasonList"),
+  patentOverall: document.getElementById("patentOverall"),
+  patentMetricList: document.getElementById("patentMetricList"),
+  trendMetric: document.getElementById("trendMetric"),
+  trendCanvas: document.getElementById("trendCanvas"),
+  trendSummary: document.getElementById("trendSummary"),
   recordsTable: document.getElementById("recordsTable"),
 };
 
@@ -45,6 +50,66 @@ const clearButton = document.getElementById("clearButton");
 const exportCsvButton = document.getElementById("exportCsvButton");
 
 const STORAGE_KEY = "farmerstree-quality-records";
+
+const PATENT_TARGETS = {
+  ph: {
+    key: "ph",
+    label: "pH",
+    passMin: 6.8,
+    passMax: 7.6,
+    warningMin: 6.4,
+    warningMax: 8.0,
+    unit: "",
+  },
+  totalNitrogen: {
+    key: "totalNitrogen",
+    label: "질소",
+    passMin: 1.2,
+    passMax: 2.2,
+    warningMin: 0.8,
+    warningMax: 2.8,
+    unit: "%",
+  },
+  phosphate: {
+    key: "phosphate",
+    label: "인",
+    passMin: 0.8,
+    passMax: 2.0,
+    warningMin: 0.4,
+    warningMax: 2.5,
+    unit: "%",
+  },
+  potassium: {
+    key: "potassium",
+    label: "칼륨",
+    passMin: 0.8,
+    passMax: 2.0,
+    warningMin: 0.4,
+    warningMax: 2.5,
+    unit: "%",
+  },
+  cn: {
+    key: "cn",
+    label: "C/N",
+    passMin: 15,
+    passMax: 25,
+    warningMin: 12,
+    warningMax: 30,
+    unit: "",
+  },
+};
+
+const TREND_METRICS = {
+  moisture: { label: "수분", unit: "%", decimals: 1 },
+  ph: { label: "pH", unit: "", decimals: 2 },
+  ec: { label: "EC", unit: "", decimals: 2 },
+  totalNitrogen: { label: "총질소", unit: "%", decimals: 2 },
+  phosphate: { label: "인산", unit: "%", decimals: 2 },
+  potassium: { label: "칼리", unit: "%", decimals: 2 },
+  cn: { label: "C/N", unit: "", decimals: 1 },
+  gi: { label: "발아지수", unit: "", decimals: 1 },
+  breakage: { label: "파손율", unit: "%", decimals: 1 },
+};
 
 let currentEvaluation = null;
 let records = loadRecords();
@@ -358,36 +423,36 @@ function evaluateQuality(data) {
 
   let status = {
     level: "good",
-    title: "출하 가능",
-    detail: "현재 입력값 기준으로 출하 가능한 품질입니다.",
+    title: "즉시출하",
+    detail: "현재 입력값 기준으로 바로 시판 가능한 품질입니다.",
   };
 
   if (dangerCount > 0) {
     status = {
       level: "danger",
-      title: "출하 불가",
-      detail: "위험 항목이 있습니다. 재건조, 추가 후숙, 재부숙 또는 재선별이 필요합니다.",
+      title: "출하보류",
+      detail: "위험 항목이 있습니다. 재건조, 추가 후숙, 재부숙 또는 재선별 후 재검사하세요.",
     };
   } else if (warnCount > 0) {
     status = {
       level: "warn",
-      title: "조건부 출하 / 재검토",
-      detail: "주의 항목이 있습니다. 제품 유형과 사용 작물에 따라 조건부 출하 또는 재검사가 필요합니다.",
+      title: "조건부출하",
+      detail: "주의 항목이 있습니다. 사용처 제한 또는 추가 확인 후 출하하세요.",
     };
   }
 
   if (data.moisture > 25 && dangerCount > 0) {
-    status.title = "재건조 필요";
+    status.title = "출하보류";
     status.detail = "수분이 높아 보관 중 곰팡이·부패 위험이 있습니다.";
   }
 
   if (data.gi < 70 || data.odor === "ammonia" || data.odor === "rot") {
-    status.title = "추가 후숙 또는 재부숙 필요";
+    status.title = "출하보류";
     status.detail = "식물 독성, 암모니아취, 부패취 가능성이 있어 바로 출하하면 안 됩니다.";
   }
 
   if (data.ripeningDays < 20 || data.ripeningTemp > 45 || data.pileDelta > 15) {
-    status.title = "추가 후숙 또는 재부숙 필요";
+    status.title = "출하보류";
     status.detail = "후숙 운영 기준 미달 항목이 있어 즉시 출하하면 안 됩니다.";
   }
 
@@ -397,27 +462,90 @@ function evaluateQuality(data) {
     data.inoculationTiming === "beforeHotCompost" ||
     data.stabilizationDays < 5
   ) {
-    status.title = "미생물 접종 조건 미달";
+    status.title = "출하보류";
     status.detail = "접종 핵심 조건(온도/암모니아취/후접종/안정화 기간) 중 미달 항목이 있어 재조정이 필요합니다.";
     status.level = "danger";
   }
 
   if (data.ec > 5.0) {
-    status.title = "사용 제한";
+    status.title = "조건부출하";
     status.detail = "염류장해 위험이 높아 민감작물용 출하를 제한해야 합니다.";
   }
 
   if (data.pathogen === "exceed" || data.heavyMetals === "exceed" || data.maturity === "unstable") {
-    status.title = "출하 불가";
+    status.title = "출하보류";
     status.detail = "법적/위생/부숙도 기준 미달 항목이 있어 출하할 수 없습니다.";
     status.level = "danger";
   }
 
+  const patentCheck = evaluatePatentCriteria(data);
+
   return {
     ...data,
     status,
+    patentCheck,
     reasons,
   };
+}
+
+function evaluatePatentMetric(value, metric) {
+  if (!Number.isFinite(value)) {
+    return "fail";
+  }
+
+  if (value >= metric.passMin && value <= metric.passMax) {
+    return "pass";
+  }
+
+  if (value >= metric.warningMin && value <= metric.warningMax) {
+    return "warning";
+  }
+
+  return "fail";
+}
+
+function evaluatePatentCriteria(data) {
+  const metrics = Object.values(PATENT_TARGETS).map((metric) => {
+    const measured = Number(data[metric.key]);
+    const level = evaluatePatentMetric(measured, metric);
+
+    return {
+      label: metric.label,
+      measured,
+      passMin: metric.passMin,
+      passMax: metric.passMax,
+      unit: metric.unit,
+      level,
+    };
+  });
+
+  const hasFail = metrics.some((metric) => metric.level === "fail");
+  const hasWarning = metrics.some((metric) => metric.level === "warning");
+
+  let level = "pass";
+  let title = "즉시출하";
+
+  if (hasFail) {
+    level = "fail";
+    title = "출하보류";
+  } else if (hasWarning) {
+    level = "warning";
+    title = "조건부출하";
+  }
+
+  return {
+    level,
+    title,
+    metrics,
+  };
+}
+
+function formatPatentValue(value, unit) {
+  if (!Number.isFinite(value)) {
+    return "입력값 없음";
+  }
+
+  return `${value}${unit}`;
 }
 
 function renderEvaluation(evaluation) {
@@ -436,6 +564,172 @@ function renderEvaluation(evaluation) {
     item.textContent = reason.text;
     outputs.reasonList.appendChild(item);
   });
+
+  outputs.patentOverall.className = `patent-overall ${evaluation.patentCheck.level}`;
+  outputs.patentOverall.textContent = evaluation.patentCheck.title;
+
+  outputs.patentMetricList.innerHTML = "";
+
+  evaluation.patentCheck.metrics.forEach((metric) => {
+    const row = document.createElement("div");
+    row.className = "patent-metric";
+    row.innerHTML = `
+      <span class="patent-metric-label">${metric.label} (최적 ${metric.passMin}~${metric.passMax}${metric.unit})</span>
+      <span class="patent-metric-value">측정 ${formatPatentValue(metric.measured, metric.unit)}</span>
+      <span class="patent-badge ${metric.level}">${metric.level === "pass" ? "즉시출하" : metric.level === "warning" ? "조건부출하" : "출하보류"}</span>
+    `;
+    outputs.patentMetricList.appendChild(row);
+  });
+}
+
+function buildMonthlySeries(metricKey) {
+  const bucket = new Map();
+
+  records.forEach((record) => {
+    const value = Number(record[metricKey]);
+    if (!Number.isFinite(value)) {
+      return;
+    }
+
+    const month = String(record.inspectionDate || "").slice(0, 7);
+    if (!month) {
+      return;
+    }
+
+    const previous = bucket.get(month) || { sum: 0, count: 0 };
+    bucket.set(month, {
+      sum: previous.sum + value,
+      count: previous.count + 1,
+    });
+  });
+
+  return Array.from(bucket.entries())
+    .sort((a, b) => a[0].localeCompare(b[0]))
+    .map(([month, value]) => ({
+      month,
+      average: value.sum / value.count,
+      count: value.count,
+    }));
+}
+
+function drawTrendChart() {
+  const canvas = outputs.trendCanvas;
+  if (!canvas) {
+    return;
+  }
+
+  const metricKey = outputs.trendMetric.value;
+  const metric = TREND_METRICS[metricKey];
+  const series = buildMonthlySeries(metricKey);
+  const ctx = canvas.getContext("2d");
+  const dpr = window.devicePixelRatio || 1;
+  const displayWidth = Math.max(320, Math.floor(canvas.clientWidth || 900));
+  const displayHeight = 280;
+
+  canvas.width = Math.floor(displayWidth * dpr);
+  canvas.height = Math.floor(displayHeight * dpr);
+
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, displayWidth, displayHeight);
+
+  if (series.length === 0) {
+    ctx.fillStyle = "#5a6656";
+    ctx.font = "15px sans-serif";
+    ctx.fillText("저장된 데이터가 없어 추세를 표시할 수 없습니다.", 24, 48);
+    outputs.trendSummary.textContent = "기록을 저장하면 월별 평균 추세가 자동으로 생성됩니다.";
+    return;
+  }
+
+  const chart = {
+    left: 50,
+    right: displayWidth - 20,
+    top: 20,
+    bottom: displayHeight - 42,
+  };
+  const chartWidth = chart.right - chart.left;
+  const chartHeight = chart.bottom - chart.top;
+
+  const values = series.map((item) => item.average);
+  let min = Math.min(...values);
+  let max = Math.max(...values);
+
+  if (min === max) {
+    min -= 1;
+    max += 1;
+  }
+
+  const padding = (max - min) * 0.15;
+  min -= padding;
+  max += padding;
+
+  ctx.strokeStyle = "#e0e7d7";
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i += 1) {
+    const y = chart.top + (chartHeight * i) / 4;
+    ctx.beginPath();
+    ctx.moveTo(chart.left, y);
+    ctx.lineTo(chart.right, y);
+    ctx.stroke();
+  }
+
+  ctx.strokeStyle = "#8ea77a";
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(chart.left, chart.top);
+  ctx.lineTo(chart.left, chart.bottom);
+  ctx.lineTo(chart.right, chart.bottom);
+  ctx.stroke();
+
+  const toX = (index) => {
+    if (series.length === 1) {
+      return chart.left + chartWidth / 2;
+    }
+
+    return chart.left + (chartWidth * index) / (series.length - 1);
+  };
+  const toY = (value) => chart.bottom - ((value - min) / (max - min)) * chartHeight;
+
+  ctx.strokeStyle = "#4f7a39";
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  series.forEach((item, index) => {
+    const x = toX(index);
+    const y = toY(item.average);
+    if (index === 0) {
+      ctx.moveTo(x, y);
+    } else {
+      ctx.lineTo(x, y);
+    }
+  });
+  ctx.stroke();
+
+  ctx.fillStyle = "#2f5e20";
+  series.forEach((item, index) => {
+    const x = toX(index);
+    const y = toY(item.average);
+    ctx.beginPath();
+    ctx.arc(x, y, 4, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  ctx.fillStyle = "#566252";
+  ctx.font = "12px sans-serif";
+  series.forEach((item, index) => {
+    const x = toX(index);
+    ctx.fillText(item.month.slice(2), x - 16, chart.bottom + 20);
+  });
+
+  const latest = series[series.length - 1];
+  const first = series[0];
+  const delta = latest.average - first.average;
+  const direction = delta > 0 ? "상승" : delta < 0 ? "하락" : "유지";
+  outputs.trendSummary.textContent =
+    `${metric.label} 월평균: 최신 ${latest.month} ${latest.average.toFixed(metric.decimals)}${metric.unit}, ` +
+    `초기 ${first.month} 대비 ${Math.abs(delta).toFixed(metric.decimals)}${metric.unit} ${direction}.`;
+}
+
+function renderTrendChart() {
+  drawTrendChart();
 }
 
 function evaluateCurrent() {
@@ -508,7 +802,8 @@ function exportRecordsToCsv() {
     "안정화발효(일)",
     "균주구성",
     "최종판정",
-    "판정상세"
+    "판정상세",
+    "최적기준종합"
   ];
 
   const rows = records
@@ -548,7 +843,8 @@ function exportRecordsToCsv() {
       record.stabilizationDays,
       record.strainMix,
       record.status.title,
-      record.status.detail
+      record.status.detail,
+      (record.patentCheck || evaluatePatentCriteria(record)).title
     ]);
 
   const csv = [headers, ...rows]
@@ -575,6 +871,7 @@ function renderRecords() {
     .slice()
     .sort((a, b) => String(b.inspectionDate).localeCompare(String(a.inspectionDate)))
     .forEach((record) => {
+      const qualityGate = record.patentCheck || evaluatePatentCriteria(record);
       const row = document.createElement("tr");
 
       row.innerHTML = `
@@ -610,16 +907,25 @@ function renderRecords() {
             ${record.status.title}
           </span>
         </td>
+        <td>
+          <span class="patent-badge ${qualityGate.level}">
+            ${qualityGate.title}
+          </span>
+        </td>
       `;
 
       outputs.recordsTable.appendChild(row);
     });
+
+  renderTrendChart();
 }
 
 evaluateButton.addEventListener("click", evaluateCurrent);
 saveButton.addEventListener("click", saveCurrent);
 clearButton.addEventListener("click", clearRecords);
 exportCsvButton.addEventListener("click", exportRecordsToCsv);
+outputs.trendMetric.addEventListener("change", renderTrendChart);
+window.addEventListener("resize", renderTrendChart);
 
 evaluateCurrent();
 renderRecords();

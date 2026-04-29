@@ -161,6 +161,43 @@ tbody tr:nth-child(2n) {
   font-weight: 700;
 }
 
+.lock-section {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid #edf0e8;
+}
+
+.lock-section h3 {
+  margin: 0 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+}
+
+.lock-badge {
+  display: inline-block;
+  background: #2f4428;
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+}
+
+.lock-description {
+  margin: 0 0 12px;
+  color: #4c5748;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.lock-message {
+  background: #edf4e5;
+  color: #2f4428;
+}
+
 @media (max-width: 900px) {
   .controls,
   .grid {
