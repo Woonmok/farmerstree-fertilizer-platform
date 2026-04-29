@@ -18,9 +18,11 @@ temp/
 *.tmp
 
 # Local exports
+exports/*.csv
 exports/**/*.csv
 
 # Generated reports
+reports/*.pdf
 reports/**/*.pdf
 
 # Local backup files

@@ -30,9 +30,13 @@ Farmerstree 후배지 펠릿비료 제조 공정은 다음 8단계로 구성한�
 - `recipe-calculator/`: 배합 계산기
 - `dashboard/`: 발효 온도 기록 대시보드
 - `quality-dashboard/`: 품질검사 입력/판정 대시보드
+- `batch-generator/`: 배치 기록 마크다운 생성기
+- `report-generator/`: CSV 기반 통합 리포트 생성기
+- `print-report/`: A4 인쇄/PDF 저장용 품질 성적서 화면
 - `qc/`: 체크리스트, 배치 기록서 템플릿, 배치별 기록
 - `recipes/`: 표준 레시피 데이터
 - `docs/`: 운영 기준 문서
+- `scripts/`: 운영 스크립트(백업 등)
 
 ---
 
@@ -47,6 +51,7 @@ Farmerstree 후배지 펠릿비료 제조 공정은 다음 8단계로 구성한�
 ## 4. 문서
 
 - 운영 규칙: `docs/OPERATION_RULES.md`
+- Git/백업 운영 규칙: `docs/GIT_BACKUP_RULES.md`
 - 품질 체크리스트: `qc/qc_checklist.md`
 - 배치 기록서 템플릿: `qc/batch_record_template.md`
 
