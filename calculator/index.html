@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farmerstree 후배지 펠릿비료 수익성 계산기</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <main class="container">
+    <section class="hero">
+      <p class="eyebrow">Farmerstree Fertilizer Platform</p>
+      <h1>후배지 펠릿비료 수익성 계산기</h1>
+      <p class="description">
+        후배지 원료관리, 염류관리, C/N 보정, 고온부숙, 후숙, 기능성 미생물,
+        펠릿화, 품질검사 비용을 반영하여 20kg 포대 기준 원가와 수익성을 계산합니다.
+      </p>
+    </section>
+
+    <section class="grid">
+      <div class="card input-card">
+        <h2>입력값</h2>
+
+        <label>
+          생산량 / 20kg 포대
+          <input id="bags" type="number" value="1000" min="1" />
+        </label>
+
+        <label>
+          후배지 원료·운송비 / 포대
+          <input id="rawCost" type="number" value="1000" min="0" />
+        </label>
+
+        <label>
+          염류관리·수분조정비 / 포대
+          <input id="saltCost" type="number" value="500" min="0" />
+        </label>
+
+        <label>
+          C/N 보정 첨가물비 / 포대
+          <input id="cnCost" type="number" value="2000" min="0" />
+        </label>
+
+        <label>
+          기능성 미생물비 / 포대
+          <input id="microbeCost" type="number" value="1000" min="0" />
+        </label>
+
+        <label>
+          고온부숙·후숙 관리비 / 포대
+          <input id="compostCost" type="number" value="1200" min="0" />
+        </label>
+
+        <label>
+          건조·펠릿화비 / 포대
+          <input id="pelletCost" type="number" value="2000" min="0" />
+        </label>
+
+        <label>
+          포장비 / 포대
+          <input id="packagingCost" type="number" value="600" min="0" />
+        </label>
+
+        <label>
+          품질검사·불량률 비용 / 포대
+          <input id="qcCost" type="number" value="600" min="0" />
+        </label>
+
+        <label>
+          인건비·장비감가상각 / 포대
+          <input id="laborCost" type="number" value="1000" min="0" />
+        </label>
+
+        <label>
+          판매가 / 포대
+          <input id="salePrice" type="number" value="15000" min="0" />
+        </label>
+
+        <label>
+          보조금 / 포대
+          <input id="subsidy" type="number" value="1600" min="0" />
+        </label>
+      </div>
+
+      <div class="card result-card">
+        <h2>계산 결과</h2>
+
+        <div class="result-row">
+          <span>포대당 제조원가</span>
+          <strong id="unitCost">0원</strong>
+        </div>
+
+        <div class="result-row">
+          <span>총 생산비</span>
+          <strong id="totalCost">0원</strong>
+        </div>
+
+        <div class="result-row">
+          <span>총 예상 매출</span>
+          <strong id="totalRevenue">0원</strong>
+        </div>
+
+        <div class="result-row">
+          <span>농가 체감가</span>
+          <strong id="farmerPrice">0원</strong>
+        </div>
+
+        <div class="highlight">
+          <span>예상 순이익</span>
+          <strong id="profit">0원</strong>
+        </div>
+
+        <div class="highlight secondary">
+          <span>마진율</span>
+          <strong id="marginRate">0%</strong>
+        </div>
+
+        <div class="result-row">
+          <span>손익분기 판매가</span>
+          <strong id="breakEvenPrice">0원</strong>
+        </div>
+
+        <div class="message" id="businessMessage">
+          계산 결과가 여기에 표시됩니다.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>

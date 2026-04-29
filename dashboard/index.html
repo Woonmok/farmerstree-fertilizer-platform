@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farmerstree 발효 온도 기록 대시보드</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <main class="container">
+    <section class="hero">
+      <p class="eyebrow">Farmerstree Fertilizer Platform</p>
+      <h1>발효 온도 기록 대시보드</h1>
+      <p class="description">
+        후배지 펠릿비료의 고온부숙 과정에서 오전·오후 온도, 냄새, 수분 상태, 조치 내용을 기록하고
+        발효 상태를 자동 판정합니다.
+      </p>
+    </section>
+
+    <section class="card form-card">
+      <h2>오늘 기록 입력</h2>
+
+      <div class="form-grid">
+        <label>
+          제조번호
+          <input id="batchId" type="text" value="FT-FERT-20260429-001" />
+        </label>
+
+        <label>
+          일차
+          <input id="day" type="number" value="1" min="1" />
+        </label>
+
+        <label>
+          오전 온도 ℃
+          <input id="morningTemp" type="number" value="58" />
+        </label>
+
+        <label>
+          오후 온도 ℃
+          <input id="afternoonTemp" type="number" value="62" />
+        </label>
+
+        <label>
+          냄새 상태
+          <select id="odor">
+            <option value="normal">정상</option>
+            <option value="ammonia">암모니아취</option>
+            <option value="rot">부패취</option>
+          </select>
+        </label>
+
+        <label>
+          수분 상태
+          <select id="moisture">
+            <option value="normal">적정</option>
+            <option value="wet">과습</option>
+            <option value="dry">건조</option>
+          </select>
+        </label>
+
+        <label class="wide">
+          조치 내용
+          <input id="action" type="text" placeholder="예: 뒤집기, 송풍, 수분 보정, 왕겨 추가 등" />
+        </label>
+      </div>
+
+      <div class="button-row">
+        <button id="addRecord">기록 추가</button>
+        <button id="exportCsv">CSV 내보내기</button>
+        <button id="clearRecords" class="danger">전체 기록 삭제</button>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <h2>발효 상태 요약</h2>
+
+        <div class="summary-grid">
+          <div class="summary-box">
+            <span>총 기록 수</span>
+            <strong id="recordCount">0건</strong>
+          </div>
+
+          <div class="summary-box">
+            <span>평균 온도</span>
+            <strong id="avgTemp">0℃</strong>
+          </div>
+
+          <div class="summary-box">
+            <span>최고 온도</span>
+            <strong id="maxTemp">0℃</strong>
+          </div>
+
+          <div class="summary-box">
+            <span>55℃ 이상 유지</span>
+            <strong id="hotDays">0회</strong>
+          </div>
+        </div>
+
+        <div id="mainMessage" class="message">
+          기록을 추가하면 발효 상태가 표시됩니다.
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>판정 기준</h2>
+
+        <ul class="rule-list">
+          <li><strong>40℃ 미만</strong> 발효 부족. 수분, 질소원, 통기 조건 재점검</li>
+          <li><strong>45~55℃</strong> 발효 진행. 관찰 유지</li>
+          <li><strong>55~65℃</strong> 적정 고온부숙. 유지</li>
+          <li><strong>65~70℃</strong> 과열 주의. 뒤집기 또는 송풍</li>
+          <li><strong>70℃ 초과</strong> 품질 저하 위험. 즉시 뒤집기, 수분 보정</li>
+          <li><strong>부패취</strong> 산소 부족, 과습, 혐기화 가능성</li>
+          <li><strong>암모니아취</strong> 질소 과다, pH 과상승, 통기 부족 가능성</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>온도 기록표</h2>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>제조번호</th>
+              <th>일차</th>
+              <th>오전</th>
+              <th>오후</th>
+              <th>평균</th>
+              <th>냄새</th>
+              <th>수분</th>
+              <th>판정</th>
+              <th>조치</th>
+            </tr>
+          </thead>
+          <tbody id="recordsTable"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# VS Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# Logs
+logs/
+*.log
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Local exports
+exports/**/*.csv
+
+# Generated reports
+reports/**/*.pdf
+
+# Local backup files
+backup/
+backups/
+*.bak
+
+# Environment variables
+.env
+.env.local
+
+# Node / package managers, reserved for future expansion
+node_modules/
+package-lock.json
+
+# Python, reserved for future expansion
+__pycache__/
+*.pyc
+.venv/
+venv/

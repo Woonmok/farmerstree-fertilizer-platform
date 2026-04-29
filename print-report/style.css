@@ -1,0 +1,110 @@
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Pretendard", "Apple SD Gothic Neo", sans-serif;
+  background: #eef1e8;
+  color: #1d281f;
+}
+.container {
+  width: min(1080px, 92vw);
+  margin: 0 auto;
+  padding: 28px 0 56px;
+}
+.card {
+  background: #fff;
+  border: 1px solid #d4dfcf;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+h1 { margin: 0 0 8px; font-size: 30px; }
+.desc { margin: 0 0 16px; color: #4e5d50; }
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 700;
+}
+label.wide { grid-column: 1 / -1; }
+input, select, textarea {
+  border: 1px solid #bfcab9;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 15px;
+  background: #fbfcfa;
+}
+.actions {
+  margin-top: 14px;
+  display: flex;
+  gap: 10px;
+}
+button {
+  border: none;
+  border-radius: 10px;
+  padding: 11px 15px;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  background: #4f7541;
+  color: #fff;
+}
+.sheet {
+  background: #fff;
+  border: 2px solid #2f4c34;
+  border-radius: 10px;
+  padding: 24px;
+}
+.sheet-header {
+  border-bottom: 2px solid #cfd9ca;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+}
+.sheet-header h2 {
+  margin: 0;
+  font-size: 28px;
+}
+.sheet-header p {
+  margin: 4px 0 0;
+  color: #466049;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  border: 1px solid #c6d3c1;
+  padding: 10px;
+  text-align: left;
+  vertical-align: top;
+}
+th {
+  width: 18%;
+  background: #eef5ea;
+}
+.status {
+  font-weight: 900;
+  font-size: 18px;
+}
+.sheet-footer {
+  margin-top: 14px;
+  font-size: 12px;
+  color: #576a59;
+}
+@media print {
+  body { background: #fff; }
+  .no-print { display: none; }
+  .container { width: 100%; padding: 0; }
+  .sheet { border: none; border-radius: 0; padding: 0; }
+}
+@media (max-width: 800px) {
+  .form-grid { grid-template-columns: 1fr; }
+}

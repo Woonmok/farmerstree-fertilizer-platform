@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farmerstree 품질검사 입력 대시보드</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <main class="container">
+    <section class="hero">
+      <p class="eyebrow">Farmerstree Fertilizer Platform</p>
+      <h1>품질검사 입력 대시보드</h1>
+      <p class="description">
+        후배지 펠릿비료의 최종 품질검사 값을 입력하면 출하 가능 여부를 자동 판정합니다.
+        수분, pH, EC, C/N, 발아지수, 냄새, 펠릿 파손율과 후숙 운영 기준을 함께 점검해
+        재건조·추가 후숙·재부숙 필요 여부를 판단합니다.
+      </p>
+    </section>
+
+    <section class="card form-card">
+      <h2>품질검사 입력</h2>
+
+      <div class="form-grid">
+        <label>
+          제조번호
+          <input id="batchId" type="text" value="FT-FERT-20260429-001" />
+        </label>
+
+        <label>
+          제품 유형
+          <select id="productType">
+            <option value="standard">일반형 고부숙 펠릿</option>
+            <option value="premium">프리미엄 기능성 펠릿</option>
+            <option value="lowSalt">저염 민감작물용</option>
+          </select>
+        </label>
+
+        <label>
+          검사일
+          <input id="inspectionDate" type="date" />
+        </label>
+
+        <label>
+          최종 수분 %
+          <input id="moisture" type="number" value="18" step="0.1" />
+        </label>
+
+        <label>
+          pH
+          <input id="ph" type="number" value="7.2" step="0.1" />
+        </label>
+
+        <label>
+          EC
+          <input id="ec" type="number" value="2.5" step="0.1" />
+        </label>
+
+        <label>
+          유기물(%)
+          <input id="organicMatter" type="number" value="30" step="0.1" />
+        </label>
+
+        <label>
+          총질소(%)
+          <input id="totalNitrogen" type="number" value="1.5" step="0.1" />
+        </label>
+
+        <label>
+          인산(%)
+          <input id="phosphate" type="number" value="1.0" step="0.1" />
+        </label>
+
+        <label>
+          칼리(%)
+          <input id="potassium" type="number" value="1.0" step="0.1" />
+        </label>
+
+        <label>
+          C/N
+          <input id="cn" type="number" value="20" step="0.1" />
+        </label>
+
+        <label>
+          발아지수 GI
+          <input id="gi" type="number" value="85" step="1" />
+        </label>
+
+        <label>
+          펠릿 파손율 %
+          <input id="breakage" type="number" value="5" step="0.1" />
+        </label>
+
+        <label>
+          냄새 상태
+          <select id="odor">
+            <option value="normal">정상 / 흙냄새</option>
+            <option value="ammonia">암모니아취</option>
+            <option value="rot">부패취</option>
+            <option value="sour">강한 산취</option>
+          </select>
+        </label>
+
+        <label>
+          포장 후 곰팡이 재발
+          <select id="mold">
+            <option value="none">없음</option>
+            <option value="low">약간 있음</option>
+            <option value="high">많음</option>
+          </select>
+        </label>
+
+        <label>
+          이물질
+          <select id="foreignMatter">
+            <option value="none">없음</option>
+            <option value="minor">소량</option>
+            <option value="major">많음</option>
+          </select>
+        </label>
+
+        <label>
+          부숙도
+          <select id="maturity">
+            <option value="stable">양호(미숙취·발열 없음)</option>
+            <option value="unstable">미흡(미숙취·발열 있음)</option>
+          </select>
+        </label>
+
+        <label>
+          병원성 미생물
+          <select id="pathogen">
+            <option value="within">기준 이내</option>
+            <option value="exceed">기준 초과</option>
+          </select>
+        </label>
+
+        <label>
+          중금속
+          <select id="heavyMetals">
+            <option value="within">기준 이내</option>
+            <option value="exceed">기준 초과</option>
+          </select>
+        </label>
+
+        <label>
+          후숙 기간(일)
+          <input id="ripeningDays" type="number" value="30" step="1" min="0" />
+        </label>
+
+        <label>
+          후숙 평균 온도(℃)
+          <input id="ripeningTemp" type="number" value="35" step="0.1" />
+        </label>
+
+        <label>
+          후숙 수분(%)
+          <input id="ripeningMoisture" type="number" value="45" step="0.1" />
+        </label>
+
+        <label>
+          뒤집기 간격(일)
+          <input id="turningInterval" type="number" value="6" step="1" min="1" />
+        </label>
+
+        <label>
+          후숙 색상
+          <select id="colorState">
+            <option value="brown">갈색</option>
+            <option value="darkBrown">암갈색</option>
+            <option value="light">옅은색</option>
+            <option value="black">검은색</option>
+          </select>
+        </label>
+
+        <label>
+          후숙 촉감
+          <select id="textureState">
+            <option value="friable">부슬부슬, 끈적임 적음</option>
+            <option value="sticky">끈적임 있음</option>
+            <option value="lumpy">덩어리 많음</option>
+          </select>
+        </label>
+
+        <label>
+          더미-외기 온도차(℃)
+          <input id="pileDelta" type="number" value="6" step="0.1" />
+        </label>
+
+        <label>
+          접종 시 원료 온도(℃)
+          <input id="inoculationTemp" type="number" value="35" step="0.1" />
+        </label>
+
+        <label>
+          접종 시 수분(%)
+          <input id="inoculationMoisture" type="number" value="40" step="0.1" />
+        </label>
+
+        <label>
+          접종 전 암모니아취
+          <select id="inoculationAmmonia">
+            <option value="none">없음</option>
+            <option value="present">남아 있음</option>
+          </select>
+        </label>
+
+        <label>
+          접종 시점
+          <select id="inoculationTiming">
+            <option value="postRipening">후숙 후접종</option>
+            <option value="beforeHotCompost">고온부숙 전 조기접종</option>
+          </select>
+        </label>
+
+        <label>
+          접종 후 안정화 발효(일)
+          <input id="stabilizationDays" type="number" value="7" step="1" min="0" />
+        </label>
+
+        <label class="wide">
+          기능성 미생물 균주 구성
+          <input
+            id="strainMix"
+            type="text"
+            value="Bacillus subtilis, Bacillus amyloliquefaciens, Bacillus licheniformis, Lactobacillus plantarum, Saccharomyces cerevisiae"
+          />
+        </label>
+      </div>
+
+      <div class="button-row">
+        <button id="evaluateButton">품질 판정</button>
+        <button id="saveButton">기록 저장</button>
+        <button id="exportCsvButton">CSV 내보내기</button>
+        <button id="clearButton" class="danger">전체 기록 삭제</button>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card result-card">
+        <h2>최종 판정</h2>
+
+        <div id="finalStatus" class="status neutral">
+          검사값을 입력하고 품질 판정을 누르세요.
+        </div>
+
+        <div id="reasonList" class="reason-list"></div>
+      </div>
+
+      <div class="card">
+        <h2>기준값</h2>
+
+        <table class="small-table">
+          <tbody>
+            <tr>
+              <th>수분</th>
+              <td>펠릿 기준 15~20% 권장, 25% 초과 시 재건조</td>
+            </tr>
+            <tr>
+              <th>pH</th>
+              <td>6.5~8.0 권장</td>
+            </tr>
+            <tr>
+              <th>EC</th>
+              <td>낮을수록 민감작물에 유리, 4.0 초과 시 주의</td>
+            </tr>
+            <tr>
+              <th>유기물</th>
+              <td>제품 기준 설정 필요</td>
+            </tr>
+            <tr>
+              <th>총질소</th>
+              <td>제품 기준 설정 필요</td>
+            </tr>
+            <tr>
+              <th>인산</th>
+              <td>제품 기준 설정 필요</td>
+            </tr>
+            <tr>
+              <th>칼리</th>
+              <td>제품 기준 설정 필요</td>
+            </tr>
+            <tr>
+              <th>C/N</th>
+              <td>15~25 권장</td>
+            </tr>
+            <tr>
+              <th>부숙도</th>
+              <td>미숙취·발열 없어야 함</td>
+            </tr>
+            <tr>
+              <th>발아지수</th>
+              <td>70 이상 최소, 80 이상 권장</td>
+            </tr>
+            <tr>
+              <th>병원성 미생물</th>
+              <td>기준 이내</td>
+            </tr>
+            <tr>
+              <th>중금속</th>
+              <td>기준 이내</td>
+            </tr>
+            <tr>
+              <th>냄새</th>
+              <td>암모니아취·부패취 없어야 함</td>
+            </tr>
+            <tr>
+              <th>펠릿 파손율</th>
+              <td>10% 이하 권장, 20% 초과 시 제품성 낮음</td>
+            </tr>
+            <tr>
+              <th>후숙 기간</th>
+              <td>20~40일 권장</td>
+            </tr>
+            <tr>
+              <th>후숙 온도</th>
+              <td>25~45℃ 권장, 외기 대비 과열 금지</td>
+            </tr>
+            <tr>
+              <th>후숙 수분</th>
+              <td>40~50% 권장</td>
+            </tr>
+            <tr>
+              <th>뒤집기 주기</th>
+              <td>5~7일 간격 권장</td>
+            </tr>
+            <tr>
+              <th>색상/촉감</th>
+              <td>갈색~암갈색, 부슬부슬·저점착 권장</td>
+            </tr>
+            <tr>
+              <th>접종 온도</th>
+              <td>후숙물 40℃ 이하에서 접종</td>
+            </tr>
+            <tr>
+              <th>접종 전 상태</th>
+              <td>암모니아취가 남아 있으면 접종 금지</td>
+            </tr>
+            <tr>
+              <th>접종 수분</th>
+              <td>35~45% 권장</td>
+            </tr>
+            <tr>
+              <th>접종 원칙</th>
+              <td>고온부숙 전 과다 투입 금지, 후숙 후접종 기본, 접종 후 5~10일 안정화 발효</td>
+            </tr>
+            <tr>
+              <th>권장 균주</th>
+              <td>Bacillus subtilis, Bacillus amyloliquefaciens, Bacillus licheniformis, Lactobacillus plantarum, Saccharomyces cerevisiae</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="rule-alerts">
+          <h3>즉시 조치가 필요한 위험 조건</h3>
+          <ol>
+            <li>강한 암모니아취가 있음</li>
+            <li>부패취가 있음</li>
+            <li>발아지수 70 미만</li>
+            <li>수분 25% 초과</li>
+            <li>EC 과도 고농도(사용 작물 제한 필요 상태)</li>
+            <li>이물질 다량 혼입</li>
+            <li>포장 후 곰팡이 재발 많음</li>
+            <li>펠릿 파손율 과다</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>품질검사 기록</h2>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>검사일</th>
+              <th>제조번호</th>
+              <th>제품 유형</th>
+              <th>수분</th>
+              <th>pH</th>
+              <th>EC</th>
+              <th>C/N</th>
+              <th>GI</th>
+              <th>파손율</th>
+              <th>후숙기간</th>
+              <th>후숙온도</th>
+              <th>후숙수분</th>
+              <th>접종온도</th>
+              <th>접종수분</th>
+              <th>접종시점</th>
+              <th>판정</th>
+            </tr>
+          </thead>
+          <tbody id="recordsTable"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>

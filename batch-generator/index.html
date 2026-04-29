@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farmerstree 제조 배치 기록 자동 생성기</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <main class="container">
+    <section class="hero">
+      <p class="eyebrow">Farmerstree Fertilizer Platform</p>
+      <h1>제조 배치 기록 자동 생성기</h1>
+      <p class="description">
+        후배지 펠릿비료 제조번호, 원료 입고량, 제품 유형, 담당자 정보를 입력하면
+        제조 배치 기록서 Markdown 파일을 자동 생성합니다.
+      </p>
+    </section>
+
+    <section class="grid">
+      <section class="card form-card">
+        <h2>배치 정보 입력</h2>
+
+        <div class="form-grid">
+          <label>
+            제조번호
+            <input id="batchId" type="text" value="FT-FERT-20260429-001" />
+          </label>
+
+          <label>
+            제조일자
+            <input id="manufactureDate" type="date" />
+          </label>
+
+          <label>
+            제조장소
+            <input id="location" type="text" value="Farmerstree 발효장" />
+          </label>
+
+          <label>
+            담당자
+            <input id="manager" type="text" value="운목" />
+          </label>
+
+          <label>
+            제품 유형
+            <select id="productType">
+              <option value="일반형 고부숙 펠릿">일반형 고부숙 펠릿</option>
+              <option value="프리미엄 기능성 펠릿">프리미엄 기능성 펠릿</option>
+              <option value="저염 민감작물용">저염 민감작물용</option>
+            </select>
+          </label>
+
+          <label>
+            목표 제품명
+            <input id="productName" type="text" value="후배지 고부숙 펠릿비료" />
+          </label>
+
+          <label>
+            포장 단위 kg
+            <input id="bagKg" type="number" value="20" min="1" />
+          </label>
+
+          <label>
+            목표 생산량 포
+            <input id="targetBags" type="number" value="1000" min="1" />
+          </label>
+
+          <label>
+            후배지 공급처
+            <input id="supplier" type="text" value="진안 버섯농가" />
+          </label>
+
+          <label>
+            버섯 종류
+            <select id="mushroomType">
+              <option value="느타리">느타리</option>
+              <option value="새송이">새송이</option>
+              <option value="표고">표고</option>
+              <option value="양송이">양송이</option>
+              <option value="혼합">혼합</option>
+            </select>
+          </label>
+
+          <label>
+            후배지 입고량 kg
+            <input id="substrateKg" type="number" value="1000" min="1" />
+          </label>
+
+          <label>
+            수거 후 경과시간
+            <input id="elapsedHours" type="number" value="24" min="0" />
+          </label>
+
+          <label>
+            입고 시 수분 %
+            <input id="initialMoisture" type="number" value="65" step="0.1" />
+          </label>
+
+          <label>
+            입고 시 pH
+            <input id="initialPh" type="number" value="7.0" step="0.1" />
+          </label>
+
+          <label>
+            입고 시 EC
+            <input id="initialEc" type="number" value="2.5" step="0.1" />
+          </label>
+
+          <label>
+            목표 배합
+            <select id="recipeType">
+              <option value="A안: 일반 농가용 고부숙 펠릿">A안: 일반 농가용 고부숙 펠릿</option>
+              <option value="B안: 프리미엄 기능성 펠릿">B안: 프리미엄 기능성 펠릿</option>
+              <option value="C안: 저염 민감작물용">C안: 저염 민감작물용</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="button-row">
+          <button id="generateButton">기록서 생성</button>
+          <button id="copyButton">Markdown 복사</button>
+          <button id="downloadButton">.md 파일 다운로드</button>
+        </div>
+      </section>
+
+      <section class="card preview-card">
+        <h2>생성 결과 미리보기</h2>
+        <pre id="preview"></pre>
+      </section>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>

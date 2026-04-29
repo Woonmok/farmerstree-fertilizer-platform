@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farmerstree 후배지 비료 배합 계산기</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <main class="container">
+    <section class="hero">
+      <p class="eyebrow">Farmerstree Fertilizer Platform</p>
+      <h1>후배지 비료 배합 계산기</h1>
+      <p class="description">
+        후배지 투입량을 기준으로 고부숙 펠릿비료 제조에 필요한 첨가물 투입량을 자동 계산합니다.
+        기본 배합은 후배지 1,000kg 기준 표준형, 프리미엄형, 저염형으로 구성됩니다.
+      </p>
+    </section>
+
+    <section class="card controls">
+      <label>
+        후배지 투입량 kg
+        <input id="substrateKg" type="number" value="1000" min="1" />
+      </label>
+
+      <label>
+        배합 유형
+        <select id="recipeType">
+          <option value="standard">A안: 일반 농가용 고부숙 펠릿</option>
+          <option value="premium">B안: 프리미엄 기능성 펠릿</option>
+          <option value="lowSalt">C안: 저염 민감작물용</option>
+        </select>
+      </label>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <h2>배합 결과</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>원료</th>
+              <th>기준량</th>
+              <th>계산 투입량</th>
+              <th>역할</th>
+            </tr>
+          </thead>
+          <tbody id="recipeTable"></tbody>
+        </table>
+      </div>
+
+      <div class="card result-card">
+        <h2>공정 목표값</h2>
+
+        <div class="result-row">
+          <span>초기 목표 수분</span>
+          <strong>55~60%</strong>
+        </div>
+
+        <div class="result-row">
+          <span>초기 목표 pH</span>
+          <strong>6.5~7.5</strong>
+        </div>
+
+        <div class="result-row">
+          <span>초기 목표 C/N</span>
+          <strong>25~30</strong>
+        </div>
+
+        <div class="result-row">
+          <span>고온부숙 온도</span>
+          <strong>55~65℃</strong>
+        </div>
+
+        <div class="result-row">
+          <span>고온부숙 기간</span>
+          <strong>7~14일</strong>
+        </div>
+
+        <div class="result-row">
+          <span>후숙 기간</span>
+          <strong>20~40일</strong>
+        </div>
+
+        <div class="message" id="recipeMessage">
+          배합 설명이 여기에 표시됩니다.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>

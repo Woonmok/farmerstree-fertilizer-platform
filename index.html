@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farmerstree Fertilizer Platform</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <main class="container">
+    <section class="hero">
+      <p class="eyebrow">Farmerstree Fertilizer Platform</p>
+      <h1>후배지 기반 기능성 펠릿비료 제조관리 시스템</h1>
+      <p class="description">
+        후배지 원료관리, 염류관리, C/N 보정, 고온부숙, 후숙, 기능성 미생물,
+        펠릿화, 품질검사까지 관리하는 Farmerstree 비료 제조관리 플랫폼입니다.
+      </p>
+
+      <div class="hero-actions">
+        <a class="primary-button" href="./calculator/index.html">수익성 계산 시작</a>
+        <a class="secondary-button" href="./quality-dashboard/index.html">품질검사 판정</a>
+      </div>
+    </section>
+
+    <section class="process-card">
+      <h2>핵심 제조 공정 8단계</h2>
+
+      <div class="process-grid">
+        <div class="process-step">
+          <span>01</span>
+          <strong>후배지 원료관리</strong>
+          <p>수거, 선별, 이물 제거, 파쇄, 균질화</p>
+        </div>
+
+        <div class="process-step">
+          <span>02</span>
+          <strong>염류관리</strong>
+          <p>pH, EC, 수분 측정 및 염류 저감</p>
+        </div>
+
+        <div class="process-step">
+          <span>03</span>
+          <strong>C/N 보정</strong>
+          <p>계분, 유박, 미강, 제올라이트, 바이오차 배합</p>
+        </div>
+
+        <div class="process-step">
+          <span>04</span>
+          <strong>고온부숙</strong>
+          <p>55~65℃ 고온 호기성 발효 관리</p>
+        </div>
+
+        <div class="process-step">
+          <span>05</span>
+          <strong>후숙</strong>
+          <p>암모니아취, 유기산, 식물 독성 안정화</p>
+        </div>
+
+        <div class="process-step">
+          <span>06</span>
+          <strong>기능성 미생물</strong>
+          <p>Bacillus, Lactobacillus, 효모 후접종</p>
+        </div>
+
+        <div class="process-step">
+          <span>07</span>
+          <strong>펠릿화</strong>
+          <p>건조, 분쇄, 성형, 냉각, 재건조</p>
+        </div>
+
+        <div class="process-step">
+          <span>08</span>
+          <strong>품질검사</strong>
+          <p>수분, pH, EC, C/N, 발아지수, 냄새, 파손율 판정</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="module-grid">
+      <a class="module-card" href="./calculator/index.html">
+        <div class="module-icon">₩</div>
+        <h2>수익성 계산기</h2>
+        <p>
+          생산량, 원료비, 첨가물비, 펠릿화비, 품질검사비, 판매가, 보조금을 입력해
+          포대당 원가와 순이익을 계산합니다.
+        </p>
+        <span>열기 →</span>
+      </a>
+
+      <a class="module-card" href="./recipe-calculator/index.html">
+        <div class="module-icon">㎏</div>
+        <h2>배합 계산기</h2>
+        <p>
+          후배지 투입량을 입력하면 일반형, 프리미엄형, 저염형 배합의 첨가물 투입량을 자동 계산합니다.
+        </p>
+        <span>열기 →</span>
+      </a>
+
+      <a class="module-card" href="./dashboard/index.html">
+        <div class="module-icon">℃</div>
+        <h2>발효 온도 대시보드</h2>
+        <p>
+          오전·오후 온도, 냄새, 수분 상태를 기록하고 고온부숙 적정 여부와 조치 필요성을 자동 판정합니다.
+        </p>
+        <span>열기 →</span>
+      </a>
+
+      <a class="module-card" href="./quality-dashboard/index.html">
+        <div class="module-icon">✓</div>
+        <h2>품질검사 대시보드</h2>
+        <p>
+          수분, pH, EC, C/N, 발아지수, 파손율, 냄새 상태를 입력해 출하 가능 여부를 판정합니다.
+        </p>
+        <span>열기 →</span>
+      </a>
+
+      <a class="module-card" href="./qc/qc_checklist.md">
+        <div class="module-icon">QC</div>
+        <h2>품질검사 체크리스트</h2>
+        <p>
+          원료관리부터 최종 출하 판정까지 현장에서 확인할 품질관리 항목을 정리한 문서입니다.
+        </p>
+        <span>문서 열기 →</span>
+      </a>
+
+      <a class="module-card" href="./qc/batch_record_template.md">
+        <div class="module-icon">LOT</div>
+        <h2>제조 배치 기록서</h2>
+        <p>
+          제조번호별로 원료 입고, 배합, 부숙, 후숙, 미생물 접종, 펠릿화, 품질검사를 기록하는 양식입니다.
+        </p>
+        <span>문서 열기 →</span>
+      </a>
+
+      <a class="module-card" href="./report-generator/index.html">
+        <div class="module-icon">REP</div>
+        <h2>통합 리포트 생성기</h2>
+        <p>
+          발효 온도 CSV와 품질검사 CSV를 읽어 제조번호별 통합 품질 이력 리포트를 생성합니다.
+        </p>
+        <span>열기 →</span>
+      </a>
+
+      <a class="module-card" href="./print-report/index.html">
+        <div class="module-icon">PDF</div>
+        <h2>PDF 품질 리포트</h2>
+        <p>
+          제조번호별 품질검사 결과를 A4 출력용 리포트 화면으로 만들고 PDF로 저장합니다.
+        </p>
+        <span>열기 →</span>
+      </a>
+    </section>
+
+    <section class="status-card">
+      <h2>현재 플랫폼 구성</h2>
+
+      <div class="status-list">
+        <div>
+          <strong>1단계</strong>
+          <span>수익성 계산기 완료</span>
+        </div>
+        <div>
+          <strong>2단계</strong>
+          <span>배합 계산기 완료</span>
+        </div>
+        <div>
+          <strong>3단계</strong>
+          <span>품질검사·제조기록 문서 완료</span>
+        </div>
+        <div>
+          <strong>4단계</strong>
+          <span>발효 온도 대시보드 완료</span>
+        </div>
+        <div>
+          <strong>5단계</strong>
+          <span>품질검사 입력 대시보드 완료</span>
+        </div>
+        <div>
+          <strong>6단계</strong>
+          <span>메인 홈 화면 완료</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>
