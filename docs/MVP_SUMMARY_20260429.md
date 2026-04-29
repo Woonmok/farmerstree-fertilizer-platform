@@ -2,7 +2,7 @@
 
 ## 1. 프로젝트 한줄 정의
 
-버섯 후배지를 기반으로 저염·고부숙 기능성 펠릿비료를 제조할 때, 현장 작업자가 브라우저에서 공정 기록, 품질 판정, 리포트 생성, 출력까지 수행하도록 만든 운영형 웹 MVP.
+버섯 후배지를 기반으로 **저염 및 고기능성** 펠릿비료를 제조할 때, 현장 작업자가 브라우저에서 공정 기록, 품질 판정, 리포트 생성, 출력까지 수행하도록 만든 운영형 웹 MVP.
 
 ## 2. 이번 단계 완료 범위
 
@@ -21,6 +21,7 @@
 - 배합 계산: 레시피 비율 계산 보조
 - 발효 대시보드: 배치별 온도 기록, 판정, CSV 내보내기
 - 품질 대시보드: 품질항목 입력, 규칙 기반 판정, CSV 내보내기
+- **입력 데이터 보호: 브라우저 로컬 스토리지(localStorage)를 활용한 임시 자동 저장 기능 (예기치 않은 브라우저 종료 시 유실 방지)**
 
 ### 3-2. 문서/리포트
 
@@ -41,14 +42,20 @@
 - 로컬 Git 저장소 초기화 완료
 - 초기 커밋 완료
 - 기본 브랜치 main 운영
-- `.gitignore` 구성 완료
+- .gitignore 구성 완료
 
-### 4-2. 백업 체계
+### 4-2. 시스템 백업 체계
 
-- 스크립트: `scripts/backup_project.sh`
+- 스크립트: scripts/backup_project.sh
 - 방식: 프로젝트 전체 zip 백업
-- 제외: `.git`, `node_modules`, `.DS_Store`
-- 경로: `/Volumes/AI_DATA_CENTRE/AI_WORKSPACE/_BACKUPS/farmerstree-fertilizer-platform`
+- 제외: .git, node_modules, .DS_Store
+- 경로: /Volumes/AI_DATA_CENTRE/AI_WORKSPACE/_BACKUPS/farmerstree-fertilizer-platform
+
+### 4-3. 현장 실무 데이터 백업 체계 (신설)
+
+- **대상: 현장에서 생성 및 내보내기 된 원본 CSV 데이터 및 PDF 성적서 산출물**
+- **주기: 주 1회 정기 백업 및 중요 공정 완료 직후**
+- **방식: 진안 현장의 외부 스토리지(NAS/외장하드) 복사 또는 클라우드 자동 동기화**
 
 ## 5. GitHub 업로드 정책 (핵심)
 
@@ -63,24 +70,24 @@
 - 원본 CSV 데이터
 - PDF 성적서 산출물
 - 개인정보 포함 파일
-- 환경변수 파일(`.env`, `.env.local`)
+- 환경변수 파일(.env, .env.local)
 - 임시 파일/로컬 백업
 
 ## 6. 최종 운영 루틴 (현장 적용본)
 
-1. 새 기능 전 `git status`
+1. 새 기능 전 git status
 2. 작업
 3. Live Server 확인
-4. 이상 없으면 `git add .`
-5. `git commit -m "작업 내용"`
-6. `git push`
-7. 중요한 날 `./scripts/backup_project.sh`
+4. 이상 없으면 git add .
+5. **git commit -m "feat/fix/docs: 작업 내용" (직관적인 커밋 메시지 컨벤션 적용)**
+6. git push
+7. 중요한 날 ./scripts/backup_project.sh **및 현장 데이터 백업 실행**
 
 ## 7. 현재 보완 포인트
 
-1. 릴리스 태그 규칙(v0.1.0 등) 도입 권장
+1. 릴리스 태그 규칙(v0.1.0 등) **및 커밋 메시지 컨벤션** 도입 권장
 2. 데이터 샘플/실데이터 분리 폴더 정책 권장
-3. 월 1회 복구 리허설(백업 zip 복원 테스트) 권장
+3. 월 1회 복구 리허설(백업 zip **및 실데이터 복원** 테스트) 권장
 
 ## 8. 외부 설명용 결론
 
