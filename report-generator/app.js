@@ -9,6 +9,7 @@ const message = document.getElementById("message");
 let currentMarkdown = "";
 
 function parseCsv(text) {
+  const stripBom = (value) => String(value ?? "").replace(/^\uFEFF/, "").trim();
   const rows = [];
   let row = [];
   let cell = "";
@@ -55,21 +56,35 @@ function parseCsv(text) {
     rows.push(row);
   }
 
-  if (rows.length === 0) return [];
+  if (rows.length === 0) {
+    return {
+      headers: [],
+      records: [],
+    };
+  }
 
-  const headers = rows[0].map((h) => String(h).trim());
-
-  return rows.slice(1).map((cells) => {
+  const headers = rows[0].map((h) => stripBom(h));
+  const records = rows.slice(1).map((cells) => {
     const record = {};
     headers.forEach((header, idx) => {
-      record[header] = String(cells[idx] ?? "").trim();
+      record[header] = stripBom(cells[idx]);
     });
     return record;
   });
+
+  return {
+    headers,
+    records,
+  };
 }
 
-function findBatchField(record) {
-  const keys = Object.keys(record);
+function findBatchField(recordOrHeaders) {
+  const keys = Array.isArray(recordOrHeaders)
+    ? recordOrHeaders
+    : Object.keys(recordOrHeaders || {});
+
+  if (keys.length === 0) return null;
+
   const candidates = ["제조번호", "batchId", "배치번호"];
   for (const key of candidates) {
     if (keys.includes(key)) return key;
@@ -119,16 +134,19 @@ async function handleGenerate() {
     return;
   }
 
-  const fermentationAll = await readCsvFile(fermentationFileInput);
-  const qualityAll = await readCsvFile(qualityFileInput);
+  const fermentationParsed = await readCsvFile(fermentationFileInput);
+  const qualityParsed = await readCsvFile(qualityFileInput);
 
-  if (!fermentationAll || !qualityAll) {
+  if (!fermentationParsed || !qualityParsed) {
     message.textContent = "발효 온도 CSV와 품질검사 CSV를 모두 선택하세요.";
     return;
   }
 
-  const fermentationKey = fermentationAll[0] ? findBatchField(fermentationAll[0]) : null;
-  const qualityKey = qualityAll[0] ? findBatchField(qualityAll[0]) : null;
+  const fermentationAll = fermentationParsed.records;
+  const qualityAll = qualityParsed.records;
+
+  const fermentationKey = findBatchField(fermentationParsed.headers);
+  const qualityKey = findBatchField(qualityParsed.headers);
 
   if (!fermentationKey || !qualityKey) {
     message.textContent = "CSV에서 제조번호 컬럼을 찾을 수 없습니다.";
