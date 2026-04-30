@@ -142,7 +142,7 @@ biochar-lots/FT-BIO-20260429-001.md
 
 ---
 
-## Soil Carbon Calculator
+## 10. 토양·탄소 리포트 계산기
 
 경로:
 

@@ -18,24 +18,6 @@ const inputs = {
   heavyMetalTest: document.getElementById("heavyMetalTest"),
   useCase: document.getElementById("useCase"),
 };
-const inputs = {
-  biocharLotId: document.getElementById("biocharLotId"),
-  sourceBatchId: document.getElementById("sourceBatchId"),
-  inspectionDate: document.getElementById("inspectionDate"),
-  pyrolysisTemp: document.getElementById("pyrolysisTemp"),
-  pyrolysisMinutes: document.getElementById("pyrolysisMinutes"),
-  charYield: document.getElementById("charYield"),
-  moisture: document.getElementById("moisture"),
-  ph: document.getElementById("ph"),
-  ec: document.getElementById("ec"),
-  ash: document.getElementById("ash"),
-  fixedCarbon: document.getElementById("fixedCarbon"),
-  particleSize: document.getElementById("particleSize"),
-  odor: document.getElementById("odor"),
-  foreignMatter: document.getElementById("foreignMatter"),
-  heavyMetalTest: document.getElementById("heavyMetalTest"),
-  useCase: document.getElementById("useCase"),
-};
 
 const outputs = {
   finalStatus: document.getElementById("finalStatus"),
@@ -47,8 +29,6 @@ const evaluateButton = document.getElementById("evaluateButton");
 const saveButton = document.getElementById("saveButton");
 const exportCsvButton = document.getElementById("exportCsvButton");
 const clearButton = document.getElementById("clearButton");
-
-const STORAGE_KEY = "farmerstree-biochar-quality-records";
 
 let currentEvaluation = null;
 let records = loadRecords();
