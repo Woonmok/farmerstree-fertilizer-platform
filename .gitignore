@@ -30,6 +30,9 @@ backup/
 backups/
 *.bak
 
+# Download bundles
+downloads/
+
 # Environment variables
 .env
 .env.local

@@ -24,3 +24,16 @@ zip -r "$BACKUP_DIR/farmerstree-fertilizer-platform-$DATE.zip" "farmerstree-fert
 
 echo "Backup complete:"
 echo "$BACKUP_DIR/farmerstree-fertilizer-platform-$DATE.zip"
+
+# 최신 zip을 downloads/ 폴더에 복사 (홈 화면 다운로드 버튼용)
+DOWNLOADS_DIR="$PROJECT_DIR/downloads"
+mkdir -p "$DOWNLOADS_DIR"
+# 기존 zip 제거 후 최신 파일로 교체
+rm -f "$DOWNLOADS_DIR"/farmerstree-fertilizer-platform-*.zip
+cp "$BACKUP_DIR/farmerstree-fertilizer-platform-$DATE.zip" "$DOWNLOADS_DIR/farmerstree-fertilizer-platform-$DATE.zip"
+
+# index.html의 다운로드 링크 파일명 업데이트
+FILENAME="farmerstree-fertilizer-platform-$DATE.zip"
+sed -i '' "s|farmerstree-fertilizer-platform-[0-9_]*\.zip|$FILENAME|g" "$PROJECT_DIR/index.html"
+
+echo "Downloads folder updated: $DOWNLOADS_DIR/$FILENAME"
