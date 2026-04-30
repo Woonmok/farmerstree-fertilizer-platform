@@ -137,6 +137,29 @@ h2 {
   margin-bottom: 28px;
 }
 
+.module-section {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 32px;
+  box-shadow: 0 14px 36px rgba(25, 45, 20, 0.08);
+  border: 1px solid rgba(80, 100, 70, 0.12);
+  margin-bottom: 28px;
+}
+
+.module-section-title {
+  margin-bottom: 8px;
+}
+
+.module-section-text {
+  margin: 0 0 20px;
+  color: #566252;
+  font-weight: 700;
+}
+
+.module-section .module-grid {
+  margin-bottom: 0;
+}
+
 .module-card {
   display: flex;
   flex-direction: column;

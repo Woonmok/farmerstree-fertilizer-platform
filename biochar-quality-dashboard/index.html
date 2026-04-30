@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farmerstree SMS Biochar 품질검사 대시보드</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <main class="container">
+    <section class="hero">
+      <p class="eyebrow">Farmerstree Fertilizer Platform</p>
+      <h1>SMS Biochar 품질검사 대시보드</h1>
+      <p class="description">
+        버섯 후배지 유래 SMS biochar의 로트번호, 탄화 조건, 수분, pH, EC, 회분,
+        고정탄소, 입도, 냄새, 중금속 검사 여부를 기록하고 제품 사용 가능성을 판정합니다.
+      </p>
+    </section>
+
+    <section class="card form-card">
+      <h2>Biochar 품질검사 입력</h2>
+
+      <div class="form-grid">
+        <label>
+          Biochar 로트번호
+          <input id="biocharLotId" type="text" value="FT-BIO-20260429-001" />
+        </label>
+
+        <label>
+          원료 후배지 제조번호
+          <input id="sourceBatchId" type="text" value="FT-FERT-20260429-001" />
+        </label>
+
+        <label>
+          검사일
+          <input id="inspectionDate" type="date" />
+        </label>
+
+        <label>
+          탄화 온도 ℃
+          <input id="pyrolysisTemp" type="number" value="500" step="1" />
+        </label>
+
+        <label>
+          탄화 시간 분
+          <input id="pyrolysisMinutes" type="number" value="90" step="1" />
+        </label>
+
+        <label>
+          탄화 수율 %
+          <input id="charYield" type="number" value="35" step="0.1" />
+        </label>
+
+        <label>
+          수분 %
+          <input id="moisture" type="number" value="8" step="0.1" />
+        </label>
+
+        <label>
+          pH
+          <input id="ph" type="number" value="8.5" step="0.1" />
+        </label>
+
+        <label>
+          EC
+          <input id="ec" type="number" value="2.5" step="0.1" />
+        </label>
+
+        <label>
+          회분 %
+          <input id="ash" type="number" value="18" step="0.1" />
+        </label>
+
+        <label>
+          고정탄소 %
+          <input id="fixedCarbon" type="number" value="55" step="0.1" />
+        </label>
+
+        <label>
+          입도 mm
+          <input id="particleSize" type="number" value="3" step="0.1" />
+        </label>
+
+        <label>
+          냄새 상태
+          <select id="odor">
+            <option value="normal">정상 / 탄화취</option>
+            <option value="smoke">강한 연기취</option>
+            <option value="rot">부패취</option>
+            <option value="chemical">화학취</option>
+          </select>
+        </label>
+
+        <label>
+          이물질
+          <select id="foreignMatter">
+            <option value="none">없음</option>
+            <option value="minor">소량</option>
+            <option value="major">많음</option>
+          </select>
+        </label>
+
+        <label>
+          중금속 외부검사
+          <select id="heavyMetalTest">
+            <option value="done_pass">검사 완료 / 적합</option>
+            <option value="done_fail">검사 완료 / 부적합</option>
+            <option value="not_done">미검사</option>
+          </select>
+        </label>
+
+        <label>
+          사용 목적
+          <select id="useCase">
+            <option value="blend">후배지 펠릿비료 혼합</option>
+            <option value="soil">토양개량재 단독 사용</option>
+            <option value="trial">시험포 실증용</option>
+            <option value="hold">보류 / 연구용</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="button-row">
+        <button id="evaluateButton">품질 판정</button>
+        <button id="saveButton">기록 저장</button>
+        <button id="exportCsvButton">CSV 내보내기</button>
+        <button id="clearButton" class="danger">전체 기록 삭제</button>
+      </div>
+    </section>
+
+    <section class="grid">
+      <section class="card result-card">
+        <h2>최종 판정</h2>
+        <div id="finalStatus" class="status neutral">
+          검사값을 입력하고 품질 판정을 누르세요.
+        </div>
+        <div id="reasonList" class="reason-list"></div>
+      </section>
+
+      <section class="card">
+        <h2>내부 기준</h2>
+
+        <table class="small-table">
+          <tbody>
+            <tr>
+              <th>탄화 온도</th>
+              <td>450~550℃ 권장</td>
+            </tr>
+            <tr>
+              <th>수분</th>
+              <td>10% 이하 보관성 양호, 15% 초과 재건조</td>
+            </tr>
+            <tr>
+              <th>pH</th>
+              <td>6~10 사용 가능, 과도한 알칼리성 주의</td>
+            </tr>
+            <tr>
+              <th>EC</th>
+              <td>4.0 초과 시 민감작물 주의, 5.0 초과 사용 제한</td>
+            </tr>
+            <tr>
+              <th>고정탄소</th>
+              <td>높을수록 탄소저장형 제품에 유리</td>
+            </tr>
+            <tr>
+              <th>중금속</th>
+              <td>공식 판매 전 외부검사 필요</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </section>
+
+    <section class="card">
+      <h2>Biochar 품질검사 기록</h2>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>검사일</th>
+              <th>로트번호</th>
+              <th>원료 제조번호</th>
+              <th>탄화온도</th>
+              <th>수분</th>
+              <th>pH</th>
+              <th>EC</th>
+              <th>고정탄소</th>
+              <th>중금속</th>
+              <th>판정</th>
+            </tr>
+          </thead>
+          <tbody id="recordsTable"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>

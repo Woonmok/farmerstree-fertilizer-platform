@@ -1,0 +1,32 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f4f6f0; color: #1f2a1f; }
+.container { width: min(1220px, 92vw); margin: 0 auto; padding: 48px 0; }
+.hero { margin-bottom: 24px; }
+.eyebrow { margin: 0 0 8px; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; color: #5d7145; font-weight: 800; }
+h1 { margin: 0; font-size: 36px; }
+.description { margin-top: 14px; max-width: 980px; line-height: 1.7; color: #4c5748; }
+.card { background: #fff; border-radius: 20px; padding: 24px; margin-bottom: 20px; box-shadow: 0 14px 36px rgba(25, 45, 20, 0.08); border: 1px solid rgba(80, 100, 70, 0.12); }
+h2 { margin: 0 0 18px; }
+.form-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+label { display: flex; flex-direction: column; gap: 7px; font-size: 14px; font-weight: 700; }
+input { border: 1px solid #cbd5c4; border-radius: 12px; padding: 10px 12px; font-size: 15px; background: #fbfcfa; }
+.button-row { display: flex; gap: 10px; margin-top: 16px; }
+button { border: none; border-radius: 12px; padding: 11px 16px; font-size: 15px; font-weight: 800; cursor: pointer; color: #fff; background: #5f7f45; }
+button.danger { background: #8a3d31; }
+.grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 20px; }
+.summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.summary-grid div { background: #eef4e7; border-radius: 14px; padding: 14px; }
+.summary-grid span { display: block; font-size: 13px; color: #566252; margin-bottom: 7px; }
+.summary-grid strong { font-size: 21px; }
+.message { margin-top: 16px; background: #faf8ed; border-radius: 12px; padding: 14px; line-height: 1.6; font-weight: 700; color: #574d2f; }
+.rule-list { margin: 0; padding-left: 18px; line-height: 1.85; }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; min-width: 980px; }
+th, td { border-bottom: 1px solid #edf0e8; padding: 10px; text-align: left; font-size: 13px; }
+th { background: #edf4e5; color: #2f4428; }
+.badge { display: inline-flex; border-radius: 999px; padding: 4px 8px; font-size: 12px; font-weight: 900; }
+.good { background: #e4f3da; color: #2f5e20; }
+.warn { background: #fff3cf; color: #735400; }
+@media (max-width: 980px) {
+  .form-grid, .grid, .summary-grid { grid-template-columns: 1fr; }
+}

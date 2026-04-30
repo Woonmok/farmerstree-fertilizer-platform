@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farmerstree SMS Biochar 계산기</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <main class="container">
+    <section class="hero">
+      <p class="eyebrow">Farmerstree Fertilizer Platform</p>
+      <h1>SMS Biochar 전환·혼합 계산기</h1>
+      <p class="description">
+        버섯 후배지 일부를 SMS biochar로 전환할 때 건조 중량, 탄화 수율, biochar 생산량,
+        최종 펠릿비료 혼합비, 제품 포대 수를 계산합니다.
+      </p>
+    </section>
+
+    <section class="grid">
+      <section class="card input-card">
+        <h2>입력값</h2>
+
+        <label>
+          총 후배지 확보량 kg
+          <input id="totalSmsKg" type="number" value="1000" min="1" />
+        </label>
+
+        <label>
+          Biochar 전환 비율 %
+          <input id="biocharRatio" type="number" value="20" min="0" max="100" step="1" />
+        </label>
+
+        <label>
+          후배지 초기 수분 %
+          <input id="initialMoisture" type="number" value="65" min="0" max="95" step="0.1" />
+        </label>
+
+        <label>
+          탄화 전 목표 수분 %
+          <input id="targetMoisture" type="number" value="15" min="0" max="50" step="0.1" />
+        </label>
+
+        <label>
+          탄화 수율 %
+          <input id="charYield" type="number" value="35" min="5" max="80" step="0.1" />
+        </label>
+
+        <label>
+          최종 비료 내 biochar 혼합비 %
+          <input id="blendRatio" type="number" value="5" min="0" max="30" step="0.1" />
+        </label>
+
+        <label>
+          일반 후배지 펠릿 생산 수율 %
+          <input id="fertilizerYield" type="number" value="65" min="10" max="100" step="0.1" />
+        </label>
+
+        <label>
+          포장 단위 kg
+          <input id="bagKg" type="number" value="20" min="1" />
+        </label>
+
+        <label>
+          Biochar 제조비 원/kg
+          <input id="biocharCostPerKg" type="number" value="800" min="0" />
+        </label>
+
+        <label>
+          Biochar 프리미엄 판매가 상승분 원/포
+          <input id="premiumPerBag" type="number" value="1500" min="0" />
+        </label>
+      </section>
+
+      <section class="card result-card">
+        <h2>계산 결과</h2>
+
+        <div class="result-row">
+          <span>Biochar 전환용 생후배지</span>
+          <strong id="smsForBiochar">0kg</strong>
+        </div>
+
+        <div class="result-row">
+          <span>비료화용 후배지</span>
+          <strong id="smsForFertilizer">0kg</strong>
+        </div>
+
+        <div class="result-row">
+          <span>탄화 전 건조 후 중량</span>
+          <strong id="driedSmsKg">0kg</strong>
+        </div>
+
+        <div class="result-row">
+          <span>예상 SMS biochar 생산량</span>
+          <strong id="biocharKg">0kg</strong>
+        </div>
+
+        <div class="result-row">
+          <span>기본 펠릿비료 생산량</span>
+          <strong id="baseFertilizerKg">0kg</strong>
+        </div>
+
+        <div class="result-row">
+          <span>최종 혼합 제품 총량</span>
+          <strong id="finalProductKg">0kg</strong>
+        </div>
+
+        <div class="highlight">
+          <span>예상 20kg 포대 수</span>
+          <strong id="bagCount">0포</strong>
+        </div>
+
+        <div class="highlight secondary">
+          <span>Biochar 투입 후 포대당 추가 원가</span>
+          <strong id="extraCostPerBag">0원</strong>
+        </div>
+
+        <div class="highlight secondary">
+          <span>포대당 프리미엄 순증 효과</span>
+          <strong id="netPremiumPerBag">0원</strong>
+        </div>
+
+        <div id="message" class="message">
+          계산 결과가 여기에 표시됩니다.
+        </div>
+      </section>
+    </section>
+
+    <section class="card">
+      <h2>제품 포지션</h2>
+      <div class="position-grid">
+        <div>
+          <strong>A. 후배지 고부숙 펠릿비료</strong>
+          <p>일반 농가용 제품군으로 원가 안정성과 대량 공급에 초점을 둡니다.</p>
+        </div>
+        <div>
+          <strong>B. 후배지 기능성 미생물 펠릿비료</strong>
+          <p>프리미엄 농가용 제품군으로 시설원예·과수 시장과 기능성 미생물 강점을 강조합니다.</p>
+        </div>
+        <div>
+          <strong>C. 후배지 + SMS Biochar 복합 펠릿</strong>
+          <p>토양개량, 수분 보유, 탄소저장, ESG·공공사업 대응에 적합한 고부가가치 브랜드형 제품군입니다.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>

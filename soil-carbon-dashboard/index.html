@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farmerstree 토양 탄소·효과 대시보드</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <main class="container">
+    <section class="hero">
+      <p class="eyebrow">Farmerstree Fertilizer Platform</p>
+      <h1>토양 복원·탄소 효과 대시보드</h1>
+      <p class="description">
+        토양 유기탄소, pH, EC, 수분 보유력, 작물 수량, 화학비료 절감률, 탄소저장 추정량 변화를 관리합니다.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>측정값 입력</h2>
+      <div class="form-grid">
+        <label>필지/시험구 ID<input id="plotId" type="text" value="PLOT-A-01" /></label>
+        <label>유기탄소 기준값 %<input id="socBase" type="number" value="1.2" step="0.01" /></label>
+        <label>유기탄소 현재값 %<input id="socNow" type="number" value="1.8" step="0.01" /></label>
+        <label>토양 pH 기준값<input id="phBase" type="number" value="6.2" step="0.1" /></label>
+        <label>토양 pH 현재값<input id="phNow" type="number" value="6.8" step="0.1" /></label>
+        <label>토양 EC 기준값<input id="ecBase" type="number" value="1.4" step="0.1" /></label>
+        <label>토양 EC 현재값<input id="ecNow" type="number" value="1.1" step="0.1" /></label>
+        <label>수분 보유력 기준값 %<input id="waterBase" type="number" value="28" step="0.1" /></label>
+        <label>수분 보유력 현재값 %<input id="waterNow" type="number" value="34" step="0.1" /></label>
+        <label>작물 수량 기준값 kg/10a<input id="yieldBase" type="number" value="520" step="1" /></label>
+        <label>작물 수량 현재값 kg/10a<input id="yieldNow" type="number" value="590" step="1" /></label>
+        <label>화학비료 절감률 %<input id="fertReduction" type="number" value="20" step="0.1" /></label>
+        <label>토양 투입 biochar kg<input id="biocharInput" type="number" value="300" step="1" /></label>
+      </div>
+
+      <div class="button-row">
+        <button id="calcBtn">변화 계산</button>
+        <button id="saveBtn">기록 저장</button>
+        <button id="exportBtn">CSV 내보내기</button>
+        <button id="clearBtn" class="danger">전체 삭제</button>
+      </div>
+    </section>
+
+    <section class="grid">
+      <section class="card">
+        <h2>변화 요약</h2>
+        <div class="summary-grid">
+          <div><span>토양 유기탄소 변화</span><strong id="socDelta">0%</strong></div>
+          <div><span>토양 pH 변화</span><strong id="phDelta">0</strong></div>
+          <div><span>토양 EC 변화</span><strong id="ecDelta">0</strong></div>
+          <div><span>수분 보유력 변화</span><strong id="waterDelta">0%</strong></div>
+          <div><span>작물 수량 변화</span><strong id="yieldDelta">0%</strong></div>
+          <div><span>화학비료 절감률</span><strong id="fertReductionOut">0%</strong></div>
+          <div><span>탄소저장 추정량</span><strong id="carbonStored">0 kgCO2e</strong></div>
+          <div><span>누적 기록 수</span><strong id="recordCount">0건</strong></div>
+        </div>
+        <div id="message" class="message">입력 후 변화 계산을 누르세요.</div>
+      </section>
+
+      <section class="card">
+        <h2>판정 힌트</h2>
+        <ul class="rule-list">
+          <li>유기탄소 상승은 토양 건강성 회복 신호</li>
+          <li>pH는 작물 적정 범위(보통 6.0~7.0) 유지가 중요</li>
+          <li>EC 감소는 염류 스트레스 완화에 유리</li>
+          <li>수분 보유력 상승은 관수 효율 개선 가능</li>
+          <li>작물 수량 상승 + 화학비료 절감 동시 달성이 핵심</li>
+          <li>탄소저장 추정은 사업/ESG 설명용 지표로 활용</li>
+        </ul>
+      </section>
+    </section>
+
+    <section class="card">
+      <h2>시험구 기록</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>필지ID</th>
+              <th>유기탄소 변화</th>
+              <th>pH 변화</th>
+              <th>EC 변화</th>
+              <th>수분보유 변화</th>
+              <th>수량 변화</th>
+              <th>비료 절감률</th>
+              <th>탄소저장 추정</th>
+              <th>판정</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>
