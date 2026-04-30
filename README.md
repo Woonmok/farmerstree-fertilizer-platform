@@ -34,6 +34,7 @@ Farmerstree 후배지 펠릿비료 제조 공정은 다음 8단계로 구성한�
 - `biochar-dashboard/`: SMS biochar 공정·품질 대시보드
 - `biochar-lot-generator/`: Biochar 로트 기록 Markdown 자동 생성기
 - `soil-carbon-dashboard/`: 토양 복원·탄소 효과 대시보드
+- `soil-carbon-calculator/`: 토양·탄소 리포트 계산기
 - `carbon-report/`: ESG/공공사업용 탄소 성과 리포트 생성기
 - `batch-generator/`: 배치 기록 마크다운 생성기
 - `report-generator/`: CSV 기반 통합 리포트 생성기
@@ -113,7 +114,8 @@ SMS biochar 확장 운영은 아래 순서로 사용하는 것을 권장한다.
 3. `biochar-lot-generator/`에서 Biochar 로트 기록서를 Markdown으로 자동 생성·저장한다.
 4. `quality-dashboard/`와 기존 제조 기록 문서에서 최종 비료 품질을 확인한다.
 5. `soil-carbon-dashboard/`에서 토양 유기탄소, pH, EC, 수분 보유력, 작물 수량 변화를 기록한다.
-6. `carbon-report/`에서 재자원화량, biochar 생산량, 토양 투입량, 탄소저장 추정량을 바탕으로 ESG 및 공공사업용 문장을 생성한다.
+6. `soil-carbon-calculator/`에서 면적당 투입량, 고정탄소량, CO2e 환산량, 화학비료 절감량과 토양개량·ESG용 설명 문장을 계산한다.
+7. `carbon-report/`에서 재자원화량, biochar 생산량, 토양 투입량, 탄소저장 추정량을 바탕으로 ESG 및 공공사업용 문장을 생성한다.
 
 ---
 
@@ -136,4 +138,17 @@ Biochar 로트 기록 자동 생성기 모듈과 저장 폴더는 아래 경로�
 biochar-lot-generator/index.html
 biochar-lots/
 biochar-lots/FT-BIO-20260429-001.md
+```
+
+---
+
+## Soil Carbon Calculator
+
+경로:
+
+```text
+soil-carbon-calculator/index.html
+SMS biochar 복합 펠릿비료의 토양 투입량, 10a당 사용량, 고정탄소량,
+안정화 탄소량, CO₂e 환산량, 화학비료 절감량을 계산하고
+토양개량·ESG·공공사업용 리포트 문장을 생성한다.
 ```
