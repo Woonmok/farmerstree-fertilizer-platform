@@ -32,6 +32,7 @@ Farmerstree 후배지 펠릿비료 제조 공정은 다음 8단계로 구성한�
 - `quality-dashboard/`: 품질검사 입력/판정 대시보드
 - `biochar-calculator/`: SMS biochar 전환·혼합 계산기
 - `biochar-dashboard/`: SMS biochar 공정·품질 대시보드
+- `biochar-lot-generator/`: Biochar 로트 기록 Markdown 자동 생성기
 - `soil-carbon-dashboard/`: 토양 복원·탄소 효과 대시보드
 - `carbon-report/`: ESG/공공사업용 탄소 성과 리포트 생성기
 - `batch-generator/`: 배치 기록 마크다운 생성기
@@ -109,9 +110,10 @@ SMS biochar 확장 운영은 아래 순서로 사용하는 것을 권장한다.
 
 1. `biochar-calculator/`에서 후배지 전환 비율, 건조 중량, 탄화 수율, 혼합비, 포대 수를 계산한다.
 2. `biochar-dashboard/`에서 로트번호별 탄화 조건과 biochar 품질값을 기록한다.
-3. `quality-dashboard/`와 기존 제조 기록 문서에서 최종 비료 품질을 확인한다.
-4. `soil-carbon-dashboard/`에서 토양 유기탄소, pH, EC, 수분 보유력, 작물 수량 변화를 기록한다.
-5. `carbon-report/`에서 재자원화량, biochar 생산량, 토양 투입량, 탄소저장 추정량을 바탕으로 ESG 및 공공사업용 문장을 생성한다.
+3. `biochar-lot-generator/`에서 Biochar 로트 기록서를 Markdown으로 자동 생성·저장한다.
+4. `quality-dashboard/`와 기존 제조 기록 문서에서 최종 비료 품질을 확인한다.
+5. `soil-carbon-dashboard/`에서 토양 유기탄소, pH, EC, 수분 보유력, 작물 수량 변화를 기록한다.
+6. `carbon-report/`에서 재자원화량, biochar 생산량, 토양 투입량, 탄소저장 추정량을 바탕으로 ESG 및 공공사업용 문장을 생성한다.
 
 ---
 
@@ -123,3 +125,15 @@ SMS biochar 확장 운영은 아래 순서로 사용하는 것을 권장한다.
 2. B. 후배지 기능성 미생물 펠릿비료: 프리미엄 농가용, 시설원예·과수, 기능성 미생물 강조
 3. C. 후배지 + SMS Biochar 복합 펠릿: 토양개량, 수분 보유, 탄소저장, ESG·공공사업, 고부가가치 브랜드형
 
+
+---
+
+## 9. Biochar 로트 기록 생성기
+
+Biochar 로트 기록 자동 생성기 모듈과 저장 폴더는 아래 경로를 사용한다.
+
+```text
+biochar-lot-generator/index.html
+biochar-lots/
+biochar-lots/FT-BIO-20260429-001.md
+```

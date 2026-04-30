@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farmerstree Biochar 로트 기록 자동 생성기</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <main class="container">
+    <section class="hero">
+      <p class="eyebrow">Farmerstree Fertilizer Platform</p>
+      <h1>Biochar 로트 기록 자동 생성기</h1>
+      <p class="description">
+        SMS biochar의 로트번호, 원료 후배지 제조번호, 탄화 조건, 생산량, 품질검사 결과를 입력하면
+        Biochar 로트 기록서 Markdown 파일을 자동 생성합니다.
+      </p>
+    </section>
+
+    <section class="grid">
+      <section class="card form-card">
+        <h2>Biochar 로트 정보 입력</h2>
+
+        <div class="form-grid">
+          <label>
+            Biochar 로트번호
+            <input id="biocharLotId" type="text" value="FT-BIO-20260429-001" />
+          </label>
+
+          <label>
+            원료 후배지 제조번호
+            <input id="sourceBatchId" type="text" value="FT-FERT-20260429-001" />
+          </label>
+
+          <label>
+            제조일자
+            <input id="manufactureDate" type="date" />
+          </label>
+
+          <label>
+            제조장소
+            <input id="location" type="text" value="Farmerstree Biochar 탄화장" />
+          </label>
+
+          <label>
+            담당자
+            <input id="manager" type="text" value="운목" />
+          </label>
+
+          <label>
+            사용 목적
+            <select id="useCase">
+              <option value="후배지 펠릿비료 혼합">후배지 펠릿비료 혼합</option>
+              <option value="토양개량재 단독 사용">토양개량재 단독 사용</option>
+              <option value="시험포 실증용">시험포 실증용</option>
+              <option value="보류 / 연구용">보류 / 연구용</option>
+            </select>
+          </label>
+
+          <label>
+            생후배지 투입량 kg
+            <input id="rawSmsKg" type="number" value="200" min="0" step="0.1" />
+          </label>
+
+          <label>
+            초기 수분 %
+            <input id="initialMoisture" type="number" value="65" min="0" max="95" step="0.1" />
+          </label>
+
+          <label>
+            탄화 전 건조 중량 kg
+            <input id="driedSmsKg" type="number" value="82" min="0" step="0.1" />
+          </label>
+
+          <label>
+            탄화 온도 ℃
+            <input id="pyrolysisTemp" type="number" value="500" step="1" />
+          </label>
+
+          <label>
+            탄화 시간 분
+            <input id="pyrolysisMinutes" type="number" value="90" step="1" />
+          </label>
+
+          <label>
+            탄화 방식
+            <select id="pyrolysisMethod">
+              <option value="중온 무산소/저산소 탄화">중온 무산소/저산소 탄화</option>
+              <option value="저온 탄화">저온 탄화</option>
+              <option value="고온 탄화">고온 탄화</option>
+              <option value="외주 탄화">외주 탄화</option>
+            </select>
+          </label>
+
+          <label>
+            Biochar 생산량 kg
+            <input id="biocharKg" type="number" value="29" min="0" step="0.1" />
+          </label>
+
+          <label>
+            탄화 수율 %
+            <input id="charYield" type="number" value="35" step="0.1" />
+          </label>
+
+          <label>
+            최종 수분 %
+            <input id="moisture" type="number" value="8" step="0.1" />
+          </label>
+
+          <label>
+            pH
+            <input id="ph" type="number" value="8.5" step="0.1" />
+          </label>
+
+          <label>
+            EC
+            <input id="ec" type="number" value="2.5" step="0.1" />
+          </label>
+
+          <label>
+            회분 %
+            <input id="ash" type="number" value="18" step="0.1" />
+          </label>
+
+          <label>
+            고정탄소 %
+            <input id="fixedCarbon" type="number" value="55" step="0.1" />
+          </label>
+
+          <label>
+            입도 mm
+            <input id="particleSize" type="number" value="3" step="0.1" />
+          </label>
+
+          <label>
+            냄새 상태
+            <select id="odor">
+              <option value="정상 / 탄화취">정상 / 탄화취</option>
+              <option value="강한 연기취">강한 연기취</option>
+              <option value="부패취">부패취</option>
+              <option value="화학취">화학취</option>
+            </select>
+          </label>
+
+          <label>
+            이물질
+            <select id="foreignMatter">
+              <option value="없음">없음</option>
+              <option value="소량">소량</option>
+              <option value="많음">많음</option>
+            </select>
+          </label>
+
+          <label>
+            중금속 외부검사
+            <select id="heavyMetalTest">
+              <option value="검사 완료 / 적합">검사 완료 / 적합</option>
+              <option value="검사 완료 / 부적합">검사 완료 / 부적합</option>
+              <option value="미검사">미검사</option>
+            </select>
+          </label>
+
+          <label>
+            최종 판정
+            <select id="finalStatus">
+              <option value="혼합 사용 가능">혼합 사용 가능</option>
+              <option value="조건부 사용">조건부 사용</option>
+              <option value="내부 시험용 가능 / 판매 전 검사 필요">내부 시험용 가능 / 판매 전 검사 필요</option>
+              <option value="사용 보류">사용 보류</option>
+              <option value="사용 금지">사용 금지</option>
+            </select>
+          </label>
+
+          <label class="wide">
+            종합 의견
+            <textarea id="comment">현재 입력값 기준으로 후배지 펠릿비료 혼합용 SMS biochar로 사용할 수 있습니다. 단, 공식 판매 전에는 중금속 등 외부 시험성적서와 관련 공정규격 검토가 필요합니다.</textarea>
+          </label>
+        </div>
+
+        <div class="button-row">
+          <button id="generateButton">기록서 생성</button>
+          <button id="copyButton">Markdown 복사</button>
+          <button id="downloadButton">.md 파일 다운로드</button>
+        </div>
+      </section>
+
+      <section class="card preview-card">
+        <h2>생성 결과 미리보기</h2>
+        <pre id="preview"></pre>
+      </section>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>
