@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>농가 ROI 시뮬레이터 — Farmerstree</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <span class="logo">Farmerstree Fertilizer Platform</span>
+    <nav class="header-nav">
+      <a href="../calculator/">수익성 계산기</a>
+      <a href="../quality-dashboard/">품질검사</a>
+      <a href="../sales-manager/">재고·거래처</a>
+      <a href="../farmer-roi-calculator/" class="active">농가 ROI</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <h1 class="page-title">농가 ROI 시뮬레이터</h1>
+  <p class="page-desc">Farmerstree 후배지 바이오차 복합 펠릿비료 사용 시, 화학비료 대비 비용 절감액과 수익 증가를 작물별로 계산합니다.</p>
+
+  <div class="grid-2col">
+
+    <!-- ── 왼쪽: 입력 패널 ── -->
+    <div class="input-panel">
+
+      <!-- ① 작물 및 면적 -->
+      <section class="card">
+        <h2 class="section-title">① 작물 및 면적 설정</h2>
+
+        <div class="form-group">
+          <label for="cropType">작물 종류</label>
+          <select id="cropType" onchange="onCropChange()">
+            <option value="rice">벼 (논)</option>
+            <option value="pepper">고추</option>
+            <option value="garlic">마늘</option>
+            <option value="onion">양파</option>
+            <option value="cabbage">배추</option>
+            <option value="strawberry">딸기 (시설)</option>
+            <option value="tomato">토마토 (시설)</option>
+            <option value="apple">사과</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="areaUnit">면적 단위</label>
+          <select id="areaUnit" onchange="onAreaUnitChange()">
+            <option value="1000">1,000㎡ (약 300평)</option>
+            <option value="3000">3,000㎡ (약 900평)</option>
+            <option value="10000">10a (1반 = 10,000㎡)</option>
+            <option value="custom">직접 입력 (㎡)</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="customAreaGroup" style="display:none;">
+          <label for="customArea">직접 입력 면적 (㎡)</label>
+          <input type="number" id="customArea" value="1000" min="1" oninput="calcROI()" />
+        </div>
+
+        <div class="form-group">
+          <label for="areaCount">적용 면적 수</label>
+          <div class="input-hint-row">
+            <input type="number" id="areaCount" value="1" min="1" step="1" oninput="calcROI()" />
+            <span class="hint" id="totalAreaHint">총 1,000㎡</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ② 화학비료 현황 -->
+      <section class="card">
+        <h2 class="section-title">② 현재 화학비료 사용 현황</h2>
+        <p class="section-desc">현재 사용 중인 비료 비용을 입력하세요. 작물 선택 시 평균값이 자동 입력됩니다.</p>
+
+        <div class="form-group">
+          <label for="chemBase">기비(밑거름) 비용</label>
+          <div class="input-unit-row">
+            <input type="number" id="chemBase" value="30000" min="0" oninput="calcROI()" />
+            <span class="unit">원 / 1,000㎡</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="chemTop">추비(웃거름) 비용</label>
+          <div class="input-unit-row">
+            <input type="number" id="chemTop" value="15000" min="0" oninput="calcROI()" />
+            <span class="unit">원 / 1,000㎡</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="chemSoil">토양개량제 비용</label>
+          <div class="input-unit-row">
+            <input type="number" id="chemSoil" value="10000" min="0" oninput="calcROI()" />
+            <span class="unit">원 / 1,000㎡</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="chemLabor">시비 인건비</label>
+          <div class="input-unit-row">
+            <input type="number" id="chemLabor" value="15000" min="0" oninput="calcROI()" />
+            <span class="unit">원 / 1,000㎡</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="chemYield">현재 수확량</label>
+          <div class="input-unit-row">
+            <input type="number" id="chemYield" value="500" min="0" oninput="calcROI()" />
+            <span class="unit">kg / 1,000㎡</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="cropPrice">농산물 판매단가</label>
+          <div class="input-unit-row">
+            <input type="number" id="cropPrice" value="1800" min="0" oninput="calcROI()" />
+            <span class="unit">원 / kg</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ③ Farmerstree 비료 설정 -->
+      <section class="card">
+        <h2 class="section-title">③ Farmerstree 비료 적용 설정</h2>
+
+        <div class="form-group">
+          <label for="ftProductType">제품 선택</label>
+          <select id="ftProductType" onchange="onProductChange()">
+            <option value="A">A형 — 후배지 고부숙 펠릿 (기본)</option>
+            <option value="B">B형 — 기능성 미생물 펠릿 (프리미엄)</option>
+            <option value="C">C형 — 후배지 + SMS 바이오차 복합 (고부가)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="ftPrice">구매 단가</label>
+          <div class="input-unit-row">
+            <input type="number" id="ftPrice" value="18000" min="0" oninput="calcROI()" />
+            <span class="unit">원 / 20kg포대</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="ftUsage">사용량</label>
+          <div class="input-unit-row">
+            <input type="number" id="ftUsage" value="2.0" min="0" step="0.1" oninput="calcROI()" />
+            <span class="unit">포대 / 1,000㎡</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="ftChemReplace">화학비료 대체율</label>
+          <div class="input-unit-row">
+            <input type="number" id="ftChemReplace" value="50" min="0" max="100" oninput="calcROI()" />
+            <span class="unit">% 기비+추비 중 절감 비율</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="ftSoilReplace">토양개량제 대체율</label>
+          <div class="input-unit-row">
+            <input type="number" id="ftSoilReplace" value="60" min="0" max="100" oninput="calcROI()" />
+            <span class="unit">%</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="ftYieldUp">수확량 증가율</label>
+          <div class="input-unit-row">
+            <input type="number" id="ftYieldUp" value="4" min="0" max="50" step="0.5" oninput="calcROI()" />
+            <span class="unit">% 바이오차 토양개량 효과 반영</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="subsidyRate">보조금·지원율</label>
+          <div class="input-unit-row">
+            <input type="number" id="subsidyRate" value="0" min="0" max="80" oninput="calcROI()" />
+            <span class="unit">% 친환경농업직불금·지자체 지원 등</span>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /input-panel -->
+
+    <!-- ── 오른쪽: 결과 패널 ── -->
+    <div class="result-panel">
+
+      <section class="card result-card">
+        <h2 class="section-title">농가 ROI 분석 결과</h2>
+        <p class="result-area-label" id="resultAreaLabel">적용 면적: –</p>
+
+        <!-- 핵심 KPI -->
+        <div class="kpi-primary">
+          <div class="kpi-label">연간 순 절감·수익</div>
+          <div class="result-value green" id="resNetSaving">0원</div>
+          <div class="kpi-sub" id="resNetSavingSub">–</div>
+        </div>
+
+        <div class="kpi-grid">
+          <div class="kpi-item">
+            <div class="kpi-label">비료비 절감</div>
+            <div class="result-value" id="resFertSaving">0원</div>
+            <div class="kpi-sub" id="resFertSavingSub">–</div>
+          </div>
+          <div class="kpi-item">
+            <div class="kpi-label">수확량 증가 수익</div>
+            <div class="result-value" id="resYieldGain">0원</div>
+            <div class="kpi-sub" id="resYieldGainSub">–</div>
+          </div>
+          <div class="kpi-item">
+            <div class="kpi-label">Farmerstree 비료 비용</div>
+            <div class="result-value" id="resFTCost">0원</div>
+            <div class="kpi-sub" id="resFTCostSub">–</div>
+          </div>
+          <div class="kpi-item">
+            <div class="kpi-label">보조금 수령 추정</div>
+            <div class="result-value" id="resSubsidy">0원</div>
+            <div class="kpi-sub">친환경 전환 지원 기준</div>
+          </div>
+          <div class="kpi-item">
+            <div class="kpi-label">ROI 배수</div>
+            <div class="result-value" id="resROI">0.0배</div>
+            <div class="kpi-sub">투자 대비 순이익 비율</div>
+          </div>
+        </div>
+
+        <!-- 바 차트 비교 -->
+        <div class="bar-section">
+          <h3 class="bar-title">비용 구조 비교 (1,000㎡ 기준)</h3>
+          <div class="bar-row">
+            <span class="bar-label">화학비료 기준 총비용</span>
+            <div class="bar-track">
+              <div class="bar bar-chem" id="barChem"></div>
+            </div>
+            <span class="bar-val" id="barChemVal">0원</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">Farmerstree 전환 후 총비용</span>
+            <div class="bar-track">
+              <div class="bar bar-ft" id="barFT"></div>
+            </div>
+            <span class="bar-val" id="barFTVal">0원</span>
+          </div>
+        </div>
+
+        <!-- 보조 지표 -->
+        <div class="sub-metrics">
+          <div class="sub-metric-item">
+            <span class="sub-label">투자 회수 기간</span>
+            <span class="sub-val" id="resBEP">–</span>
+          </div>
+          <div class="sub-metric-item">
+            <span class="sub-label">수확량 증가 예상</span>
+            <span class="sub-val" id="resYieldKg">–</span>
+          </div>
+          <div class="sub-metric-item">
+            <span class="sub-label">탄소저장 추정 (C형)</span>
+            <span class="sub-val" id="resCarbonSeq">–</span>
+          </div>
+        </div>
+
+        <!-- 영업 요약 문구 -->
+        <div class="summary-box">
+          <h3 class="summary-title">영업 설명용 요약 문구</h3>
+          <p class="summary-text" id="summaryText">–</p>
+          <div class="summary-actions">
+            <button class="btn btn-copy" onclick="copySummary()">문구 복사</button>
+            <button class="btn btn-csv" onclick="exportCSV()">CSV 내보내기</button>
+            <button class="btn btn-print" onclick="window.print()">인쇄 / PDF 저장</button>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- 참고 테이블 -->
+      <section class="card">
+        <h2 class="section-title">작물별 기본 설정값 참고</h2>
+        <div class="table-wrap">
+          <table class="ref-table">
+            <thead>
+              <tr>
+                <th>작물</th>
+                <th>기비</th>
+                <th>추비</th>
+                <th>토양개량</th>
+                <th>수확량(kg)</th>
+                <th>단가(원/kg)</th>
+                <th>수확증가율</th>
+              </tr>
+            </thead>
+            <tbody id="refTableBody"></tbody>
+          </table>
+        </div>
+        <p class="table-note">※ 기준값은 농촌진흥청 농자재 투입 통계 및 Farmerstree 시험포 추정치입니다.</p>
+      </section>
+
+    </div><!-- /result-panel -->
+
+  </div><!-- /grid-2col -->
+</main>
+
+<footer class="site-footer">
+  <a href="../index.html">← Farmerstree Fertilizer Platform 메인으로</a>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

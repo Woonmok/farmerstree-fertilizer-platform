@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>재고·출하·거래처 관리 — Farmerstree</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <span class="logo">Farmerstree Fertilizer Platform</span>
+    <nav class="header-nav">
+      <a href="../quality-dashboard/">품질검사</a>
+      <a href="../farmer-roi-calculator/">농가 ROI</a>
+      <a href="../sales-manager/" class="active">재고·거래처</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <h1 class="page-title">재고·출하·거래처 관리</h1>
+  <p class="page-desc">로트별 재고 현황, 출하 이력, 거래처 납품 관리를 통합합니다.</p>
+
+  <!-- KPI 대시보드 -->
+  <div class="kpi-row">
+    <div class="kpi-card" id="kpiTotalStockCard">
+      <div class="kpi-label">총 재고 (포대)</div>
+      <div class="kpi-value" id="kpiTotalStock">0</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">총 재고 (kg)</div>
+      <div class="kpi-value" id="kpiTotalKg">0</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">이번 달 출하</div>
+      <div class="kpi-value" id="kpiThisMonthShip">0포</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">이번 달 매출</div>
+      <div class="kpi-value" id="kpiThisMonthRev">0원</div>
+    </div>
+    <div class="kpi-card" id="kpiLowStock">
+      <div class="kpi-label">재고 부족 로트</div>
+      <div class="kpi-value" id="kpiLowStockVal">0건</div>
+    </div>
+  </div>
+
+  <!-- 탭 -->
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('inventory')">재고 현황</button>
+    <button class="tab-btn" onclick="switchTab('shipment')">출하 등록</button>
+    <button class="tab-btn" onclick="switchTab('customer')">거래처 관리</button>
+    <button class="tab-btn" onclick="switchTab('history')">납품 이력</button>
+  </div>
+
+  <!-- ── 탭 1: 재고 현황 ── -->
+  <div class="tab-content active" id="tab-inventory">
+
+    <section class="card">
+      <div class="section-header">
+        <h2 class="section-title">로트별 재고</h2>
+        <button class="btn-toggle" onclick="toggleStockForm()">+ 재고 등록</button>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>로트번호</th>
+              <th>제품유형</th>
+              <th>제조일</th>
+              <th>포장단위</th>
+              <th>입고(포)</th>
+              <th>출하(포)</th>
+              <th>잔여(포)</th>
+              <th>잔여(kg)</th>
+              <th>상태</th>
+            </tr>
+          </thead>
+          <tbody id="inventoryBody">
+            <tr class="empty-row"><td colspan="9">등록된 재고가 없습니다.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 재고 등록 폼 (기본 숨김) -->
+    <section class="card" id="stockFormCard" style="display:none;">
+      <h2 class="section-title">재고 입고 등록</h2>
+      <p class="section-desc">생산 완료된 배치를 재고로 등록합니다. 로트번호는 품질검사 대시보드의 제조번호와 일치시키세요.</p>
+
+      <div class="form-grid-3">
+        <div class="form-group">
+          <label for="stockLot">로트번호 (제조번호)</label>
+          <input type="text" id="stockLot" placeholder="예) FT-BIO-20260430-001" />
+        </div>
+        <div class="form-group">
+          <label for="stockProductType">제품 유형</label>
+          <select id="stockProductType">
+            <option value="A">A형 — 후배지 고부숙 펠릿</option>
+            <option value="B">B형 — 기능성 미생물 펠릿</option>
+            <option value="C">C형 — 바이오차 복합 펠릿</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="stockMfgDate">제조일</label>
+          <input type="date" id="stockMfgDate" />
+        </div>
+        <div class="form-group">
+          <label for="stockPkgUnit">포장 단위 (kg)</label>
+          <select id="stockPkgUnit">
+            <option value="20">20kg</option>
+            <option value="10">10kg</option>
+            <option value="5">5kg</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="stockQty">입고 수량 (포대)</label>
+          <input type="number" id="stockQty" min="1" placeholder="0" />
+        </div>
+        <div class="form-group">
+          <label for="stockNote">비고</label>
+          <input type="text" id="stockNote" placeholder="선택 입력" />
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-primary" onclick="addStock()">재고 등록</button>
+        <button class="btn btn-ghost" onclick="toggleStockForm()">취소</button>
+      </div>
+    </section>
+
+  </div><!-- /tab-inventory -->
+
+  <!-- ── 탭 2: 출하 등록 ── -->
+  <div class="tab-content" id="tab-shipment">
+
+    <section class="card">
+      <h2 class="section-title">출하 등록</h2>
+      <p class="section-desc">거래처에 납품할 때 출하 내역을 기록합니다.</p>
+
+      <div class="form-grid-3">
+        <div class="form-group">
+          <label for="shipLot">로트번호</label>
+          <select id="shipLot" onchange="onShipLotChange()">
+            <option value="">— 로트 선택 —</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="shipCustomer">거래처</label>
+          <select id="shipCustomer">
+            <option value="">— 거래처 선택 —</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="shipDate">출하일</label>
+          <input type="date" id="shipDate" />
+        </div>
+        <div class="form-group">
+          <label for="shipQty">수량 (포대) <span class="avail-hint" id="shipAvailHint">가용 재고: –</span></label>
+          <input type="number" id="shipQty" min="1" placeholder="0" />
+        </div>
+        <div class="form-group">
+          <label for="shipUnitPrice">단가</label>
+          <div class="input-unit-row">
+            <input type="number" id="shipUnitPrice" min="0" placeholder="0" />
+            <span class="unit">원 / 포대</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="shipNote">비고</label>
+          <input type="text" id="shipNote" placeholder="선택 입력" />
+        </div>
+      </div>
+
+      <div class="ship-total-row">
+        <span class="ship-total-label">출하 금액 (자동 계산)</span>
+        <span class="ship-total-value" id="shipTotalDisplay">0원</span>
+      </div>
+
+      <div id="shipMsg" class="msg-box" style="display:none;"></div>
+
+      <div class="form-actions">
+        <button class="btn btn-primary" onclick="addShipment()">출하 등록</button>
+      </div>
+    </section>
+
+  </div><!-- /tab-shipment -->
+
+  <!-- ── 탭 3: 거래처 관리 ── -->
+  <div class="tab-content" id="tab-customer">
+
+    <!-- 거래처 등록 폼 -->
+    <section class="card">
+      <h2 class="section-title">거래처 등록</h2>
+      <div class="form-grid-3">
+        <div class="form-group">
+          <label for="custName">거래처명</label>
+          <input type="text" id="custName" placeholder="예) 한국농협 XX지점" />
+        </div>
+        <div class="form-group">
+          <label for="custType">유형</label>
+          <select id="custType">
+            <option value="농협">농협</option>
+            <option value="영농조합">영농조합</option>
+            <option value="직거래 농가">직거래 농가</option>
+            <option value="유통업체">유통업체</option>
+            <option value="공공기관">공공기관</option>
+            <option value="기타">기타</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="custContact">담당자 / 연락처</label>
+          <input type="text" id="custContact" placeholder="홍길동 / 010-0000-0000" />
+        </div>
+        <div class="form-group">
+          <label for="custRegion">지역</label>
+          <input type="text" id="custRegion" placeholder="예) 전남 나주시" />
+        </div>
+        <div class="form-group">
+          <label for="custDefaultPrice">기본 단가</label>
+          <div class="input-unit-row">
+            <input type="number" id="custDefaultPrice" min="0" placeholder="0" />
+            <span class="unit">원/포</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="custNote">비고</label>
+          <input type="text" id="custNote" placeholder="선택 입력" />
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-primary" onclick="addCustomer()">거래처 등록</button>
+      </div>
+    </section>
+
+    <!-- 거래처 목록 -->
+    <section class="card">
+      <h2 class="section-title">거래처 목록</h2>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>거래처명</th>
+              <th>유형</th>
+              <th>담당자/연락처</th>
+              <th>지역</th>
+              <th>기본단가</th>
+              <th>총 납품</th>
+              <th>총 매출</th>
+              <th>관리</th>
+            </tr>
+          </thead>
+          <tbody id="customerBody">
+            <tr class="empty-row"><td colspan="8">등록된 거래처가 없습니다.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </div><!-- /tab-customer -->
+
+  <!-- ── 탭 4: 납품 이력 ── -->
+  <div class="tab-content" id="tab-history">
+
+    <section class="card">
+      <div class="section-header">
+        <h2 class="section-title">납품 이력</h2>
+        <div class="filter-row">
+          <select id="filterCustomer" onchange="renderHistory()">
+            <option value="">전체 거래처</option>
+          </select>
+          <select id="filterProduct" onchange="renderHistory()">
+            <option value="">전체 제품</option>
+            <option value="A">A형</option>
+            <option value="B">B형</option>
+            <option value="C">C형</option>
+          </select>
+          <button class="btn btn-outline" onclick="exportHistoryCSV()">CSV 내보내기</button>
+        </div>
+      </div>
+
+      <div id="historySummary"></div>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>출하일</th>
+              <th>거래처</th>
+              <th>로트번호</th>
+              <th>제품유형</th>
+              <th>수량(포)</th>
+              <th>단가</th>
+              <th>금액</th>
+              <th>비고</th>
+            </tr>
+          </thead>
+          <tbody id="historyBody">
+            <tr class="empty-row"><td colspan="8">출하 이력이 없습니다.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </div><!-- /tab-history -->
+
+  <!-- 데이터 관리 -->
+  <section class="card data-mgmt-card">
+    <h2 class="section-title">데이터 관리</h2>
+    <div class="data-mgmt-row">
+      <button class="btn btn-outline" onclick="exportAllCSV()">전체 데이터 CSV 내보내기</button>
+      <button class="btn btn-outline" onclick="backupJSON()">JSON 백업</button>
+      <button class="btn btn-danger" onclick="clearAll()">전체 초기화</button>
+    </div>
+    <p class="data-mgmt-note">※ localStorage 저장 방식입니다. 정기적으로 CSV/JSON 백업을 권장합니다.</p>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <a href="../index.html">← Farmerstree Fertilizer Platform 메인으로</a>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
