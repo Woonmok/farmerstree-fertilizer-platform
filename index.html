@@ -22,6 +22,62 @@
       </div>
     </section>
 
+    <section class="status-card">
+      <h2>현장 운영 대시보드</h2>
+      <p class="module-section-text">오늘 확인할 현장 운영 항목입니다.</p>
+      <div class="ops-grid">
+        <a class="ops-item" href="./batch-generator/index.html">
+          <span class="ops-icon">📥</span>
+          <div>
+            <strong>원료 입고</strong>
+            <p>후배지 수거량·입고일·이물 제거 여부 확인</p>
+          </div>
+        </a>
+        <a class="ops-item" href="./dashboard/index.html">
+          <span class="ops-icon">🌡</span>
+          <div>
+            <strong>발효 온도</strong>
+            <p>오전·오후 온도, 냄새, 수분 상태 기록</p>
+          </div>
+        </a>
+        <a class="ops-item" href="./quality-dashboard/index.html">
+          <span class="ops-icon">✓</span>
+          <div>
+            <strong>품질검사</strong>
+            <p>수분·pH·EC·C/N·발아지수·파손율 입력 및 판정</p>
+          </div>
+        </a>
+        <a class="ops-item" href="./quality-dashboard/index.html">
+          <span class="ops-icon">🚚</span>
+          <div>
+            <strong>출하 가능 여부</strong>
+            <p>품질검사 판정 결과로 출하 적합성 확인</p>
+          </div>
+        </a>
+        <a class="ops-item" href="./sales-manager/index.html">
+          <span class="ops-icon">📦</span>
+          <div>
+            <strong>재고·출하</strong>
+            <p>로트별 재고 입고·출하 등록·거래처 납품 이력</p>
+          </div>
+        </a>
+        <a class="ops-item" href="./biochar-lot-generator/index.html">
+          <span class="ops-icon">🔥</span>
+          <div>
+            <strong>Biochar 로트</strong>
+            <p>탄화 조건·수율·품질검사 결과 로트 기록 생성</p>
+          </div>
+        </a>
+        <a class="ops-item" href="./soil-carbon-dashboard/index.html">
+          <span class="ops-icon">🌱</span>
+          <div>
+            <strong>토양 탄소 기록</strong>
+            <p>토양 유기탄소·pH·EC·작물 수량·탄소저장량 관리</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
     <section class="process-card">
       <h2>핵심 제조 공정 8단계</h2>
 
@@ -82,7 +138,7 @@
       <div class="module-grid">
         <a class="module-card" href="./calculator/index.html">
           <div class="module-icon">₩</div>
-          <h2>수익성 계산기</h2>
+          <h3>수익성 계산기</h3>
           <p>
             생산량, 원료비, 첨가물비, 펠릿화비, 품질검사비, 판매가, 보조금을 입력해
             포대당 원가와 순이익을 계산합니다.
@@ -92,7 +148,7 @@
 
         <a class="module-card" href="./recipe-calculator/index.html">
           <div class="module-icon">㎏</div>
-          <h2>배합 계산기</h2>
+          <h3>배합 계산기</h3>
           <p>
             후배지 투입량을 입력하면 일반형, 프리미엄형, 저염형 배합의 첨가물 투입량을 자동 계산합니다.
           </p>
@@ -101,7 +157,7 @@
 
         <a class="module-card" href="./dashboard/index.html">
           <div class="module-icon">℃</div>
-          <h2>발효 온도 대시보드</h2>
+          <h3>발효 온도 대시보드</h3>
           <p>
             오전·오후 온도, 냄새, 수분 상태를 기록하고 고온부숙 적정 여부와 조치 필요성을 자동 판정합니다.
           </p>
@@ -116,7 +172,7 @@
       <div class="module-grid">
         <a class="module-card" href="./quality-dashboard/index.html">
           <div class="module-icon">✓</div>
-          <h2>품질검사 대시보드</h2>
+          <h3>품질검사 대시보드</h3>
           <p>
             수분, pH, EC, C/N, 발아지수, 파손율, 냄새 상태를 입력해 출하 가능 여부를 판정합니다.
           </p>
@@ -125,7 +181,7 @@
 
         <a class="module-card" href="./qc/qc_checklist.md">
           <div class="module-icon">QC</div>
-          <h2>품질검사 체크리스트</h2>
+          <h3>품질검사 체크리스트</h3>
           <p>
             원료관리부터 최종 출하 판정까지 현장에서 확인할 품질관리 항목을 정리한 문서입니다.
           </p>
@@ -134,7 +190,7 @@
 
         <a class="module-card" href="./qc/batch_record_template.md">
           <div class="module-icon">LOT</div>
-          <h2>제조 배치 기록서</h2>
+          <h3>제조 배치 기록서</h3>
           <p>
             제조번호별로 원료 입고, 배합, 부숙, 후숙, 미생물 접종, 펠릿화, 품질검사를 기록하는 양식입니다.
           </p>
@@ -143,7 +199,7 @@
 
         <a class="module-card" href="./report-generator/index.html">
           <div class="module-icon">REP</div>
-          <h2>통합 리포트 생성기</h2>
+          <h3>통합 리포트 생성기</h3>
           <p>
             발효 온도 CSV와 품질검사 CSV를 읽어 제조번호별 통합 품질 이력 리포트를 생성합니다.
           </p>
@@ -152,9 +208,19 @@
 
         <a class="module-card" href="./print-report/index.html">
           <div class="module-icon">PDF</div>
-          <h2>PDF 품질 리포트</h2>
+          <h3>PDF 품질 리포트</h3>
           <p>
             제조번호별 품질검사 결과를 A4 출력용 리포트 화면으로 만들고 PDF로 저장합니다.
+          </p>
+          <span>열기 →</span>
+        </a>
+
+        <a class="module-card" href="./batch-generator/index.html">
+          <div class="module-icon">BAT</div>
+          <h3>제조 배치 기록 생성기</h3>
+          <p>
+            후배지 펠릿비료 제조번호, 원료 입고량, 제품 유형, 담당자 정보를 입력해
+            제조 배치 기록서 Markdown 파일을 자동 생성합니다.
           </p>
           <span>열기 →</span>
         </a>
@@ -167,7 +233,7 @@
       <div class="module-grid">
         <a class="module-card" href="./farmer-roi-calculator/index.html">
           <div class="module-icon">ROI</div>
-          <h2>농가 ROI 시뮬레이터</h2>
+          <h3>농가 ROI 시뮬레이터</h3>
           <p>
             작물별 화학비료 비용과 Farmerstree 비료 적용 조건을 입력해 연간 절감액, 수익 증가,
             ROI 배수, 투자 회수 기간을 자동 계산하고 영업 문구를 생성합니다.
@@ -177,7 +243,7 @@
 
         <a class="module-card" href="./sales-manager/index.html">
           <div class="module-icon">INV</div>
-          <h2>재고·출하·거래처 관리</h2>
+          <h3>재고·출하·거래처 관리</h3>
           <p>
             로트별 재고 입고, 출하 등록, 거래처 납품 이력을 통합 관리합니다.
             월별 매출·재고 KPI, CSV 내보내기, JSON 백업을 지원합니다.
@@ -193,7 +259,7 @@
       <div class="module-grid">
         <a class="module-card" href="./biochar-calculator/index.html">
           <div class="module-icon">BIO</div>
-          <h2>SMS Biochar 계산기</h2>
+          <h3>SMS Biochar 계산기</h3>
           <p>
             후배지 일부를 biochar로 전환할 때 건조 중량, 탄화 수율, biochar 생산량,
             최종 혼합비와 포대당 추가 원가를 계산합니다.
@@ -203,7 +269,7 @@
 
         <a class="module-card" href="./biochar-quality-dashboard/index.html">
           <div class="module-icon">BQC</div>
-          <h2>Biochar 품질검사</h2>
+          <h3>Biochar 품질검사</h3>
           <p>
             SMS biochar의 탄화 조건, 수분, pH, EC, 회분, 고정탄소, 중금속 검사 여부를
             기록하고 사용 가능성을 판정합니다.
@@ -213,7 +279,7 @@
 
         <a class="module-card" href="./biochar-lot-generator/index.html">
           <div class="module-icon">BLOT</div>
-          <h2>Biochar 로트 생성기</h2>
+          <h3>Biochar 로트 생성기</h3>
           <p>
             SMS biochar 로트번호, 원료 후배지 제조번호, 탄화 조건, 품질검사 결과를 입력해
             로트 기록서를 자동 생성합니다.
@@ -223,7 +289,7 @@
 
         <a class="module-card" href="./soil-carbon-calculator/index.html">
           <div class="module-icon">CO₂</div>
-          <h2>토양·탄소 리포트 계산기</h2>
+          <h3>토양·탄소 리포트 계산기</h3>
           <p>
             SMS biochar 복합 펠릿비료의 투입량, 면적당 사용량, 추정 탄소저장량, CO₂e 환산량, 화학비료 절감량을 계산합니다.
           </p>
@@ -231,8 +297,8 @@
         </a>
 
         <a class="module-card" href="./biochar-dashboard/index.html">
-          <div class="module-icon">LOT</div>
-          <h2>Biochar 공정 대시보드</h2>
+          <div class="module-icon">PROC</div>
+          <h3>Biochar 공정 대시보드</h3>
           <p>
             탄화 온도, 시간, 수분, 수율, pH, EC, 회분, 고정탄소, 냄새, 색상, 입도, 로트번호를
             기록하고 로트 품질 상태를 판정합니다.
@@ -242,7 +308,7 @@
 
         <a class="module-card" href="./soil-carbon-dashboard/index.html">
           <div class="module-icon">SOC</div>
-          <h2>토양 탄소 대시보드</h2>
+          <h3>토양 탄소 대시보드</h3>
           <p>
             토양 유기탄소, pH, EC, 수분 보유력, 작물 수량, 화학비료 절감률, 탄소저장 추정량 변화를
             시험구 단위로 관리합니다.
@@ -252,7 +318,7 @@
 
         <a class="module-card" href="./carbon-report/index.html">
           <div class="module-icon">ESG</div>
-          <h2>탄소 성과 리포트</h2>
+          <h3>탄소 성과 리포트</h3>
           <p>
             후배지 재자원화량, biochar 생산량, 토양 투입량, 탄소저장 추정량을 기반으로 ESG 보고서용
             문장과 공공사업 제안서용 문장을 생성합니다.
@@ -321,6 +387,14 @@
         <div>
           <strong>14단계</strong>
           <span>재고·출하·거래처 관리 완료</span>
+        </div>
+        <div>
+          <strong>15단계</strong>
+          <span>Biochar 품질검사 대시보드 완료</span>
+        </div>
+        <div>
+          <strong>16단계</strong>
+          <span>제조 배치 기록 자동 생성기 완료</span>
         </div>
       </div>
     </section>
