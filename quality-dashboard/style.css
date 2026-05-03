@@ -433,3 +433,42 @@ th {
     grid-template-columns: 1fr;
   }
 }
+
+.site-header {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.header-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  font-weight: 700;
+  color: #14532d;
+}
+
+.header-nav {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.header-nav a {
+  text-decoration: none;
+  color: #374151;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+.header-nav a.active {
+  background: #dcfce7;
+  color: #14532d;
+  font-weight: 600;
+}

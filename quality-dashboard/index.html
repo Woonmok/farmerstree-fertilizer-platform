@@ -7,6 +7,18 @@
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
+  <header class="site-header">
+    <div class="header-inner">
+      <span class="logo">Farmerstree Fertilizer Platform</span>
+      <nav class="header-nav">
+        <a href="../calculator/">수익성 계산기</a>
+        <a href="../quality-dashboard/" class="active">품질검사</a>
+        <a href="../sales-manager/">재고·거래처</a>
+        <a href="../farmer-roi-calculator/">농가 ROI</a>
+      </nav>
+    </div>
+  </header>
+
   <main class="container">
     <section class="hero">
       <p class="eyebrow">Farmerstree Fertilizer Platform</p>
@@ -236,8 +248,8 @@
       </div>
     </section>
 
-    <section class="grid">
-      <div class="card result-card" id="shipping-judgement">
+    <section class="grid" id="shipping-judgement">
+      <div class="card result-card">
         <h2>최종 판정</h2>
 
         <div id="finalStatus" class="status neutral">
