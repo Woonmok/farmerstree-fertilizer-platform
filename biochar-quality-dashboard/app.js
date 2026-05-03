@@ -229,11 +229,13 @@ function evaluateBiochar(data) {
 }
 
 function renderEvaluation(evaluation) {
+  const levelIcon = { good: "✓", warn: "!", danger: "✕", neutral: "–" };
+  const icon = levelIcon[evaluation.status.level] || "–";
+
   outputs.finalStatus.className = `status ${evaluation.status.level}`;
   outputs.finalStatus.innerHTML = `
-    ${evaluation.status.title}
-    <br />
-    <small>${evaluation.status.detail}</small>
+    <span class="status-badge">${icon} ${evaluation.status.title}</span>
+    <p class="status-detail">${evaluation.status.detail}</p>
   `;
 
   outputs.reasonList.innerHTML = "";
