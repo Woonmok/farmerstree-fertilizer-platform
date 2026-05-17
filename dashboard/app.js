@@ -303,24 +303,46 @@ exportCsvButton.addEventListener("click", exportRecordsToCsv);
 
 render();
 
-// Load AI test report (JSON + markdown) from repository root
-async function loadAiTestReport() {
+// Load AI test report (JSON + markdown) from repository root with simple polling
+let lastJsonText = null;
+let lastMdText = null;
+
+function renderAiJson(data) {
   if (!aiReportSummary) return;
+  aiReportSummary.innerHTML = `<strong>${data.report_date}</strong> · SOP ${data.sop_version} · 상태: ${data.status}`;
+  const list = document.createElement("ul");
+  data.test_results.forEach((r) => {
+    const li = document.createElement("li");
+    li.innerHTML = `<strong>${r.category}</strong>: ${r.status} — ${r.description}`;
+    list.appendChild(li);
+  });
+  aiReportSummary.appendChild(list);
+}
 
+function renderAiMarkdown(md) {
+  if (!aiReportDetails) return;
+  if (window.marked) {
+    aiReportDetails.innerHTML = marked.parse(md);
+  } else {
+    aiReportDetails.textContent = md;
+  }
+}
+
+async function loadAiTestReport() {
+  // JSON
   try {
-    const res = await fetch("../ai-test-report.json");
+    const res = await fetch("../ai-test-report.json", { cache: "no-store" });
     if (res.ok) {
-      const data = await res.json();
-      aiReportSummary.innerHTML = `<strong>${data.report_date}</strong> · SOP ${data.sop_version} · 상태: ${data.status}`;
-
-      const list = document.createElement("ul");
-      data.test_results.forEach((r) => {
-        const li = document.createElement("li");
-        li.innerHTML = `<strong>${r.category}</strong>: ${r.status} — ${r.description}`;
-        list.appendChild(li);
-      });
-
-      aiReportSummary.appendChild(list);
+      const text = await res.text();
+      if (text !== lastJsonText) {
+        lastJsonText = text;
+        try {
+          const data = JSON.parse(text);
+          renderAiJson(data);
+        } catch (e) {
+          aiReportSummary.textContent = "AI 리포트(JSON) 파싱 오류.";
+        }
+      }
     } else {
       aiReportSummary.textContent = "AI 리포트 로드 실패 (JSON).";
     }
@@ -328,13 +350,15 @@ async function loadAiTestReport() {
     aiReportSummary.textContent = "AI 리포트 로드 실패.";
   }
 
-  // load markdown file for full report text (display as plain text)
-  if (!aiReportDetails) return;
+  // Markdown
   try {
-    const mdRes = await fetch("../ai-test-report.md");
+    const mdRes = await fetch("../ai-test-report.md", { cache: "no-store" });
     if (mdRes.ok) {
       const md = await mdRes.text();
-      aiReportDetails.textContent = md;
+      if (md !== lastMdText) {
+        lastMdText = md;
+        renderAiMarkdown(md);
+      }
     } else {
       aiReportDetails.textContent = "AI 리포트(마크다운) 없음.";
     }
@@ -343,4 +367,8 @@ async function loadAiTestReport() {
   }
 }
 
+// initial load
 loadAiTestReport();
+
+// poll every 15 seconds for updates
+setInterval(loadAiTestReport, 15000);
