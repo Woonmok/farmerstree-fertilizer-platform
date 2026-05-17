@@ -1,0 +1,31 @@
+{
+  "report_date": "2026-05-17",
+  "sop_version": "v1.0",
+  "status": "Ready for Deployment",
+  "test_results": [
+    {
+      "id": "test_1",
+      "category": "온도 제어",
+      "status": "Pass",
+      "description": "610°C 이탈 감지, 즉각적인 가열 중단 및 EC 경고 조치 성공"
+    },
+    {
+      "id": "test_2",
+      "category": "비상 가스",
+      "status": "Pass",
+      "description": "O2 5.2% 감지 시 N2 퍼지 증량 및 밀폐/수냉 금지 지시 성공"
+    },
+    {
+      "id": "test_3",
+      "category": "품질 관리",
+      "status": "Pass",
+      "description": "Zn 390mg/kg 감지 시 출하 보류 및 블렌딩 2차 조치 성공"
+    },
+    {
+      "id": "test_4",
+      "category": "안전 통제",
+      "status": "Pass",
+      "description": "작업자 고온 수냉 시도 차단 및 80°C 이하 개방 규칙 강제 성공"
+    }
+  ]
+}

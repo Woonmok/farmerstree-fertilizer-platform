@@ -17,6 +17,9 @@ const outputs = {
   recordsTable: document.getElementById("recordsTable"),
 };
 
+const aiReportSummary = document.getElementById("aiReportSummary");
+const aiReportDetails = document.getElementById("aiReportDetails");
+
 const addRecordButton = document.getElementById("addRecord");
 const clearRecordsButton = document.getElementById("clearRecords");
 const exportCsvButton = document.getElementById("exportCsv");
@@ -299,3 +302,45 @@ clearRecordsButton.addEventListener("click", clearRecords);
 exportCsvButton.addEventListener("click", exportRecordsToCsv);
 
 render();
+
+// Load AI test report (JSON + markdown) from repository root
+async function loadAiTestReport() {
+  if (!aiReportSummary) return;
+
+  try {
+    const res = await fetch("../ai-test-report.json");
+    if (res.ok) {
+      const data = await res.json();
+      aiReportSummary.innerHTML = `<strong>${data.report_date}</strong> · SOP ${data.sop_version} · 상태: ${data.status}`;
+
+      const list = document.createElement("ul");
+      data.test_results.forEach((r) => {
+        const li = document.createElement("li");
+        li.innerHTML = `<strong>${r.category}</strong>: ${r.status} — ${r.description}`;
+        list.appendChild(li);
+      });
+
+      aiReportSummary.appendChild(list);
+    } else {
+      aiReportSummary.textContent = "AI 리포트 로드 실패 (JSON).";
+    }
+  } catch (err) {
+    aiReportSummary.textContent = "AI 리포트 로드 실패.";
+  }
+
+  // load markdown file for full report text (display as plain text)
+  if (!aiReportDetails) return;
+  try {
+    const mdRes = await fetch("../ai-test-report.md");
+    if (mdRes.ok) {
+      const md = await mdRes.text();
+      aiReportDetails.textContent = md;
+    } else {
+      aiReportDetails.textContent = "AI 리포트(마크다운) 없음.";
+    }
+  } catch (err) {
+    aiReportDetails.textContent = "AI 리포트(마크다운) 로드 실패.";
+  }
+}
+
+loadAiTestReport();
