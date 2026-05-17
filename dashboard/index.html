@@ -144,7 +144,12 @@
     <section class="card" id="aiTestReportCard">
       <h2>AI 테스트 리포트</h2>
 
-      <div id="aiReportSummary">로딩 중...</div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div id="aiReportSummary">로딩 중...</div>
+        <div class="ai-actions">
+          <button id="refreshAiReport">새로고침</button>
+        </div>
+      </div>
 
       <div id="aiReportDetails" class="markdown-body" style="max-height:320px;overflow:auto;border:1px solid #eee;padding:12px;margin-top:8px;background:#fafafa;">로드 중...</div>
     </section>

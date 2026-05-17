@@ -306,6 +306,10 @@ render();
 // Load AI test report (JSON + markdown) from repository root with simple polling
 let lastJsonText = null;
 let lastMdText = null;
+let lastETagJson = null;
+let lastModifiedJson = null;
+let lastETagMd = null;
+let lastModifiedMd = null;
 
 function renderAiJson(data) {
   if (!aiReportSummary) return;
@@ -329,11 +333,23 @@ function renderAiMarkdown(md) {
 }
 
 async function loadAiTestReport() {
-  // JSON
+  // JSON (conditional request)
   try {
-    const res = await fetch("../ai-test-report.json", { cache: "no-store" });
-    if (res.ok) {
+    const headers = {};
+    if (lastETagJson) headers['If-None-Match'] = lastETagJson;
+    if (lastModifiedJson) headers['If-Modified-Since'] = lastModifiedJson;
+
+    const res = await fetch("../ai-test-report.json", { cache: "no-store", headers });
+    if (res.status === 304) {
+      // not modified
+    } else if (res.ok) {
       const text = await res.text();
+      // update caching hints
+      const etag = res.headers.get('etag');
+      const lastmod = res.headers.get('last-modified');
+      if (etag) lastETagJson = etag;
+      if (lastmod) lastModifiedJson = lastmod;
+
       if (text !== lastJsonText) {
         lastJsonText = text;
         try {
@@ -350,11 +366,22 @@ async function loadAiTestReport() {
     aiReportSummary.textContent = "AI 리포트 로드 실패.";
   }
 
-  // Markdown
+  // Markdown (conditional request)
   try {
-    const mdRes = await fetch("../ai-test-report.md", { cache: "no-store" });
-    if (mdRes.ok) {
+    const headersMd = {};
+    if (lastETagMd) headersMd['If-None-Match'] = lastETagMd;
+    if (lastModifiedMd) headersMd['If-Modified-Since'] = lastModifiedMd;
+
+    const mdRes = await fetch("../ai-test-report.md", { cache: "no-store", headers: headersMd });
+    if (mdRes.status === 304) {
+      // not modified
+    } else if (mdRes.ok) {
       const md = await mdRes.text();
+      const etagMd = mdRes.headers.get('etag');
+      const lastmodMd = mdRes.headers.get('last-modified');
+      if (etagMd) lastETagMd = etagMd;
+      if (lastmodMd) lastModifiedMd = lastmodMd;
+
       if (md !== lastMdText) {
         lastMdText = md;
         renderAiMarkdown(md);
@@ -372,3 +399,16 @@ loadAiTestReport();
 
 // poll every 15 seconds for updates
 setInterval(loadAiTestReport, 15000);
+
+// manual refresh button
+const refreshBtn = document.getElementById('refreshAiReport');
+if (refreshBtn) {
+  refreshBtn.addEventListener('click', () => {
+    // clear etags to force full reload on manual refresh
+    lastETagJson = null;
+    lastModifiedJson = null;
+    lastETagMd = null;
+    lastModifiedMd = null;
+    loadAiTestReport();
+  });
+}
