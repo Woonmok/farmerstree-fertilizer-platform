@@ -316,3 +316,29 @@ thead th {
     grid-template-columns: 1fr;
   }
 }
+
+
+/* 메인 대시보드 돌아가기 링크 스타일 */
+.back-link-container {
+  margin-bottom: 20px;
+}
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  color: #5f7f45;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 15px;
+  transition: color 0.15s, transform 0.1s;
+}
+.back-link:hover {
+  color: #2f4428;
+  text-decoration: underline;
+  transform: translateX(-2px);
+}
+
+@media print {
+  .back-link-container {
+    display: none !important;
+  }
+}

@@ -308,3 +308,144 @@ h2 {
     padding: 28px;
   }
 }
+
+/* 처음 사용자를 위한 현장 작업 순서 가이드 스타일 */
+.guide-card {
+  border: 1px solid #cbd5c4;
+}
+
+.guide-steps {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.guide-step {
+  display: flex;
+  gap: 16px;
+  padding: 22px;
+  background: #f7f9f4;
+  border: 1px solid #e4eadc;
+  border-radius: 20px;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.guide-step:hover {
+  box-shadow: 0 6px 18px rgba(25, 45, 20, 0.06);
+  border-color: #cbd5c4;
+}
+
+.step-num {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  background: #5f7f45;
+  color: #ffffff;
+  font-size: 16px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 8px rgba(95, 127, 69, 0.2);
+}
+
+.step-body {
+  flex: 1;
+}
+
+.step-body strong {
+  display: block;
+  font-size: 17px;
+  color: #2f4428;
+  margin-bottom: 6px;
+  font-weight: 900;
+}
+
+.step-body p {
+  margin: 0;
+  font-size: 14px;
+  color: #566252;
+  line-height: 1.6;
+}
+
+.step-links {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.step-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: #5f7f45;
+  background: #eef4e7;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 900;
+  border: 1px solid #d0dfc4;
+  transition: background 0.2s, transform 0.1s, color 0.2s;
+}
+
+.step-link:hover {
+  background: #e2ecd9;
+  color: #2f4428;
+  transform: translateY(-1px);
+}
+
+.guide-extra {
+  margin-top: 28px;
+  padding: 24px;
+  background: #fdfefe;
+  border: 1px dashed #cbd5c4;
+  border-radius: 20px;
+}
+
+.guide-extra strong {
+  display: block;
+  font-size: 17px;
+  color: #2f4428;
+  margin-bottom: 8px;
+  font-weight: 900;
+}
+
+.guide-extra p {
+  margin: 0 0 16px;
+  font-size: 14.5px;
+  color: #566252;
+  line-height: 1.6;
+}
+
+.extra-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.extra-link {
+  text-decoration: none;
+  color: #4c5748;
+  font-weight: 900;
+  font-size: 14px;
+  padding: 8px 16px;
+  background: #f7f9f4;
+  border: 1px solid #e4eadc;
+  border-radius: 10px;
+  transition: all 0.2s;
+}
+
+.extra-link:hover {
+  background: #edf4e5;
+  color: #2f4428;
+  border-color: #cbd5c4;
+}
+
+@media (max-width: 860px) {
+  .guide-steps {
+    grid-template-columns: 1fr;
+  }
+}
+

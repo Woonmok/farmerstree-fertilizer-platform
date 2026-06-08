@@ -452,6 +452,11 @@ th {
 .logo {
   font-weight: 700;
   color: #14532d;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+.logo:hover {
+  opacity: 0.85;
 }
 
 .header-nav {

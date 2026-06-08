@@ -17,8 +17,73 @@
       </p>
 
       <div class="hero-actions">
-        <a class="primary-button" href="./calculator/index.html">수익성 계산 시작</a>
-        <a class="secondary-button" href="./quality-dashboard/index.html">품질검사 판정</a>
+        <a class="primary-button" href="#quick-guide">💡 처음이신가요? 작업 순서 보기</a>
+        <a class="secondary-button" href="./dashboard/index.html">🌡 일일 발효 온도 기록</a>
+        <a class="secondary-button" href="./quality-dashboard/index.html">✓ 최종 품질검사 판정</a>
+      </div>
+    </section>
+
+    <section class="status-card guide-card" id="quick-guide">
+      <h2>💡 처음 오셨나요? 현장 작업 순서 가이드</h2>
+      <p class="module-section-text">현장 작업자는 아래 작업 순서에 맞게 대시보드 기능을 활용하여 비료 제조 과정을 안전하고 과학적으로 관리하세요.</p>
+      
+      <div class="guide-steps">
+        <div class="guide-step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>원료 입고 & 배합 계산 (기초 단계)</strong>
+            <p>새로운 비료 배치가 들어오면 제조번호를 생성하고, 계분·유박·바이오차 등 첨가물 배합량을 계산합니다.</p>
+            <div class="step-links">
+              <a href="./batch-generator/index.html" class="step-link">📥 원료 입고 등록</a>
+              <a href="./recipe-calculator/index.html" class="step-link">㎏ 배합 계산기</a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="guide-step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>일일 발효 온도 기록 (제조 단계)</strong>
+            <p>발효장(고온부숙/후숙) 내 퇴비 더미의 온도를 아침/저녁으로 기록하고 수분과 냄새 상태를 추적합니다.</p>
+            <div class="step-links">
+              <a href="./dashboard/index.html" class="step-link">🌡 발효 온도 대시보드</a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="guide-step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>최종 품질검사 & 출하 판정 (출하 단계)</strong>
+            <p>펠릿 가공이 끝난 비료의 수분, pH, EC, 발아지수(GI), 파손율을 입력해 출격 적합 여부를 최종 판정합니다.</p>
+            <div class="step-links">
+              <a href="./quality-dashboard/index.html" class="step-link">✓ 품질검사 대시보드</a>
+              <a href="./print-report/index.html" class="step-link">📄 PDF 성적서 출력</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="guide-step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <strong>재고 및 출하 관리 (유통 단계)</strong>
+            <p>검사를 통과한 비료 로트의 완제품 재고를 입고하고, 거래처별 납품 및 출고 내역을 투명하게 관리합니다.</p>
+            <div class="step-links">
+              <a href="./sales-manager/index.html" class="step-link">📦 재고·출하 관리</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="guide-extra">
+        <strong>📊 사업성 검토 및 영업 지원 도구</strong>
+        <p>현장 제조 관리 외에 사업 기획이나 농가 판매 상담 시 아래의 특화 분석 도구를 활용해 보세요.</p>
+        <div class="extra-links">
+          <a href="./calculator/index.html" class="extra-link">₩ 수익성 계산기</a>
+          <a href="./farmer-roi-calculator/index.html" class="extra-link">📈 농가 ROI 시뮬레이터</a>
+          <a href="./soil-carbon-calculator/index.html" class="extra-link">🌱 토양·탄소 리포트</a>
+          <a href="./carbon-report/index.html" class="extra-link">📄 탄소 성과 리포트 (ESG)</a>
+        </div>
       </div>
     </section>
 
