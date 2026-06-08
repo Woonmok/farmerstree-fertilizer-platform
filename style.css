@@ -50,43 +50,6 @@ h1 {
   color: #4c5748;
 }
 
-.runtime-banner {
-  margin-top: 18px;
-  padding: 14px 16px;
-  border-radius: 14px;
-  border: 1px solid #d6decc;
-  background: #f7f9f4;
-}
-
-.runtime-banner strong {
-  display: block;
-  margin-bottom: 8px;
-  color: #2f4428;
-}
-
-.runtime-banner p {
-  margin: 6px 0 0;
-  font-size: 13px;
-  line-height: 1.45;
-  color: #3d4b38;
-  word-break: break-all;
-}
-
-.runtime-key {
-  font-weight: 900;
-  color: #5d7145;
-}
-
-.runtime-banner.is-local {
-  border-color: #b8d9a7;
-  background: #edf8e6;
-}
-
-.runtime-banner.is-remote {
-  border-color: #efc2a0;
-  background: #fff3ea;
-}
-
 .hero-actions {
   display: flex;
   gap: 14px;
