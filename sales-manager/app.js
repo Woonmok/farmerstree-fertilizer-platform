@@ -21,6 +21,19 @@ function getStocks()    { return load(STORAGE_KEYS.stocks);    }
 function getShipments() { return load(STORAGE_KEYS.shipments); }
 function getCustomers() { return load(STORAGE_KEYS.customers); }
 
+function escapeHtml(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function normalizeProductType(type) {
+  return ['A', 'B', 'C'].includes(type) ? type : 'unknown';
+}
+
 // ─── 초기화 ───────────────────────────────────
 window.addEventListener('DOMContentLoaded', () => {
   setDefaultDates();
@@ -233,6 +246,8 @@ function renderInventory() {
   }
   const productLabel = { A:'A형', B:'B형', C:'C형' };
   tbody.innerHTML = stocks.map(s => {
+    const safeType = normalizeProductType(s.type);
+    const safeTypeLabel = productLabel[safeType] || escapeHtml(s.type || '–');
     const shipped = getShippedByLot(s.lot);
     const remain = s.inQty - shipped;
     const remainKg = remain * s.pkgUnit;
@@ -244,9 +259,9 @@ function renderInventory() {
     else                  { status = '충분'; statusClass = 'badge-green'; }
     return `
       <tr>
-        <td class="monospace">${s.lot}</td>
-        <td><span class="badge badge-type-${s.type}">${productLabel[s.type] || s.type}</span></td>
-        <td>${s.mfgDate}</td>
+        <td class="monospace">${escapeHtml(s.lot)}</td>
+        <td><span class="badge badge-type-${safeType}">${safeTypeLabel}</span></td>
+        <td>${escapeHtml(s.mfgDate)}</td>
         <td>${s.pkgUnit}kg</td>
         <td>${s.inQty.toLocaleString()}</td>
         <td>${shipped.toLocaleString()}</td>
@@ -272,16 +287,16 @@ function renderCustomerTable() {
     const totalRev = custShips.reduce((a, b) => a + b.totalAmount, 0);
     return `
       <tr>
-        <td><strong>${c.name}</strong></td>
-        <td><span class="badge badge-gray">${c.type}</span></td>
-        <td>${c.contact || '–'}</td>
-        <td>${c.region || '–'}</td>
+        <td><strong>${escapeHtml(c.name)}</strong></td>
+        <td><span class="badge badge-gray">${escapeHtml(c.type)}</span></td>
+        <td>${escapeHtml(c.contact || '–')}</td>
+        <td>${escapeHtml(c.region || '–')}</td>
         <td>${(c.defaultPrice||0).toLocaleString()}원</td>
         <td>${totalQty.toLocaleString()}포</td>
         <td>${totalRev.toLocaleString()}원</td>
         <td>
-          <button class="btn-xs" onclick="loadCustomerToShipment('${c.id}')">출하</button>
-          <button class="btn-xs danger" onclick="deleteCustomer('${c.id}')">삭제</button>
+          <button class="btn-xs" onclick='loadCustomerToShipment(${JSON.stringify(c.id)})'>출하</button>
+          <button class="btn-xs danger" onclick='deleteCustomer(${JSON.stringify(c.id)})'>삭제</button>
         </td>
       </tr>`;
   }).join('');
@@ -333,18 +348,22 @@ function renderHistory() {
   }
 
   const productLabel = { A:'A형', B:'B형', C:'C형' };
-  tbody.innerHTML = filtered.map(s => `
-    <tr>
-      <td>${s.date}</td>
-      <td>${s.custName}</td>
-      <td class="monospace">${s.lot}</td>
-      <td><span class="badge badge-type-${s.productType}">${productLabel[s.productType] || s.productType}</span></td>
-      <td>${s.qty.toLocaleString()}포</td>
-      <td>${s.unitPrice.toLocaleString()}원</td>
-      <td><strong>${s.totalAmount.toLocaleString()}원</strong></td>
-      <td>${s.note || '–'}</td>
-    </tr>
-  `).join('');
+  tbody.innerHTML = filtered.map(s => {
+    const safeType = normalizeProductType(s.productType);
+    const safeTypeLabel = productLabel[safeType] || escapeHtml(s.productType || '–');
+    return `
+      <tr>
+        <td>${escapeHtml(s.date)}</td>
+        <td>${escapeHtml(s.custName)}</td>
+        <td class="monospace">${escapeHtml(s.lot)}</td>
+        <td><span class="badge badge-type-${safeType}">${safeTypeLabel}</span></td>
+        <td>${s.qty.toLocaleString()}포</td>
+        <td>${s.unitPrice.toLocaleString()}원</td>
+        <td><strong>${s.totalAmount.toLocaleString()}원</strong></td>
+        <td>${escapeHtml(s.note || '–')}</td>
+      </tr>
+    `;
+  }).join('');
 }
 
 function updateKPI() {

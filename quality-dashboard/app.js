@@ -427,33 +427,43 @@ function evaluateQuality(data) {
     detail: "현재 입력값 기준으로 바로 시판 가능한 품질입니다.",
   };
 
-  if (dangerCount > 0) {
+  function setHold(detail) {
     status = {
       level: "danger",
       title: "출하보류",
-      detail: "위험 항목이 있습니다. 재건조, 추가 후숙, 재부숙 또는 재선별 후 재검사하세요.",
+      detail,
     };
-  } else if (warnCount > 0) {
+  }
+
+  function setConditional(detail) {
+    if (status.title === "출하보류") {
+      return;
+    }
+
     status = {
-      level: "warn",
+      ...status,
+      level: status.level === "good" ? "warn" : status.level,
       title: "조건부출하",
-      detail: "주의 항목이 있습니다. 사용처 제한 또는 추가 확인 후 출하하세요.",
+      detail,
     };
+  }
+
+  if (dangerCount > 0) {
+    setHold("위험 항목이 있습니다. 재건조, 추가 후숙, 재부숙 또는 재선별 후 재검사하세요.");
+  } else if (warnCount > 0) {
+    setConditional("주의 항목이 있습니다. 사용처 제한 또는 추가 확인 후 출하하세요.");
   }
 
   if (data.moisture > 25 && dangerCount > 0) {
-    status.title = "출하보류";
-    status.detail = "수분이 높아 보관 중 곰팡이·부패 위험이 있습니다.";
+    setHold("수분이 높아 보관 중 곰팡이·부패 위험이 있습니다.");
   }
 
   if (data.gi < 70 || data.odor === "ammonia" || data.odor === "rot") {
-    status.title = "출하보류";
-    status.detail = "식물 독성, 암모니아취, 부패취 가능성이 있어 바로 출하하면 안 됩니다.";
+    setHold("식물 독성, 암모니아취, 부패취 가능성이 있어 바로 출하하면 안 됩니다.");
   }
 
   if (data.ripeningDays < 20 || data.ripeningTemp > 45 || data.pileDelta > 15) {
-    status.title = "출하보류";
-    status.detail = "후숙 운영 기준 미달 항목이 있어 즉시 출하하면 안 됩니다.";
+    setHold("후숙 운영 기준 미달 항목이 있어 즉시 출하하면 안 됩니다.");
   }
 
   if (
@@ -462,20 +472,15 @@ function evaluateQuality(data) {
     data.inoculationTiming === "beforeHotCompost" ||
     data.stabilizationDays < 5
   ) {
-    status.title = "출하보류";
-    status.detail = "접종 핵심 조건(온도/암모니아취/후접종/안정화 기간) 중 미달 항목이 있어 재조정이 필요합니다.";
-    status.level = "danger";
+    setHold("접종 핵심 조건(온도/암모니아취/후접종/안정화 기간) 중 미달 항목이 있어 재조정이 필요합니다.");
   }
 
   if (data.ec > 5.0) {
-    status.title = "조건부출하";
-    status.detail = "염류장해 위험이 높아 민감작물용 출하를 제한해야 합니다.";
+    setConditional("염류장해 위험이 높아 민감작물용 출하를 제한해야 합니다.");
   }
 
   if (data.pathogen === "exceed" || data.heavyMetals === "exceed" || data.maturity === "unstable") {
-    status.title = "출하보류";
-    status.detail = "법적/위생/부숙도 기준 미달 항목이 있어 출하할 수 없습니다.";
-    status.level = "danger";
+    setHold("법적/위생/부숙도 기준 미달 항목이 있어 출하할 수 없습니다.");
   }
 
   const patentCheck = evaluatePatentCriteria(data);

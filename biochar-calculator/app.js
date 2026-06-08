@@ -45,12 +45,54 @@ function formatWon(value) {
 
 function calculate() {
   const totalSmsKg = num(inputs.totalSmsKg);
-  const biocharRatio = num(inputs.biocharRatio) / 100;
-  const initialMoisture = num(inputs.initialMoisture) / 100;
-  const targetMoisture = num(inputs.targetMoisture) / 100;
-  const charYield = num(inputs.charYield) / 100;
-  const blendRatio = num(inputs.blendRatio) / 100;
-  const fertilizerYield = num(inputs.fertilizerYield) / 100;
+  const rawBiocharRatio = num(inputs.biocharRatio);
+  const rawInitialMoisture = num(inputs.initialMoisture);
+  const rawTargetMoisture = num(inputs.targetMoisture);
+  const rawCharYield = num(inputs.charYield);
+  const rawBlendRatio = num(inputs.blendRatio);
+  const rawFertilizerYield = num(inputs.fertilizerYield);
+
+  if (rawBiocharRatio < 0 || rawBiocharRatio > 100) {
+    outputs.message.textContent = "Biochar 전환 비율은 0~100% 범위에서 입력하세요.";
+    return;
+  }
+
+  if (rawInitialMoisture < 0 || rawInitialMoisture > 95) {
+    outputs.message.textContent = "후배지 초기 수분은 0~95% 범위에서 입력하세요.";
+    return;
+  }
+
+  if (rawTargetMoisture < 0 || rawTargetMoisture > 50) {
+    outputs.message.textContent = "탄화 전 목표 수분은 0~50% 범위에서 입력하세요.";
+    return;
+  }
+
+  if (rawCharYield < 5 || rawCharYield > 80) {
+    outputs.message.textContent = "탄화 수율은 5~80% 범위에서 입력하세요.";
+    return;
+  }
+
+  if (rawBlendRatio < 0 || rawBlendRatio > 30) {
+    outputs.message.textContent = "최종 비료 내 biochar 혼합비는 0~30% 범위에서 입력하세요.";
+    return;
+  }
+
+  if (rawFertilizerYield < 10 || rawFertilizerYield > 100) {
+    outputs.message.textContent = "일반 후배지 펠릿 생산 수율은 10~100% 범위에서 입력하세요.";
+    return;
+  }
+
+  if (rawBlendRatio >= 100) {
+    outputs.message.textContent = "최종 혼합비는 100% 미만이어야 합니다.";
+    return;
+  }
+
+  const biocharRatio = rawBiocharRatio / 100;
+  const initialMoisture = rawInitialMoisture / 100;
+  const targetMoisture = rawTargetMoisture / 100;
+  const charYield = rawCharYield / 100;
+  const blendRatio = rawBlendRatio / 100;
+  const fertilizerYield = rawFertilizerYield / 100;
   const bagKg = Math.max(num(inputs.bagKg), 1);
   const biocharCostPerKg = num(inputs.biocharCostPerKg);
   const premiumPerBag = num(inputs.premiumPerBag);
