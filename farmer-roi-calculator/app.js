@@ -125,7 +125,7 @@ function calcROI() {
 
   // ─── UI 업데이트 ───
   document.getElementById('totalAreaHint').textContent = `총 ${comma(totalArea)}㎡`;
-  document.getElementById('resultAreaLabel').textContent = `적용 면적: ${comma(totalArea)}㎡ (1,000㎡ × ${areaCount}단위)`;
+  document.getElementById('resultAreaLabel').textContent = `적용 면적: ${comma(totalArea)}㎡ (${comma(unitSize)}㎡ × ${areaCount}단위)`;
 
   document.getElementById('resNetSaving').textContent   = wonStr(netSaving);
   document.getElementById('resNetSavingSub').textContent = netSaving >= 0
@@ -193,11 +193,13 @@ function wonStr(n) {
 
 function copySummary() {
   const text = document.getElementById('summaryText').textContent;
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = document.querySelector('.btn-copy');
-    btn.textContent = '복사 완료!';
-    setTimeout(() => btn.textContent = '문구 복사', 2000);
-  });
+  navigator.clipboard.writeText(text)
+    .then(() => {
+      const btn = document.querySelector('.btn-copy');
+      btn.textContent = '복사 완료!';
+      setTimeout(() => btn.textContent = '문구 복사', 2000);
+    })
+    .catch(() => alert('복사에 실패했습니다. 직접 선택해 복사하세요.'));
 }
 
 function exportCSV() {

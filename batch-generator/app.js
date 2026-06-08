@@ -79,7 +79,12 @@ function calculateRecipe(substrateKg, recipeType) {
     ],
   };
 
-  return recipes[recipeType].map(([name, kg]) => {
+  const recipe = recipes[recipeType];
+  if (!recipe) {
+    preview.textContent = "알 수 없는 레시피 유형입니다.";
+    return [];
+  }
+  return recipe.map(([name, kg]) => {
     const calculated = kg * scale;
     return { name, plannedKg: calculated };
   });

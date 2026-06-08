@@ -33,7 +33,9 @@ function formatKg(value) {
   if (value >= 1000) {
     return `${(value / 1000).toFixed(2)}톤`;
   }
-
+  if (value < 1 && value > 0) {
+    return `${value.toLocaleString("ko-KR", { maximumFractionDigits: 2 })}kg`;
+  }
   return `${Math.round(value).toLocaleString("ko-KR")}kg`;
 }
 
@@ -53,11 +55,16 @@ function calculate() {
   const biocharCostPerKg = num(inputs.biocharCostPerKg);
   const premiumPerBag = num(inputs.premiumPerBag);
 
+  if (targetMoisture >= 1) {
+    outputs.message.textContent = "목표 수분은 100% 미만이어야 합니다.";
+    return;
+  }
+
   const smsForBiochar = totalSmsKg * biocharRatio;
   const smsForFertilizer = totalSmsKg - smsForBiochar;
 
   const dryMatter = smsForBiochar * (1 - initialMoisture);
-  const driedSmsKg = targetMoisture < 1 ? dryMatter / (1 - targetMoisture) : dryMatter;
+  const driedSmsKg = dryMatter / (1 - targetMoisture);
 
   const biocharKg = driedSmsKg * charYield;
   const baseFertilizerKg = smsForFertilizer * fertilizerYield;
