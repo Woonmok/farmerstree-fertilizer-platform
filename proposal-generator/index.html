@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>사업 제안서 생성기 — Farmerstree</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     입력 폼 (화면 전용 — 인쇄 시 숨김)
+══════════════════════════════════════════ -->
+<main class="container no-print">
+  <div class="back-link-container">
+    <a href="../index.html" class="back-link">← 메인 대시보드로 돌아가기</a>
+  </div>
+
+  <section class="hero">
+    <p class="eyebrow">Farmerstree Fertilizer Platform</p>
+    <h1>사업 제안서 생성기</h1>
+    <p class="desc">
+      아래 항목을 채운 뒤 <strong>제안서 미리보기</strong>로 확인하고,
+      <strong>PDF 다운로드</strong>로 저장합니다.<br />
+      농가 ROI · 탄소 성과는 각 모듈에서 복사한 문장을 전용 란에 붙여넣으세요.
+    </p>
+    <div class="hero-actions">
+      <button class="btn-primary" id="previewBtn">제안서 미리보기</button>
+      <button class="btn-secondary" id="pdfBtn">PDF 다운로드</button>
+    </div>
+  </section>
+
+  <!-- ① 기본 정보 -->
+  <section class="form-card">
+    <h2 class="section-heading">① 기본 정보</h2>
+    <div class="form-grid">
+      <label>
+        제안서 제목
+        <input id="proposalTitle" type="text" value="후배지 기반 기능성 펠릿비료 공급 사업 제안서" />
+      </label>
+      <label>
+        제안일
+        <input id="proposalDate" type="date" />
+      </label>
+      <label>
+        제안 번호 <span class="optional">(선택)</span>
+        <input id="proposalNo" type="text" placeholder="예: FT-PROP-2026-001" />
+      </label>
+      <label>
+        유효 기간 <span class="optional">(선택)</span>
+        <input id="validUntil" type="text" placeholder="예: 제안일로부터 30일" />
+      </label>
+    </div>
+  </section>
+
+  <!-- ② 수신처 -->
+  <section class="form-card">
+    <h2 class="section-heading">② 수신처 (제안 대상)</h2>
+    <div class="form-grid">
+      <label>
+        기관·고객사명
+        <input id="recipientOrg" type="text" placeholder="예: ○○군청 농업기술센터" />
+      </label>
+      <label>
+        담당자명
+        <input id="recipientName" type="text" placeholder="예: 홍길동 과장" />
+      </label>
+    </div>
+  </section>
+
+  <!-- ③ 발신처 -->
+  <section class="form-card">
+    <h2 class="section-heading">③ 발신처 (우리 회사)</h2>
+    <div class="form-grid">
+      <label>
+        회사명
+        <input id="senderOrg" type="text" value="(주)Farmerstree" />
+      </label>
+      <label>
+        담당자명 · 직함
+        <input id="senderName" type="text" placeholder="예: 김농부 대표이사" />
+      </label>
+      <label>
+        연락처
+        <input id="senderTel" type="text" placeholder="예: 010-0000-0000" />
+      </label>
+      <label>
+        이메일
+        <input id="senderEmail" type="text" placeholder="예: contact@farmerstree.com" />
+      </label>
+      <label class="wide">
+        주소 <span class="optional">(선택)</span>
+        <input id="senderAddress" type="text" placeholder="예: 충청남도 ○○시 ○○로 00" />
+      </label>
+    </div>
+  </section>
+
+  <!-- ④ 사업 배경 및 목적 -->
+  <section class="form-card">
+    <h2 class="section-heading">④ 사업 배경 및 목적</h2>
+    <label>
+      <textarea id="background" rows="6" placeholder="예: 버섯 후배지의 대량 발생으로 인한 환경 부하를 해소하고, 화학비료 의존도를 줄이는 순환농업 모델을 구축하기 위해 본 사업을 제안합니다."></textarea>
+    </label>
+  </section>
+
+  <!-- ⑤ 기술 개요 -->
+  <section class="form-card">
+    <h2 class="section-heading">⑤ 기술 개요 및 제품 특징</h2>
+    <label>
+      <textarea id="techOverview" rows="7">Farmerstree는 버섯 후배지(SMS)를 원료로 고온 호기성 부숙 → 기능성 미생물 접종 → 펠릿화 공정을 거쳐 고품질 유기질 복합비료를 생산합니다.
+
+주요 제품 라인업:
+• A형 — 후배지 고부숙 펠릿 (기본형): pH 6.5~7.5, C/N 20 이하, 수분 20% 이하
+• B형 — 기능성 미생물 펠릿 (프리미엄): Bacillus·Lactobacillus·효모 후접종, 토양 미생물 활성 강화
+• C형 — SMS 바이오차 복합 펠릿 (고부가): 탄소 격리 기능 + 토양보수력 개선, ESG 탄소 성과 연동
+
+모든 제품은 55~65℃ 고온부숙 온도 이력, pH·EC·발아지수(GI ≥ 80%)·파손율 기준을 충족한 로트만 출하합니다.</textarea>
+    </label>
+  </section>
+
+  <!-- ⑥ 제안 내용 -->
+  <section class="form-card">
+    <h2 class="section-heading">⑥ 제안 내용</h2>
+    <label>
+      <textarea id="proposal" rows="6" placeholder="납품 수량, 납품 일정, 단가, 지원 조건 등 핵심 제안 내용을 입력하세요."></textarea>
+    </label>
+  </section>
+
+  <!-- ⑦ 농가 ROI — 붙여넣기 공간 -->
+  <section class="form-card paste-card">
+    <h2 class="section-heading">
+      ⑦ 농가 ROI 분석 결과
+      <a href="../farmer-roi-calculator/index.html" class="module-link" target="_blank">농가 ROI 시뮬레이터 열기 →</a>
+    </h2>
+    <p class="paste-hint">농가 ROI 시뮬레이터의 <strong>영업 설명용 요약 문구</strong>를 복사해서 아래에 붙여넣으세요.</p>
+    <label>
+      <textarea id="roiText" rows="5" placeholder="예: 고추 재배 1,000㎡ 기준, 화학비료 대비 연간 약 ○○원 절감·수익 증가. ROI ○.○배, 투자 회수 ○개월."></textarea>
+    </label>
+  </section>
+
+  <!-- ⑧ 탄소·ESG 성과 — 붙여넣기 공간 -->
+  <section class="form-card paste-card">
+    <h2 class="section-heading">
+      ⑧ 탄소·ESG 성과
+      <a href="../carbon-report/index.html" class="module-link" target="_blank">탄소 성과 리포트 열기 →</a>
+    </h2>
+    <p class="paste-hint">탄소 성과 리포트의 <strong>공공사업 제안서용 문장</strong> 또는 <strong>ESG 문장</strong>을 복사해서 아래에 붙여넣으세요.</p>
+    <label>
+      <textarea id="carbonText" rows="5" placeholder="예: ○○ 지역을 대상으로 SMS 바이오차 기반 탄소형 복합비료를 적용하는 실증 사업을 제안합니다…"></textarea>
+    </label>
+  </section>
+
+  <!-- ⑨ 기대 효과 -->
+  <section class="form-card">
+    <h2 class="section-heading">⑨ 기대 효과</h2>
+    <label>
+      <textarea id="expectedEffect" rows="5" placeholder="예: ① 농가 비료비 절감 ② 토양 유기탄소 증진 ③ 화학비료 사용량 감축 ④ 탄소저장 성과 지역 단위 창출"></textarea>
+    </label>
+  </section>
+
+  <!-- ⑩ 추진 일정 -->
+  <section class="form-card">
+    <h2 class="section-heading">⑩ 추진 일정</h2>
+    <label>
+      <textarea id="schedule" rows="4" placeholder="예: 2026년 7월 — 계약 체결 / 8~9월 — 시험 공급 / 10월 이후 — 본 공급 전환"></textarea>
+    </label>
+  </section>
+
+  <!-- ⑪ 기타 조건 및 비고 -->
+  <section class="form-card">
+    <h2 class="section-heading">⑪ 기타 조건 및 비고 <span class="optional">(선택)</span></h2>
+    <label>
+      <textarea id="remarks" rows="3" placeholder="결제 조건, 운송 조건, 보증 내용, 첨부 서류 등 기타 사항을 입력하세요."></textarea>
+    </label>
+  </section>
+
+  <div class="bottom-actions">
+    <button class="btn-primary" id="previewBtn2">제안서 미리보기</button>
+    <button class="btn-secondary" id="pdfBtn2">PDF 다운로드</button>
+  </div>
+</main>
+
+
+<!-- ══════════════════════════════════════════
+     제안서 출력 시트 (인쇄 전용)
+══════════════════════════════════════════ -->
+<div id="proposalSheet" class="proposal-sheet print-only">
+
+  <!-- 헤더 -->
+  <header class="sheet-header">
+    <div class="sheet-brand">
+      <span class="brand-mark">FARMERSTREE</span>
+      <span class="brand-sub">후배지 기반 기능성 펠릿비료 전문기업</span>
+    </div>
+    <div class="sheet-title-block">
+      <h1 id="outTitle" class="sheet-title"></h1>
+      <p id="outMeta" class="sheet-meta"></p>
+    </div>
+  </header>
+
+  <!-- 기본 정보 표 -->
+  <table class="info-table">
+    <tbody>
+      <tr>
+        <th>수신</th>
+        <td id="outRecipient"></td>
+        <th>제안일</th>
+        <td id="outDate"></td>
+      </tr>
+      <tr>
+        <th>발신</th>
+        <td id="outSender"></td>
+        <th>연락처</th>
+        <td id="outContact"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 본문 섹션 -->
+  <section class="sheet-section" id="secBackground">
+    <h2 class="sec-heading">1. 사업 배경 및 목적</h2>
+    <p id="outBackground" class="sec-body"></p>
+  </section>
+
+  <section class="sheet-section" id="secTech">
+    <h2 class="sec-heading">2. 기술 개요 및 제품 특징</h2>
+    <p id="outTechOverview" class="sec-body"></p>
+  </section>
+
+  <section class="sheet-section" id="secProposal">
+    <h2 class="sec-heading">3. 제안 내용</h2>
+    <p id="outProposal" class="sec-body"></p>
+  </section>
+
+  <section class="sheet-section highlight-box" id="secROI">
+    <h2 class="sec-heading">4. 농가 ROI 분석</h2>
+    <p id="outROI" class="sec-body"></p>
+  </section>
+
+  <section class="sheet-section highlight-box green" id="secCarbon">
+    <h2 class="sec-heading">5. 탄소·ESG 성과</h2>
+    <p id="outCarbon" class="sec-body"></p>
+  </section>
+
+  <section class="sheet-section" id="secEffect">
+    <h2 class="sec-heading">6. 기대 효과</h2>
+    <p id="outEffect" class="sec-body"></p>
+  </section>
+
+  <section class="sheet-section" id="secSchedule">
+    <h2 class="sec-heading">7. 추진 일정</h2>
+    <p id="outSchedule" class="sec-body"></p>
+  </section>
+
+  <section class="sheet-section" id="secRemarks">
+    <h2 class="sec-heading">8. 기타 조건 및 비고</h2>
+    <p id="outRemarks" class="sec-body"></p>
+  </section>
+
+  <!-- 서명란 -->
+  <div class="signature-row">
+    <div class="sig-box">
+      <span class="sig-label">제안 담당자</span>
+      <div class="sig-line"></div>
+      <span class="sig-name" id="outSignerName"></span>
+    </div>
+    <div class="sig-box">
+      <span class="sig-label">검토 / 확인</span>
+      <div class="sig-line"></div>
+      <span class="sig-name">&nbsp;</span>
+    </div>
+    <div class="sig-box">
+      <span class="sig-label">승인</span>
+      <div class="sig-line"></div>
+      <span class="sig-name">&nbsp;</span>
+    </div>
+  </div>
+
+  <footer class="sheet-footer">
+    <p id="outFooterOrg"></p>
+    <p id="outFooterAddress"></p>
+    <p>본 제안서는 Farmerstree Fertilizer Platform에서 자동 생성되었습니다.</p>
+  </footer>
+
+</div><!-- /proposalSheet -->
+
+<!-- 미리보기 모달 -->
+<div id="previewOverlay" class="preview-overlay hidden">
+  <div class="preview-modal">
+    <div class="preview-toolbar">
+      <span class="preview-label">제안서 미리보기</span>
+      <div class="preview-actions">
+        <button class="btn-secondary" id="pdfFromModal">PDF 다운로드</button>
+        <button class="btn-close" id="closePreview">닫기</button>
+      </div>
+    </div>
+    <div class="preview-body" id="previewBody"></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="./app.js"></script>
+</body>
+</html>
