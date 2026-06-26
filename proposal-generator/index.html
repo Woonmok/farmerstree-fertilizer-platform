@@ -8,9 +8,7 @@
 </head>
 <body>
 
-<!-- ══════════════════════════════════════════
-     입력 폼 (화면 전용 — 인쇄 시 숨김)
-══════════════════════════════════════════ -->
+<!-- ══════════════════════════ 입력 폼 ══════════════════════════ -->
 <main class="container no-print">
   <div class="back-link-container">
     <a href="../index.html" class="back-link">← 메인 대시보드로 돌아가기</a>
@@ -20,13 +18,14 @@
     <p class="eyebrow">Farmerstree Fertilizer Platform</p>
     <h1>사업 제안서 생성기</h1>
     <p class="desc">
-      아래 항목을 채운 뒤 <strong>제안서 미리보기</strong>로 확인하고,
-      <strong>PDF 다운로드</strong>로 저장합니다.<br />
-      농가 ROI · 탄소 성과는 각 모듈에서 복사한 문장을 전용 란에 붙여넣으세요.
+      협력사·투자자용 통합 제안서입니다. 기본값이 채워진 항목을 확인·수정하고
+      <strong>PDF 다운로드</strong>로 완성하세요.<br />
+      <span class="save-notice" id="saveNotice">입력값은 자동 저장됩니다.</span>
     </p>
     <div class="hero-actions">
       <button class="btn-primary" id="previewBtn">제안서 미리보기</button>
       <button class="btn-secondary" id="pdfBtn">PDF 다운로드</button>
+      <button class="btn-ghost" id="clearBtn">입력 초기화</button>
     </div>
   </section>
 
@@ -34,143 +33,286 @@
   <section class="form-card">
     <h2 class="section-heading">① 기본 정보</h2>
     <div class="form-grid">
-      <label>
-        제안서 제목
-        <input id="proposalTitle" type="text" value="후배지 기반 기능성 펠릿비료 공급 사업 제안서" />
+      <label class="wide">제안서 제목
+        <input id="proposalTitle" type="text" value="SMS 바이오차 기반 기능성 펠릿비료 사업 제안서" />
       </label>
-      <label>
-        제안일
-        <input id="proposalDate" type="date" />
-      </label>
-      <label>
-        제안 번호 <span class="optional">(선택)</span>
-        <input id="proposalNo" type="text" placeholder="예: FT-PROP-2026-001" />
-      </label>
-      <label>
-        유효 기간 <span class="optional">(선택)</span>
-        <input id="validUntil" type="text" placeholder="예: 제안일로부터 30일" />
-      </label>
+      <label>제안일 <input id="proposalDate" type="date" /></label>
+      <label>제안 번호 <span class="optional">(선택)</span> <input id="proposalNo" type="text" placeholder="FT-PROP-2026-001" /></label>
+      <label>유효 기간 <span class="optional">(선택)</span> <input id="validUntil" type="text" placeholder="제안일로부터 30일" /></label>
+      <label>기밀 등급 <span class="optional">(선택)</span> <input id="confidential" type="text" placeholder="CONFIDENTIAL — 외부 무단 배포 금지" /></label>
     </div>
   </section>
 
   <!-- ② 수신처 -->
   <section class="form-card">
-    <h2 class="section-heading">② 수신처 (제안 대상)</h2>
+    <h2 class="section-heading">② 수신처</h2>
     <div class="form-grid">
-      <label>
-        기관·고객사명
-        <input id="recipientOrg" type="text" placeholder="예: ○○군청 농업기술센터" />
-      </label>
-      <label>
-        담당자명
-        <input id="recipientName" type="text" placeholder="예: 홍길동 과장" />
-      </label>
+      <label>기관·회사명 <input id="recipientOrg" type="text" placeholder="예: ○○투자파트너스" /></label>
+      <label>담당자명 <input id="recipientName" type="text" placeholder="예: 홍길동 대표" /></label>
     </div>
   </section>
 
   <!-- ③ 발신처 -->
   <section class="form-card">
-    <h2 class="section-heading">③ 발신처 (우리 회사)</h2>
+    <h2 class="section-heading">③ 발신처</h2>
     <div class="form-grid">
-      <label>
-        회사명
-        <input id="senderOrg" type="text" value="(주)Farmerstree" />
-      </label>
-      <label>
-        담당자명 · 직함
-        <input id="senderName" type="text" placeholder="예: 김농부 대표이사" />
-      </label>
-      <label>
-        연락처
-        <input id="senderTel" type="text" placeholder="예: 010-0000-0000" />
-      </label>
-      <label>
-        이메일
-        <input id="senderEmail" type="text" placeholder="예: contact@farmerstree.com" />
-      </label>
-      <label class="wide">
-        주소 <span class="optional">(선택)</span>
-        <input id="senderAddress" type="text" placeholder="예: 충청남도 ○○시 ○○로 00" />
-      </label>
+      <label>회사명 <input id="senderOrg" type="text" value="(주)Farmerstree" /></label>
+      <label>담당자명·직함 <input id="senderName" type="text" placeholder="예: 김농부 대표이사" /></label>
+      <label>연락처 <input id="senderTel" type="text" placeholder="010-0000-0000" /></label>
+      <label>이메일 <input id="senderEmail" type="text" placeholder="contact@farmerstree.com" /></label>
+      <label class="wide">주소 <span class="optional">(선택)</span> <input id="senderAddress" type="text" placeholder="충청남도 ○○시 ○○로 00" /></label>
     </div>
   </section>
 
-  <!-- ④ 사업 배경 및 목적 -->
+  <!-- ④ Executive Summary -->
+  <section class="form-card exec-card">
+    <h2 class="section-heading">④ Executive Summary (핵심 요약) <span class="badge-em">투자자 최우선 열람</span></h2>
+    <div class="form-grid">
+      <label class="wide">한 줄 사업 요약
+        <input id="execOneLiner" type="text" value="버섯 폐배지를 탄소 격리 비료로 전환하는 순환농업 플랫폼 — 3중 수익 구조로 원료 조달 비용이 마이너스인 유일한 유기질 비료 기업" />
+      </label>
+      <label>핵심 강점 ① <input id="kp1" type="text" value="원료 무비용 조달 — 수거 대행료 수취로 구조적 원가 우위" /></label>
+      <label>핵심 강점 ② <input id="kp2" type="text" value="SMS Biochar 탄소 격리 효과 2.5~2.75tCO₂e/톤 — EBC 기준 충족" /></label>
+      <label>핵심 강점 ③ <input id="kp3" type="text" value="농가 ROI 실증 — 비료비 절감 + 수확량 증가 연간 순이익 개선" /></label>
+      <label>핵심 강점 ④ <input id="kp4" type="text" value="3중 수익 모델 (수거 대행료 + 비료 판매 + 탄소 크레딧)" /></label>
+      <label>목표 시장 규모 <input id="execMarketSize" type="text" value="국내 유기질 비료 시장 5,000억원/년 + 탄소 크레딧 시장" /></label>
+      <label>협력·투자 규모 <input id="execAskSize" type="text" placeholder="예: 시리즈 A 10억원 / 유통 파트너십 / 공동 실증 사업" /></label>
+    </div>
+  </section>
+
+  <!-- ⑤ 회사 소개 -->
   <section class="form-card">
-    <h2 class="section-heading">④ 사업 배경 및 목적</h2>
+    <h2 class="section-heading">⑤ 회사 소개 및 비전</h2>
     <label>
-      <textarea id="background" rows="6" placeholder="예: 버섯 후배지의 대량 발생으로 인한 환경 부하를 해소하고, 화학비료 의존도를 줄이는 순환농업 모델을 구축하기 위해 본 사업을 제안합니다."></textarea>
+      <textarea id="companyIntro" rows="7">(주)Farmerstree는 버섯 재배 후 발생하는 폐배지(SMS, Spent Mushroom Substrate)를 고부가가치 유기질 비료와 탄소 격리 소재로 전환하는 순환농업 전문기업입니다.
+
+설립 배경: 국내 버섯 후배지 연간 발생량 약 80만 톤 중 70% 이상이 매립·소각되는 환경 문제를 해결하기 위해 설립하였습니다.
+
+핵심 역량:
+· 후배지 고온 호기성 부숙 기술 (55~65℃ 유지, 특허 출원)
+· SMS 바이오차(Biochar) 저온 탄화 공정 기술 (450~550℃)
+· 기능성 미생물 후접종 기술 (Bacillus·Lactobacillus·효모 3종)
+· 실시간 발효 온도·품질 IoT 모니터링 플랫폼
+
+비전: "후배지로 만드는 탄소 중립 농업" — 2030년까지 후배지 10만 톤 재자원화, 탄소 저감 27,500tCO₂e/년 달성</textarea>
     </label>
   </section>
 
-  <!-- ⑤ 기술 개요 -->
+  <!-- ⑥ 시장 현황 -->
   <section class="form-card">
-    <h2 class="section-heading">⑤ 기술 개요 및 제품 특징</h2>
+    <h2 class="section-heading">⑥ 시장 현황 및 사업 기회</h2>
     <label>
-      <textarea id="techOverview" rows="7">Farmerstree는 버섯 후배지(SMS)를 원료로 고온 호기성 부숙 → 기능성 미생물 접종 → 펠릿화 공정을 거쳐 고품질 유기질 복합비료를 생산합니다.
+      <textarea id="marketAnalysis" rows="10">① 원료 시장 (폐자원 재활용)
+국내 버섯 후배지 연간 발생량 약 80만 톤, 처리 비용 평균 45,000원/톤 — 총 시장 처리 비용 약 360억원/년. 환경부 폐기물 처리 규제 강화로 재활용 수요 급증 중.
 
-주요 제품 라인업:
-• A형 — 후배지 고부숙 펠릿 (기본형): pH 6.5~7.5, C/N 20 이하, 수분 20% 이하
-• B형 — 기능성 미생물 펠릿 (프리미엄): Bacillus·Lactobacillus·효모 후접종, 토양 미생물 활성 강화
-• C형 — SMS 바이오차 복합 펠릿 (고부가): 탄소 격리 기능 + 토양보수력 개선, ESG 탄소 성과 연동
+② 유기질 비료 시장
+국내 유기질 비료 시장 규모 약 5,000억원/년 (2024). 화학비료 원자재 가격 급등(요소 2022년 340% 상승), 정부의 화학비료 30% 절감 목표(2030년), 친환경 농업 전환 직불제 확대로 연평균 12% 이상 성장 중.
 
-모든 제품은 55~65℃ 고온부숙 온도 이력, pH·EC·발아지수(GI ≥ 80%)·파손율 기준을 충족한 로트만 출하합니다.</textarea>
+③ 탄소 크레딧 시장
+2025년 농업 탄소 크레딧 제도 본격 시행. 바이오차 탄소 격리는 농식품부 인정 탄소 감축 수단. 국제 바이오차 탄소 인증(EBC Carbon Standard) 기준 적용 시 크레딧 가격 약 25~50달러/tCO₂e로 추가 수익 모델 확보 가능.
+
+④ 정책 환경
+순환경제 활성화 기본법 시행(2023), 농업·농촌 탄소중립 추진 전략(2022~2030), 스마트팜 혁신밸리 연계 실증 지원 — 정부 정책 수혜 환경 최적.</textarea>
     </label>
   </section>
 
-  <!-- ⑥ 제안 내용 -->
+  <!-- ⑦ SMS Biochar 차별성 -->
+  <section class="form-card highlight-form-card">
+    <h2 class="section-heading">⑦ 핵심 기술 — SMS Biochar 차별성</h2>
+    <label>
+      <textarea id="biocharDiff" rows="15">Farmerstree SMS Biochar는 일반 목재·왕겨 바이오차와 다음 5가지 측면에서 근본적으로 차별화됩니다.
+
+【1】 원료 우위 — 균사체 분해 완료 기질
+버섯 균사체가 이미 리그닌·셀룰로오스를 생물학적으로 분해한 후배지를 탄화하므로, 탄화 수율이 목재 대비 15~20% 높고 균질성이 탁월합니다. 동일 탄화 온도(450~550℃)에서 고정탄소(Fixed Carbon) 함량이 목재 바이오차 대비 평균 8~12%p 높습니다.
+
+【2】 토양 개량 효과 — CEC 및 수분보유력 극대화
+후배지 특유의 균사체 잔류물과 키틴 성분이 탄화 후에도 미생물 활성을 촉진합니다. 양이온교환용량(CEC) 개선 효과가 일반 바이오차 대비 1.3~1.8배 높으며, 토양 수분보유력 20~35% 향상(자체 시험포 측정치)으로 관개 비용 절감 효과가 있습니다.
+
+【3】 중금속 안전성 — 원료 자체 청결성
+후배지 원료의 중금속 함량이 하수슬러지·폐목재 대비 현저히 낮아 비료 원료로서 안전성이 높고 별도 정제 공정이 불필요합니다. 전 로트 카드뮴·납·비소·수은 4종 검사를 통과한 원료만 사용합니다.
+
+【4】 탄소 격리 잠재력 — EBC 기준 적합
+SMS Biochar 1톤 토양 투입 시 약 2.5~2.75tCO₂e의 탄소 격리 효과가 추정됩니다. 국제 바이오차 탄소 인증(EBC Carbon Standard) 기준에 부합하며, 자발적 탄소 시장에서 크레딧 발급이 가능합니다.
+
+【5】 구조적 원가 우위 — 원료 조달 비용 마이너스
+원료(후배지) 수거 단계에서 처리 대행료 20,000~45,000원/톤을 수취함으로써, 원료 조달 비용이 오히려 마이너스인 유일한 구조를 보유합니다. 이는 일반 유기질 비료 업체 대비 35~50%의 원가 절감을 의미하며, 가격 경쟁력과 마진율 모두 업계 최고 수준입니다.</textarea>
+    </label>
+  </section>
+
+  <!-- ⑧ 협력·투자 제안 내용 -->
   <section class="form-card">
-    <h2 class="section-heading">⑥ 제안 내용</h2>
+    <h2 class="section-heading">⑧ 협력·투자 제안 내용</h2>
     <label>
-      <textarea id="proposal" rows="6" placeholder="납품 수량, 납품 일정, 단가, 지원 조건 등 핵심 제안 내용을 입력하세요."></textarea>
+      <textarea id="proposal" rows="5" placeholder="예: 공동 생산 파트너십 / 유통 계약 / 시험 포지 공동 운영 / 투자 참여 조건 등 핵심 제안 내용을 구체적으로 입력하세요."></textarea>
     </label>
   </section>
 
-  <!-- ⑦ 농가 ROI — 붙여넣기 공간 -->
-  <section class="form-card paste-card">
-    <h2 class="section-heading">
-      ⑦ 농가 ROI 분석 결과
-      <a href="../farmer-roi-calculator/index.html" class="module-link" target="_blank">농가 ROI 시뮬레이터 열기 →</a>
-    </h2>
-    <p class="paste-hint">농가 ROI 시뮬레이터의 <strong>영업 설명용 요약 문구</strong>를 복사해서 아래에 붙여넣으세요.</p>
-    <label>
-      <textarea id="roiText" rows="5" placeholder="예: 고추 재배 1,000㎡ 기준, 화학비료 대비 연간 약 ○○원 절감·수익 증가. ROI ○.○배, 투자 회수 ○개월."></textarea>
-    </label>
+  <!-- ⑨ 농가 ROI 계산기 (내장) -->
+  <section class="form-card calc-card">
+    <h2 class="section-heading">⑨ 농가 ROI 분석 <span class="auto-badge">자동 계산</span></h2>
+    <div class="calc-grid">
+      <div class="calc-inputs">
+        <p class="calc-label">작물 및 면적</p>
+        <div class="form-grid-3">
+          <label>작물 종류
+            <select id="roiCrop" onchange="onRoiCropChange()">
+              <option value="rice">벼 (논)</option>
+              <option value="pepper">고추</option>
+              <option value="garlic">마늘</option>
+              <option value="onion">양파</option>
+              <option value="cabbage">배추</option>
+              <option value="strawberry">딸기 (시설)</option>
+              <option value="tomato">토마토 (시설)</option>
+              <option value="apple">사과</option>
+            </select>
+          </label>
+          <label>적용 면적 (㎡) <input id="roiArea" type="number" value="10000" min="1" oninput="calcROI()" /></label>
+          <label>농산물 단가 (원/kg) <input id="roiCropPrice" type="number" value="1800" min="0" oninput="calcROI()" /></label>
+        </div>
+        <p class="calc-label" style="margin-top:14px">화학비료 비용 (원 / 1,000㎡)</p>
+        <div class="form-grid-3">
+          <label>기비 <input id="roiBase" type="number" value="30000" oninput="calcROI()" /></label>
+          <label>추비 <input id="roiTop" type="number" value="15000" oninput="calcROI()" /></label>
+          <label>토양개량제 <input id="roiSoil" type="number" value="10000" oninput="calcROI()" /></label>
+          <label>인건비 <input id="roiLabor" type="number" value="15000" oninput="calcROI()" /></label>
+          <label>수확량 (kg) <input id="roiYield" type="number" value="500" oninput="calcROI()" /></label>
+        </div>
+        <p class="calc-label" style="margin-top:14px">Farmerstree 비료 설정</p>
+        <div class="form-grid-3">
+          <label>제품
+            <select id="roiProduct" onchange="onRoiProductChange()">
+              <option value="A">A형 — 고부숙 (기본)</option>
+              <option value="B">B형 — 기능성 미생물</option>
+              <option value="C">C형 — 바이오차 복합</option>
+            </select>
+          </label>
+          <label>단가 (원/20kg포대) <input id="roiPrice" type="number" value="18000" oninput="calcROI()" /></label>
+          <label>사용량 (포대/1,000㎡) <input id="roiUsage" type="number" value="2.0" step="0.1" oninput="calcROI()" /></label>
+          <label>화학비료 대체율 (%) <input id="roiChemReplace" type="number" value="50" oninput="calcROI()" /></label>
+          <label>토양개량 대체율 (%) <input id="roiSoilReplace" type="number" value="60" oninput="calcROI()" /></label>
+          <label>수확량 증가율 (%) <input id="roiYieldUp" type="number" value="4" step="0.5" oninput="calcROI()" /></label>
+          <label>보조금·지원율 (%) <input id="roiSubsidy" type="number" value="0" oninput="calcROI()" /></label>
+        </div>
+      </div>
+      <div class="calc-result" id="roiResult">
+        <p class="result-placeholder">← 입력하면 자동 계산됩니다</p>
+      </div>
+    </div>
   </section>
 
-  <!-- ⑧ 탄소·ESG 성과 — 붙여넣기 공간 -->
-  <section class="form-card paste-card">
-    <h2 class="section-heading">
-      ⑧ 탄소·ESG 성과
-      <a href="../carbon-report/index.html" class="module-link" target="_blank">탄소 성과 리포트 열기 →</a>
-    </h2>
-    <p class="paste-hint">탄소 성과 리포트의 <strong>공공사업 제안서용 문장</strong> 또는 <strong>ESG 문장</strong>을 복사해서 아래에 붙여넣으세요.</p>
-    <label>
-      <textarea id="carbonText" rows="5" placeholder="예: ○○ 지역을 대상으로 SMS 바이오차 기반 탄소형 복합비료를 적용하는 실증 사업을 제안합니다…"></textarea>
-    </label>
+  <!-- ⑩ 탄소·ESG 성과 (내장) -->
+  <section class="form-card calc-card green-card">
+    <h2 class="section-heading">⑩ 탄소·ESG 성과 <span class="auto-badge green">자동 생성</span></h2>
+    <div class="form-grid">
+      <label>보고 기준 기간 <input id="cPeriod" type="text" value="2026년 2분기" oninput="calcCarbon()" /></label>
+      <label>사업 대상 지역 <input id="cRegion" type="text" value="충남 스마트팜 권역" oninput="calcCarbon()" /></label>
+      <label>후배지 재자원화량 (kg) <input id="cRecycled" type="number" value="12000" oninput="calcCarbon()" /></label>
+      <label>Biochar 생산량 (kg) <input id="cBiochar" type="number" value="1800" oninput="calcCarbon()" /></label>
+      <label>토양 투입량 (kg) <input id="cSoilApplied" type="number" value="1500" oninput="calcCarbon()" /></label>
+      <label>탄소저장 추정량 (kgCO₂e) <input id="cCarbonStored" type="number" value="4125" oninput="calcCarbon()" /></label>
+      <label>화학비료 절감률 (%) <input id="cFertReduction" type="number" value="18" step="0.1" oninput="calcCarbon()" /></label>
+      <label>적용 작물 <input id="cCrop" type="text" value="시설채소 및 과수" oninput="calcCarbon()" /></label>
+    </div>
+    <div class="carbon-result" id="carbonResult">
+      <p class="result-placeholder">← 입력하면 제안서 문장이 자동 생성됩니다</p>
+    </div>
   </section>
 
-  <!-- ⑨ 기대 효과 -->
+  <!-- ⑪ 사업 모델 / 수익 구조 -->
   <section class="form-card">
-    <h2 class="section-heading">⑨ 기대 효과</h2>
+    <h2 class="section-heading">⑪ 사업 모델 및 수익 구조</h2>
     <label>
-      <textarea id="expectedEffect" rows="5" placeholder="예: ① 농가 비료비 절감 ② 토양 유기탄소 증진 ③ 화학비료 사용량 감축 ④ 탄소저장 성과 지역 단위 창출"></textarea>
+      <textarea id="bizModel" rows="8">【3중 수익 구조】
+
+① 원료 수거 대행 수익
+버섯 농가로부터 후배지 수거 시 처리 대행료 수취 (평균 20,000~45,000원/톤)
+→ 원료 조달 비용이 마이너스인 구조적 비용 우위. 경쟁사 원료비 대비 35~50% 절감.
+
+② 비료 판매 수익
+A형 18,000원 / B형 23,000원 / C형 28,000원 (20kg포대 기준)
+농협·농자재상 유통, 온라인 직판, 농가 직접 납품 3채널 병행
+영업이익률 목표: A형 28%, B형 34%, C형 40%
+
+③ 탄소 크레딧 수익 (C형 제품 연동)
+SMS Biochar 1톤 기준 약 2.5~2.75tCO₂e 격리 인정
+자발적 탄소 시장 크레딧 가격 25~50USD/tCO₂e 적용 시
+연간 생산 목표 Biochar 500톤 → 예상 크레딧 수익 약 3,000~6,000만원/년</textarea>
     </label>
   </section>
 
-  <!-- ⑩ 추진 일정 -->
+  <!-- ⑫ 재무 전망 -->
+  <section class="form-card fin-card">
+    <h2 class="section-heading">⑫ 재무 전망 <span class="auto-badge">자동 계산</span></h2>
+    <p class="calc-hint">연도별 매출 목표와 영업이익률을 입력하면 재무 전망표가 자동 생성됩니다.</p>
+    <div class="form-grid-3">
+      <label>1년차 매출 목표 (원) <input id="rev1" type="number" value="300000000" oninput="calcFinance()" /></label>
+      <label>2년차 매출 목표 (원) <input id="rev2" type="number" value="800000000" oninput="calcFinance()" /></label>
+      <label>3년차 매출 목표 (원) <input id="rev3" type="number" value="2000000000" oninput="calcFinance()" /></label>
+      <label>영업이익률 1년차 (%) <input id="op1" type="number" value="8" step="0.5" oninput="calcFinance()" /></label>
+      <label>영업이익률 2년차 (%) <input id="op2" type="number" value="18" step="0.5" oninput="calcFinance()" /></label>
+      <label>영업이익률 3년차 (%) <input id="op3" type="number" value="28" step="0.5" oninput="calcFinance()" /></label>
+      <label>총 투자 요청액 (원) <input id="totalInvest" type="number" value="1000000000" oninput="calcFinance()" /></label>
+      <label>예상 투자 회수 시점 <input id="bepTarget" type="text" value="2028년 상반기" /></label>
+    </div>
+    <div class="fin-result" id="finResult"></div>
+  </section>
+
+  <!-- ⑬ 기대 효과 -->
   <section class="form-card">
-    <h2 class="section-heading">⑩ 추진 일정</h2>
+    <h2 class="section-heading">⑬ 기대 효과</h2>
     <label>
-      <textarea id="schedule" rows="4" placeholder="예: 2026년 7월 — 계약 체결 / 8~9월 — 시험 공급 / 10월 이후 — 본 공급 전환"></textarea>
+      <textarea id="expectedEffect" rows="5">① 환경적 효과: 버섯 후배지 매립·소각 제로화, 온실가스 저감, 토양 탄소 증진
+② 농가 경제 효과: 비료비 절감, 수확량 증가, 친환경 직불금 수령 기반 마련
+③ 사업적 효과: 원료 수거 → 제조 → 판매 → 탄소 크레딧의 순환 수익 구조 완성
+④ 정책 효과: 탄소중립 농업 실증 모델로 정부 R&D·실증사업 연계 가능
+⑤ ESG 효과: 협력 기업의 Scope 3 탄소 감축 실적으로 활용 가능</textarea>
     </label>
   </section>
 
-  <!-- ⑪ 기타 조건 및 비고 -->
+  <!-- ⑭ 추진 일정 -->
   <section class="form-card">
-    <h2 class="section-heading">⑪ 기타 조건 및 비고 <span class="optional">(선택)</span></h2>
+    <h2 class="section-heading">⑭ 추진 일정 (로드맵)</h2>
     <label>
-      <textarea id="remarks" rows="3" placeholder="결제 조건, 운송 조건, 보증 내용, 첨부 서류 등 기타 사항을 입력하세요."></textarea>
+      <textarea id="schedule" rows="6">Phase 1 (2026년 하반기) — 파일럿 생산 및 실증
+· 월 생산 목표 20톤 → 시험 농가 10곳 공급
+· SMS Biochar 탄화 설비 증설, EBC 인증 준비 착수
+
+Phase 2 (2027년) — 양산 전환 및 채널 확대
+· 월 생산 목표 100톤, 농협 계통 납품 계약 체결
+· 탄소 크레딧 등록·발급, 자발적 탄소 시장 첫 거래
+
+Phase 3 (2028년~) — 광역 확산 및 수출 검토
+· 연 생산 목표 1,500톤, 일본·동남아 수출 타당성 조사
+· 후배지 재자원화 모델 프랜차이즈화 검토</textarea>
+    </label>
+  </section>
+
+  <!-- ⑮ 협력·투자 요청 -->
+  <section class="form-card">
+    <h2 class="section-heading">⑮ 협력·투자 요청 사항</h2>
+    <label>
+      <textarea id="investAsk" rows="7">【협력·투자 요청 개요】
+
+요청 규모: (입력 필요 — 예: 시리즈 A 투자 10억원 / 공동 유통 계약 등)
+협력 형태: (투자 참여 / 유통 파트너십 / 공동 생산 / 정부 사업 공동 신청)
+
+【제공 가치】
+· 투자 참여 시: 지분 참여 + 탄소 크레딧 공동 수익 + ESG 실적 귀속
+· 유통 파트너 시: 독점 공급 계약 + 마진 보장 + 공동 마케팅 지원
+· 공동 연구 시: 지식재산권 공동 보유 + 정부 R&D 과제 공동 신청
+
+【요청 조건】
+· 초기 파일럿 물량 공급 및 시험 포지 운영 협조
+· 현지 농가 네트워크 또는 유통망 연계
+· 정부 지원 사업 공동 신청 및 매칭 자금 협력</textarea>
+    </label>
+  </section>
+
+  <!-- ⑯ 기타 -->
+  <section class="form-card">
+    <h2 class="section-heading">⑯ 기타 조건 및 비고 <span class="optional">(선택)</span></h2>
+    <label>
+      <textarea id="remarks" rows="3" placeholder="결제 조건, 첨부 서류, 참고 자료 등"></textarea>
     </label>
   </section>
 
@@ -181,108 +323,191 @@
 </main>
 
 
-<!-- ══════════════════════════════════════════
-     제안서 출력 시트 (인쇄 전용)
-══════════════════════════════════════════ -->
-<div id="proposalSheet" class="proposal-sheet print-only">
+<!-- ══════════════════════════ 제안서 출력 시트 ══════════════════════════ -->
+<!-- pdf-render-box: position:fixed + left:-9999px → 항상 브라우저가 렌더링, 사용자에게는 안 보임 -->
+<!-- display 토글 없이 html2pdf가 바로 캡처 가능 -->
+<div class="pdf-render-box">
+<div id="proposalSheet" class="proposal-sheet">
 
-  <!-- 헤더 -->
-  <header class="sheet-header">
-    <div class="sheet-brand">
-      <span class="brand-mark">FARMERSTREE</span>
-      <span class="brand-sub">후배지 기반 기능성 펠릿비료 전문기업</span>
+  <!-- ── 표지 ── -->
+  <div class="cover-page">
+    <div class="cover-top">
+      <div class="cover-brand">FARMERSTREE</div>
+      <div class="cover-brand-sub">후배지 기반 기능성 펠릿비료 · SMS Biochar 전문기업</div>
     </div>
-    <div class="sheet-title-block">
-      <h1 id="outTitle" class="sheet-title"></h1>
-      <p id="outMeta" class="sheet-meta"></p>
+    <div class="cover-center">
+      <div class="cover-tag">사업 제안서</div>
+      <h1 class="cover-title" id="cvTitle"></h1>
+      <div class="cover-divider"></div>
+      <div class="cover-meta-grid">
+        <div><span class="cv-label">제 안 일</span><span class="cv-val" id="cvDate"></span></div>
+        <div><span class="cv-label">수 신 처</span><span class="cv-val" id="cvRecipient"></span></div>
+        <div><span class="cv-label">제안 번호</span><span class="cv-val" id="cvNo"></span></div>
+        <div><span class="cv-label">유효 기간</span><span class="cv-val" id="cvValid"></span></div>
+      </div>
     </div>
-  </header>
-
-  <!-- 기본 정보 표 -->
-  <table class="info-table">
-    <tbody>
-      <tr>
-        <th>수신</th>
-        <td id="outRecipient"></td>
-        <th>제안일</th>
-        <td id="outDate"></td>
-      </tr>
-      <tr>
-        <th>발신</th>
-        <td id="outSender"></td>
-        <th>연락처</th>
-        <td id="outContact"></td>
-      </tr>
-    </tbody>
-  </table>
-
-  <!-- 본문 섹션 -->
-  <section class="sheet-section" id="secBackground">
-    <h2 class="sec-heading">1. 사업 배경 및 목적</h2>
-    <p id="outBackground" class="sec-body"></p>
-  </section>
-
-  <section class="sheet-section" id="secTech">
-    <h2 class="sec-heading">2. 기술 개요 및 제품 특징</h2>
-    <p id="outTechOverview" class="sec-body"></p>
-  </section>
-
-  <section class="sheet-section" id="secProposal">
-    <h2 class="sec-heading">3. 제안 내용</h2>
-    <p id="outProposal" class="sec-body"></p>
-  </section>
-
-  <section class="sheet-section highlight-box" id="secROI">
-    <h2 class="sec-heading">4. 농가 ROI 분석</h2>
-    <p id="outROI" class="sec-body"></p>
-  </section>
-
-  <section class="sheet-section highlight-box green" id="secCarbon">
-    <h2 class="sec-heading">5. 탄소·ESG 성과</h2>
-    <p id="outCarbon" class="sec-body"></p>
-  </section>
-
-  <section class="sheet-section" id="secEffect">
-    <h2 class="sec-heading">6. 기대 효과</h2>
-    <p id="outEffect" class="sec-body"></p>
-  </section>
-
-  <section class="sheet-section" id="secSchedule">
-    <h2 class="sec-heading">7. 추진 일정</h2>
-    <p id="outSchedule" class="sec-body"></p>
-  </section>
-
-  <section class="sheet-section" id="secRemarks">
-    <h2 class="sec-heading">8. 기타 조건 및 비고</h2>
-    <p id="outRemarks" class="sec-body"></p>
-  </section>
-
-  <!-- 서명란 -->
-  <div class="signature-row">
-    <div class="sig-box">
-      <span class="sig-label">제안 담당자</span>
-      <div class="sig-line"></div>
-      <span class="sig-name" id="outSignerName"></span>
-    </div>
-    <div class="sig-box">
-      <span class="sig-label">검토 / 확인</span>
-      <div class="sig-line"></div>
-      <span class="sig-name">&nbsp;</span>
-    </div>
-    <div class="sig-box">
-      <span class="sig-label">승인</span>
-      <div class="sig-line"></div>
-      <span class="sig-name">&nbsp;</span>
+    <!-- 표지 핵심 수치 -->
+    <div class="cover-kpi-row" id="coverKpiRow"></div>
+    <div class="cover-bottom">
+      <div class="cover-sender" id="cvSender"></div>
+      <div class="cover-confidential" id="cvConfidential"></div>
     </div>
   </div>
 
-  <footer class="sheet-footer">
-    <p id="outFooterOrg"></p>
-    <p id="outFooterAddress"></p>
-    <p>본 제안서는 Farmerstree Fertilizer Platform에서 자동 생성되었습니다.</p>
-  </footer>
+  <!-- ── Executive Summary 페이지 ── -->
+  <div class="exec-page">
+    <div class="exec-header">
+      <span class="exec-label">EXECUTIVE SUMMARY</span>
+      <span class="exec-sub" id="esDate"></span>
+    </div>
+    <p class="exec-oneliner" id="esOneLiner"></p>
+    <div class="exec-kpi-grid" id="esKpiGrid"></div>
+    <div class="exec-points" id="esPoints"></div>
+    <div class="exec-ask-box" id="esAskBox"></div>
+  </div>
 
-</div><!-- /proposalSheet -->
+  <!-- ── 목차 ── -->
+  <div class="toc-page">
+    <h2 class="toc-title">목 차</h2>
+    <ol class="toc-list">
+      <li>회사 소개 및 비전</li>
+      <li>시장 현황 및 사업 기회</li>
+      <li>핵심 기술 — SMS Biochar 차별성</li>
+      <li>제품 라인업 및 품질 기준</li>
+      <li>협력·투자 제안 내용</li>
+      <li>농가 ROI 분석</li>
+      <li>탄소·ESG 성과</li>
+      <li>사업 모델 및 수익 구조</li>
+      <li>재무 전망</li>
+      <li>기대 효과</li>
+      <li>추진 일정 (로드맵)</li>
+      <li>협력·투자 요청 사항</li>
+    </ol>
+  </div>
+
+  <!-- ── 본문 ── -->
+  <div class="body-page">
+
+    <table class="info-table">
+      <tbody>
+        <tr><th>수신</th><td id="outRecipient"></td><th>제안일</th><td id="outDate"></td></tr>
+        <tr><th>발신</th><td id="outSender"></td><th>연락처</th><td id="outContact"></td></tr>
+      </tbody>
+    </table>
+
+    <section class="sheet-section">
+      <h2 class="sec-heading">1. 회사 소개 및 비전</h2>
+      <p id="outCompanyIntro" class="sec-body"></p>
+    </section>
+
+    <section class="sheet-section">
+      <h2 class="sec-heading">2. 시장 현황 및 사업 기회</h2>
+      <p id="outMarketAnalysis" class="sec-body"></p>
+    </section>
+
+    <section class="sheet-section biochar-section">
+      <h2 class="sec-heading biochar-heading">3. 핵심 기술 — SMS Biochar 차별성</h2>
+      <p id="outBiocharDiff" class="sec-body"></p>
+    </section>
+
+    <!-- 제품 라인업 — 고정 비교표 -->
+    <section class="sheet-section">
+      <h2 class="sec-heading">4. 제품 라인업 및 품질 기준</h2>
+      <table class="product-table">
+        <thead>
+          <tr>
+            <th>구분</th>
+            <th class="col-a">A형 — 고부숙 펠릿<br /><small>(기본형)</small></th>
+            <th class="col-b">B형 — 기능성 미생물<br /><small>(프리미엄형)</small></th>
+            <th class="col-c">C형 — 바이오차 복합<br /><small>(고부가형)</small></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="row-label">소비자가</td><td>18,000원/20kg</td><td>23,000원/20kg</td><td>28,000원/20kg</td></tr>
+          <tr><td class="row-label">주원료</td><td>후배지 70%<br />계분 15%, 유박 10%<br />제올라이트 5%</td><td>A형 배합<br />+ 기능성 미생물 3종 후접종</td><td>B형 배합<br />+ SMS Biochar 15%</td></tr>
+          <tr><td class="row-label">품질 기준</td><td>수분 ≤20%<br />pH 6.5~7.5<br />EC ≤4 dS/m<br />C/N ≤20<br />GI ≥80%</td><td>A형 기준 동일<br />+ 미생물 ≥10⁸ CFU/g</td><td>B형 기준 동일<br />+ 고정탄소 ≥60%<br />중금속 4종 적합</td></tr>
+          <tr><td class="row-label">핵심 효능</td><td>범용 기비용<br />질소·인·칼리 균형 공급<br />오랜 잔효성</td><td>토양 미생물 다양성 회복<br />연작 장해 완화<br />뿌리 발달 촉진</td><td>탄소 격리 기능<br />보수력·CEC 극대화<br />ESG 탄소 크레딧 연동</td></tr>
+          <tr><td class="row-label">주요 적용처</td><td>논·밭 전반, 과수, 노지채소</td><td>시설채소·과수 연작지<br />친환경 인증 농가</td><td>탄소중립 인증 농가<br />ESG 경영 농협·기업농장<br />스마트팜</td></tr>
+          <tr><td class="row-label">영업이익률</td><td>약 28%</td><td>약 34%</td><td>약 40%</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="sheet-section" id="secProposal">
+      <h2 class="sec-heading">5. 협력·투자 제안 내용</h2>
+      <p id="outProposal" class="sec-body"></p>
+    </section>
+
+    <section class="sheet-section highlight-box">
+      <h2 class="sec-heading">6. 농가 ROI 분석</h2>
+      <div id="outROITable"></div>
+      <p id="outROISummary" class="sec-body" style="margin-top:8px"></p>
+    </section>
+
+    <section class="sheet-section highlight-box green">
+      <h2 class="sec-heading">7. 탄소·ESG 성과</h2>
+      <div id="outCarbonFigures"></div>
+      <p id="outCarbonText" class="sec-body" style="margin-top:8px"></p>
+    </section>
+
+    <section class="sheet-section">
+      <h2 class="sec-heading">8. 사업 모델 및 수익 구조</h2>
+      <p id="outBizModel" class="sec-body"></p>
+    </section>
+
+    <!-- 재무 전망 -->
+    <section class="sheet-section fin-section">
+      <h2 class="sec-heading">9. 재무 전망</h2>
+      <div id="outFinTable"></div>
+    </section>
+
+    <section class="sheet-section">
+      <h2 class="sec-heading">10. 기대 효과</h2>
+      <p id="outEffect" class="sec-body"></p>
+    </section>
+
+    <section class="sheet-section">
+      <h2 class="sec-heading">11. 추진 일정 (로드맵)</h2>
+      <p id="outSchedule" class="sec-body"></p>
+    </section>
+
+    <section class="sheet-section">
+      <h2 class="sec-heading">12. 협력·투자 요청 사항</h2>
+      <p id="outInvestAsk" class="sec-body"></p>
+    </section>
+
+    <section class="sheet-section" id="secRemarks" style="display:none">
+      <h2 class="sec-heading">13. 기타 조건 및 비고</h2>
+      <p id="outRemarks" class="sec-body"></p>
+    </section>
+
+    <div class="signature-row">
+      <div class="sig-box">
+        <span class="sig-label">제안 담당자</span>
+        <div class="sig-line"></div>
+        <span class="sig-name" id="outSignerName"></span>
+      </div>
+      <div class="sig-box">
+        <span class="sig-label">검토 / 확인</span>
+        <div class="sig-line"></div>
+        <span class="sig-name">&nbsp;</span>
+      </div>
+      <div class="sig-box">
+        <span class="sig-label">최종 승인</span>
+        <div class="sig-line"></div>
+        <span class="sig-name">&nbsp;</span>
+      </div>
+    </div>
+
+    <footer class="sheet-footer">
+      <p id="outFooterOrg"></p>
+      <p id="outFooterAddress"></p>
+      <p>본 제안서는 Farmerstree Fertilizer Platform에서 자동 생성되었습니다. 무단 복제 및 외부 배포를 금합니다.</p>
+    </footer>
+  </div>
+</div>
+</div><!-- /pdf-render-box -->
+
 
 <!-- 미리보기 모달 -->
 <div id="previewOverlay" class="preview-overlay hidden">
